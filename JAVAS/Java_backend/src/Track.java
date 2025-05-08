@@ -1,13 +1,21 @@
-public class Track {
-    private String trackName;
-    private String trackDate;
-    private boolean isLiked;
-    private int likes = 0;
+import java.io.Serializable;
 
-    public Track(String trackName, String trackDate) {
+public class Track implements Serializable , Comparable<Track> {
+    private String trackName;
+    private Integer trackDate;
+    private boolean isLiked;
+    private Integer likes = 0;
+
+    public Track(String trackName, Integer trackDate) {
         this.trackName = trackName;
         this.trackDate = trackDate;
     }
+
+    @Override
+    public int compareTo(Track other) {
+        return this.trackName.compareToIgnoreCase(other.trackName);
+    }
+
     public void likeTrack(){
         isLiked = true;
         likes++;
@@ -21,11 +29,11 @@ public class Track {
         this.trackName = trackName;
     }
 
-    public String getTrackDate() {
+    public Integer getTrackDate() {
         return trackDate;
     }
 
-    public void setTrackDate(String trackDate) {
+    public void setTrackDate(Integer trackDate) {
         this.trackDate = trackDate;
     }
 
@@ -37,11 +45,11 @@ public class Track {
         isLiked = liked;
     }
 
-    public int getLikes() {
+    public Integer getLikes() {
         return likes;
     }
 
-    public void setLikes(int likes) {
+    public void setLikes(Integer likes) {
         this.likes = likes;
     }
 }
