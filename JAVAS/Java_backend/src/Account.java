@@ -1,27 +1,49 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Account {
     private String Username;
     private String password;
-    private boolean Isexist=true;
-    ArrayList<PlayList>list=new ArrayList<>();
+    private boolean doesExist = true;
+    ArrayList<PlayList> PlayListList = new ArrayList<>();
+    ArrayList<Track> allTracks = new ArrayList<>();
 
     public Account(String name,String pass){
         Username=name;
         password=pass;
     }
 
-    public void Addplaylist(PlayList p){
-        
-        list.add(play);
+    public void shareTrack(Track track, Account... accounts){
+        for(Account acc :accounts){
+            if(acc != null){
+                acc.addTrack(track);
+            }
+        }
     }
-    public void Removeplaylist(PlayList p){
-        list.remove(p);
+    public void sharePlayList(PlayList playList, Account... accounts){
+        for(Account acc :accounts){
+            if(acc != null){
+                acc.Addplaylist(playList);
+            }
+        }
     }
 
+    public void Addplaylist(PlayList p){
+        PlayListList.add(p);
+    }
+    public void Removeplaylist(PlayList p){
+        PlayListList.remove(p);
+    }
+    public void addTrack(Track t){
+        allTracks.add(t);
+    }
+    public void removeTrack(Track t){
+        allTracks.remove(t);
+    }
     public void Exist(String s){
         if(s.equals("delete")){
-            Isexist=false;
+            doesExist = false;
         }
     }
 
@@ -33,12 +55,12 @@ public class Account {
         return password;
     }
 
-    public boolean isIsexist() {
-        return Isexist;
+    public boolean doesExist() {
+        return doesExist;
     }
 
-    public ArrayList<PlayList> getList() {
-        return list;
+    public ArrayList<PlayList> getPlayListList() {
+        return PlayListList;
     }
 
     public void setUsername(String username) {
@@ -49,11 +71,41 @@ public class Account {
         this.password = password;
     }
 
-    public void setIsexist(boolean isexist) {
-        Isexist = isexist;
+    public void setDoesExist(boolean doesExist) {
+        this.doesExist = doesExist;
     }
 
-    public void setList(ArrayList<PlayList> list) {
-        this.list = list;
+    public void setPlayListList(ArrayList<PlayList> playListList) {
+        this.PlayListList = playListList;
+    }
+
+    /// EVERYTHING RELATED TO ALL TRACKS MANAGEMENT
+    public ArrayList<Track> sortTracksAlphabetically() {
+        Collections.sort(allTracks);
+        return allTracks;
+    }
+
+    public ArrayList<Track> sortTracksByDate(){
+        Comparator<Track> trackComparator = new Comparator<Track>() {
+            @Override
+            public int compare(Track o1, Track o2) {
+                return o1.getTrackDate().compareTo(o2.getTrackDate());
+            }
+        };
+        Collections.sort(allTracks, trackComparator);
+        return allTracks;
+    }
+
+    public ArrayList<Track> sortTracksByLikes(){
+        Comparator<Track> likesComp = new Comparator<Track>() {
+            @Override
+            public int compare(Track o1, Track o2) {
+                return o1.getLikes().compareTo(o2.getLikes());
+            }
+        };
+        Collections.sort(allTracks, likesComp);
+        return allTracks;
     }
 }
+
+
