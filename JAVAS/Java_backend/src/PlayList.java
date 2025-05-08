@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class PlayList {
+public class PlayList extends AudioSorter implements TrackManager{
 
     ArrayList<Track> TracksList = new ArrayList<>();
     private String playlistName;
@@ -26,36 +26,21 @@ public class PlayList {
     }
 
     public void removeTrack(Track track) {
-        if(track != null) {
+        if(track != null && TracksList.contains(track)) {
             TracksList.remove(track);
         }
     }
 
-    public ArrayList<Track> sortTracksAlphabetically() {
-        Collections.sort(TracksList);
-        return TracksList;
+    public ArrayList<Track> alphabeticalSort(){
+        return sortTracksAlphabetically(TracksList);
     }
 
-    public ArrayList<Track> sortTracksByDate(){
-        Comparator<Track> trackComparator = new Comparator<Track>() {
-            @Override
-            public int compare(Track o1, Track o2) {
-                return o1.getTrackDate().compareTo(o2.getTrackDate());
-            }
-        };
-            Collections.sort(TracksList, trackComparator);
-        return TracksList;
+    public ArrayList<Track> sortTracksByYear(){
+        return sortTracksByDate(TracksList);
     }
 
     public ArrayList<Track> sortTracksByLikes(){
-        Comparator<Track> likesComp = new Comparator<Track>() {
-            @Override
-            public int compare(Track o1, Track o2) {
-                return o1.getLikes().compareTo(o2.getLikes());
-            }
-        };
-        Collections.sort(TracksList, likesComp);
-        return TracksList;
+        return sortTracksByLikes(TracksList);
     }
 
 

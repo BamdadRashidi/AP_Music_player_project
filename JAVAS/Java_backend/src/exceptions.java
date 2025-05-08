@@ -11,3 +11,13 @@ class CanNotShareWithException extends Exception{
         super(message);
     }
 }
+
+class AccountNotFoundException extends Exception{
+    String message;
+    public AccountNotFoundException() {
+        super();
+    }
+    public AccountNotFoundException(String message) {
+        super(message);
+    }
+}

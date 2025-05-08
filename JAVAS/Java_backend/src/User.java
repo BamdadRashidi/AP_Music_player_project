@@ -12,12 +12,12 @@ public class User {
     public ArrayList<Account> ShowAccounts(){
         return accounts;
     }
-    public Account Search(Account acc) throws Exception{
+    public Account Search(Account acc) throws AccountNotFoundException{
         if(accounts.contains(acc)){
             return acc;
         }
         else {
-            throw new Exception("Nothing");
+            throw new AccountNotFoundException("Account not found!");
         }
     }
 

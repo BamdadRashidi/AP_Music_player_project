@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class Account {
+public class Account extends AudioSorter implements CanShare,TrackManager{
     private String Username;
     private String password;
     private boolean doesExist = true;
@@ -19,14 +19,20 @@ public class Account {
 
     public void shareTrack(Track track, Account... accounts) throws CanNotShareWithException {
         for(Account acc :accounts){
-            if(acc != null && acc.canShareWith){
+            if(!acc.canShareWith){
+                throw new CanNotShareWithException("Can not share Track with this user");
+            }
+            if(acc != null){
                 acc.addTrack(track);
             }
         }
     }
     public void sharePlayList(PlayList playList, Account... accounts) throws CanNotShareWithException {
         for(Account acc :accounts){
-            if(acc != null && acc.canShareWith){
+            if(!acc.canShareWith){
+                throw new CanNotShareWithException("Can not share Playlist with this user");
+            }
+            if(acc != null){
                 acc.Addplaylist(playList);
             }
         }
@@ -91,33 +97,19 @@ public class Account {
     }
 
     /// EVERYTHING RELATED TO ALL TRACKS MANAGEMENT
-    //TODO: need to eventually remove these and use polymorphism for playlist and track it's more readable and gives more points
-    public ArrayList<Track> sortTracksAlphabetically() {
-        Collections.sort(allTracks);
-        return allTracks;
+
+    public ArrayList<Track> alphabeticalSort(){
+        return sortTracksAlphabetically(allTracks);
     }
 
-    public ArrayList<Track> sortTracksByDate(){
-        Comparator<Track> trackComparator = new Comparator<Track>() {
-            @Override
-            public int compare(Track o1, Track o2) {
-                return o1.getTrackDate().compareTo(o2.getTrackDate());
-            }
-        };
-        Collections.sort(allTracks, trackComparator);
-        return allTracks;
+    public ArrayList<Track> sortTracksByYear(){
+        return sortTracksByDate(allTracks);
     }
 
     public ArrayList<Track> sortTracksByLikes(){
-        Comparator<Track> likesComp = new Comparator<Track>() {
-            @Override
-            public int compare(Track o1, Track o2) {
-                return o1.getLikes().compareTo(o2.getLikes());
-            }
-        };
-        Collections.sort(allTracks, likesComp);
-        return allTracks;
+        return sortTracksByLikes(allTracks);
     }
+
 }
 
 
