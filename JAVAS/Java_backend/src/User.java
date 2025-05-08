@@ -21,5 +21,6 @@ public class User {
         }
     }
 
-    //TODO: make the option possible to choose the chosen account (change accounts)
+
+    //TODO: make the option possible to choose an account (change accounts)
 }

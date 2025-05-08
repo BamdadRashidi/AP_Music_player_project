@@ -2,10 +2,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+
 public class Account {
     private String Username;
     private String password;
     private boolean doesExist = true;
+
+    private boolean canShareWith = true;
     ArrayList<PlayList> PlayListList = new ArrayList<>();
     ArrayList<Track> allTracks = new ArrayList<>();
 
@@ -14,16 +17,16 @@ public class Account {
         password=pass;
     }
 
-    public void shareTrack(Track track, Account... accounts){
+    public void shareTrack(Track track, Account... accounts) throws CanNotShareWithException {
         for(Account acc :accounts){
-            if(acc != null){
+            if(acc != null && acc.canShareWith){
                 acc.addTrack(track);
             }
         }
     }
-    public void sharePlayList(PlayList playList, Account... accounts){
+    public void sharePlayList(PlayList playList, Account... accounts) throws CanNotShareWithException {
         for(Account acc :accounts){
-            if(acc != null){
+            if(acc != null && acc.canShareWith){
                 acc.Addplaylist(playList);
             }
         }
@@ -79,7 +82,16 @@ public class Account {
         this.PlayListList = playListList;
     }
 
+    public boolean isCanShareWith() {
+        return canShareWith;
+    }
+
+    public void setCanShareWith(boolean canShareWith) {
+        this.canShareWith = canShareWith;
+    }
+
     /// EVERYTHING RELATED TO ALL TRACKS MANAGEMENT
+    //TODO: need to eventually remove these and use polymorphism for playlist and track it's more readable and gives more points
     public ArrayList<Track> sortTracksAlphabetically() {
         Collections.sort(allTracks);
         return allTracks;
