@@ -5,6 +5,7 @@ import java.util.Comparator;
 
 public class Account extends AudioSorter implements CanShare,TrackManager{
     private String Username;
+    private String AccountName; // people see the account with this name
     private String password;
     private boolean doesExist = true;
 
@@ -12,7 +13,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
     ArrayList<PlayList> PlayListList = new ArrayList<>();
     ArrayList<Track> allTracks = new ArrayList<>();
 
-    public Account(String name,String pass){
+    public Account(String accName,String name,String pass){
+        AccountName = accName;
         Username=name;
         password=pass;
     }
@@ -94,6 +96,14 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
 
     public void setCanShareWith(boolean canShareWith) {
         this.canShareWith = canShareWith;
+    }
+
+    public String getAccountName() {
+        return AccountName;
+    }
+
+    public void setAccountName(String accountName) {
+        AccountName = accountName;
     }
 
     /// EVERYTHING RELATED TO ALL TRACKS MANAGEMENT
