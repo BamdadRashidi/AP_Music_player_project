@@ -59,4 +59,9 @@ public class Track implements Serializable , Comparable<Track> {
     public void setLikes(Integer likes) {
         this.likes = likes;
     }
+
+    @Override
+    public String toString() {
+        return "[trackName: " + trackName + "]" + ", [trackDate: " + trackDate + "]" + ", [Likes: " +  + likes + "]";
+    }
 }

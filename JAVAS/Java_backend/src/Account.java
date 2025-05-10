@@ -85,7 +85,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
         return doesExist;
     }
 
-    public ArrayList<PlayList> getPlayListList() {
+    public ArrayList<PlayList> getPlayLists() {
         return PlayListList;
     }
 
@@ -101,11 +101,9 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
         this.doesExist = doesExist;
     }
 
-    public void setPlayListList(ArrayList<PlayList> playListList) {
-        this.PlayListList = playListList;
-    }
 
-    public boolean isCanShareWith() {
+
+    public boolean CanShareWith() {
         return canShareWith;
     }
 
@@ -133,6 +131,11 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
 
     public ArrayList<Track> sortTracksByLikes(){
         return sortTracksByLikes(allTracks);
+    }
+
+    @Override
+    public String toString(){
+        return "[Account Name: " + AccountName +"]" + " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]";
     }
 
 }

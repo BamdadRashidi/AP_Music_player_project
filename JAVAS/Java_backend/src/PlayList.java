@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 public class PlayList extends AudioSorter implements TrackManager{
 
@@ -50,5 +47,23 @@ public class PlayList extends AudioSorter implements TrackManager{
 
     public void setPlaylistName(String playlistName) {
         this.playlistName = playlistName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof PlayList)) return false;
+        PlayList playList = (PlayList) o;
+        return Objects.equals(TracksList, playList.TracksList) && Objects.equals(playlistName, playList.playlistName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(TracksList, playlistName);
+    }
+
+    @Override
+    public String toString() {
+        return "PlayList Name: " + playlistName;
+        
     }
 }
