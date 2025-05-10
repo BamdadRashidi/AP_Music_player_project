@@ -17,6 +17,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
         AccountName = accName;
         Username = name;
         password = pass;
+        /// WIP THING TO TEST ADMIN
+        Admin.addAccountToList(this);
     }
 
     public void shareTrack(Track track, Account... accounts) throws CanNotShareWithException {
