@@ -7,7 +7,7 @@ public class Helper_Classes {
 
 interface CanShare{
     void shareTrack(Track track, Account... accounts) throws CanNotShareWithException;
-    void sharePlayList(PlayList playList, Account... accounts) throws CanNotShareWithException;
+    void sharePlayList(PlayList playList, Account... accounts) throws CanNotShareWithException,RedundantPlayListNameException;
 }
 
 interface TrackManager{

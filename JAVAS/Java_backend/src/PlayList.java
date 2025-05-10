@@ -44,4 +44,11 @@ public class PlayList extends AudioSorter implements TrackManager{
     }
 
 
+    public String getPlaylistName() {
+        return playlistName;
+    }
+
+    public void setPlaylistName(String playlistName) {
+        this.playlistName = playlistName;
+    }
 }

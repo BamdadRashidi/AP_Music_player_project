@@ -21,3 +21,13 @@ class AccountNotFoundException extends Exception{
         super(message);
     }
 }
+
+class RedundantPlayListNameException extends Exception{
+    String message;
+    public RedundantPlayListNameException() {
+        super();
+    }
+    public RedundantPlayListNameException(String message) {
+        super(message);
+    }
+}

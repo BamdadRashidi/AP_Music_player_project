@@ -21,6 +21,13 @@ public class Track implements Serializable , Comparable<Track> {
         likes++;
     }
 
+    public void unlikeTrack(){
+        isLiked = false;
+        likes--;
+    }
+
+    //TODO: add feature to play a track
+    public void PlayTrack(){}
     public String getTrackName() {
         return trackName;
     }

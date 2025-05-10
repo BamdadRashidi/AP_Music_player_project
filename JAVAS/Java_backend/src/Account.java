@@ -15,8 +15,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
 
     public Account(String accName,String name,String pass){
         AccountName = accName;
-        Username=name;
-        password=pass;
+        Username = name;
+        password = pass;
     }
 
     public void shareTrack(Track track, Account... accounts) throws CanNotShareWithException {
@@ -29,7 +29,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
             }
         }
     }
-    public void sharePlayList(PlayList playList, Account... accounts) throws CanNotShareWithException {
+    public void sharePlayList(PlayList playList, Account... accounts) throws CanNotShareWithException,
+                                                                            RedundantPlayListNameException{
         for(Account acc :accounts){
             if(!acc.canShareWith){
                 throw new CanNotShareWithException("Can not share Playlist with this user");
@@ -40,7 +41,12 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
         }
     }
 
-    public void Addplaylist(PlayList p){
+    public void Addplaylist(PlayList p) throws RedundantPlayListNameException{
+        for(PlayList playList : PlayListList){
+            if(p.getPlaylistName().equals(playList.getPlaylistName())){
+                throw new RedundantPlayListNameException("There is a playlist with the same name!");
+            }
+        }
         PlayListList.add(p);
     }
     public void Removeplaylist(PlayList p){
@@ -57,6 +63,15 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
             doesExist = false;
         }
     }
+
+
+    //TODO: add downloading and uploading feature
+    public void downloadTrack(){}
+
+    public void UploadTrack(){}
+
+    //------------------------------------------
+
 
     public String getUsername() {
         return Username;
