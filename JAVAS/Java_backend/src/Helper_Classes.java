@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
+import java.util.Random;
 public class Helper_Classes {
 }
 
@@ -42,4 +42,22 @@ class AudioSorter{
         Collections.sort(allTracks, likesComp);
         return allTracks;
     }
+}
+
+class Id_generator{
+    static String charactersToSelect = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    static Random random = new Random();
+
+    static String generateId(){
+        String id = "";
+        int i = 0;
+        while(i < 8){
+            int index = random.nextInt(charactersToSelect.length());
+            id += charactersToSelect.charAt(index);
+            i++;
+        }
+        return id;
+    }
+
 }

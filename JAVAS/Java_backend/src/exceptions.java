@@ -31,3 +31,25 @@ class RedundantPlayListNameException extends Exception{
         super(message);
     }
 }
+
+
+class WrongPasswordException extends Exception{
+    String message;
+    public WrongPasswordException() {
+        super();
+    }
+    public WrongPasswordException(String message) {
+        super(message);
+    }
+}
+class WrongUserNameException extends Exception{
+    String message;
+    public WrongUserNameException() {
+        super();
+    }
+    public WrongUserNameException(String message) {
+        super(message);
+    }
+}
+
+//TODO: OPTIONAL WE CAN ADD EXCEPTIONS FOR REDUNDANCY
