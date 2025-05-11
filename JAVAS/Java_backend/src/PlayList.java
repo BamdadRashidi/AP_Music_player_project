@@ -9,6 +9,7 @@ public class PlayList extends AudioSorter implements TrackManager{
     public PlayList(String playlistName) {
         this.playlistName = playlistName;
         playListID = Id_generator.generateId();
+        Admin.addPlaylistToList(this);
     }
 
     public void addTrack(Track track) {

@@ -2,6 +2,7 @@ import java.io.Serializable;
 
 public class Track implements Serializable , Comparable<Track> {
     private String trackName;
+    private String trackId;
     private Integer trackDate;
     private boolean isLiked;
     private Integer likes = 0;
@@ -9,6 +10,8 @@ public class Track implements Serializable , Comparable<Track> {
     public Track(String trackName, Integer trackDate) {
         this.trackName = trackName;
         this.trackDate = trackDate;
+        this.trackId = Id_generator.generateId();
+        Admin.addTrackToList(this);
     }
 
     @Override
@@ -60,8 +63,12 @@ public class Track implements Serializable , Comparable<Track> {
         this.likes = likes;
     }
 
+    public String getTrackId() {
+        return trackId;
+    }
+
     @Override
     public String toString() {
-        return "[trackName: " + trackName + "]" + ", [trackDate: " + trackDate + "]" + ", [Likes: " +  + likes + "]";
+        return "[trackName: " + trackName + "]" +"[trackId: " + trackId +", [trackDate: " + trackDate + "]" + ", [Likes: " +  + likes + "]";
     }
 }

@@ -53,3 +53,14 @@ class WrongUserNameException extends Exception{
 }
 
 //TODO: OPTIONAL WE CAN ADD EXCEPTIONS FOR REDUNDANCY
+
+
+class IdNotFoundException extends Exception{
+    String message;
+    public IdNotFoundException() {
+        super();
+    }
+    public IdNotFoundException(String message) {
+        super(message);
+    }
+}

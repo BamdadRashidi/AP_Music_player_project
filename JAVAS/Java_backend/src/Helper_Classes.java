@@ -61,6 +61,4 @@ class Id_generator{
         return id;
 
     }
-
-
 }
