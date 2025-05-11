@@ -145,10 +145,14 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
     @Override
     public String toString(){
         String toStringedAccount = "[Account Name: " + AccountName +"]" + " ,[Id: " + getUserId() + " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]" + '\n';
-        for(PlayList playList : PlayListList){
-            toStringedAccount += playList.toString() + '\n';
-        }
         return toStringedAccount;
+    }
+    public String showPlaylists(){
+        String PlaylistNames = "";
+        for(PlayList playList : PlayListList){
+            PlaylistNames += playList.toString() + '\n';
+        }
+        return PlaylistNames;
     }
 
 }

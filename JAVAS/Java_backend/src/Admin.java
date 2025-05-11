@@ -44,19 +44,25 @@ public class Admin {
         return mostLikedTracks;
     }
 
-    public void getAccountInfo(String accountId) throws IdNotFoundException {
+    public void getAccountInfo(String accountId, boolean shouldExpand) throws IdNotFoundException {
         for(Account account : AccountList){
             if(account.getUserId().equals(accountId)){
                 System.out.println(account.toString());
+                if(shouldExpand){
+                    System.out.println(account.showPlaylists());
+                }
                 return;
             }
         }
         throw new IdNotFoundException("There is no account with this id.");
     }
-    public void getPlayListInfo(String playlistId) throws IdNotFoundException {
+    public void getPlayListInfo(String playlistId, boolean shouldExpand) throws IdNotFoundException {
         for(PlayList playlist : PlaylistList){
             if(playlist.getPlayListID().equals(playlistId)){
                 System.out.println(playlist.toString());
+                if(shouldExpand){
+                    System.out.println(playlist.showTracksinPlaylist());
+                }
                 return;
             }
         }

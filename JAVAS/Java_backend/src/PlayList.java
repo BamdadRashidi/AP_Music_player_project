@@ -69,14 +69,15 @@ public class PlayList extends AudioSorter implements TrackManager{
 
     @Override
     public String toString() {
-
-        int counter = 1;
         String toStringedPlaylist = "PlayList Name: " + playlistName + "PlayList ID: "+ getPlayListID() + '\n';
-        for(Track track : TracksList) {
-            toStringedPlaylist += track.toString() + '\n';
-            counter++;
-        }
         return toStringedPlaylist;
+    }
 
+    public String showTracksinPlaylist() {
+        String songsnames = "";
+        for(Track track : TracksList) {
+            songsnames += track.toString() + '\n';
+        }
+        return songsnames;
     }
 }
