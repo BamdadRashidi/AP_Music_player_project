@@ -1,3 +1,4 @@
+import javax.imageio.stream.ImageInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -52,12 +53,14 @@ class Id_generator{
     static String generateId(){
         String id = "";
         int i = 0;
-        while(i < 8){
+        while(i < 10){
             int index = random.nextInt(charactersToSelect.length());
             id += charactersToSelect.charAt(index);
             i++;
         }
         return id;
+
     }
+
 
 }

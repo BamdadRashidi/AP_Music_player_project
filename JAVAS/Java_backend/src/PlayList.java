@@ -4,9 +4,11 @@ public class PlayList extends AudioSorter implements TrackManager{
 
     ArrayList<Track> TracksList = new ArrayList<>();
     private String playlistName;
+    private String playListID;
 
     public PlayList(String playlistName) {
         this.playlistName = playlistName;
+        playListID = Id_generator.generateId();
     }
 
     public void addTrack(Track track) {
@@ -40,6 +42,9 @@ public class PlayList extends AudioSorter implements TrackManager{
         return sortTracksByLikes(TracksList);
     }
 
+    public String getPlayListID() {
+        return playListID;
+    }
 
     public String getPlaylistName() {
         return playlistName;
@@ -65,7 +70,7 @@ public class PlayList extends AudioSorter implements TrackManager{
     public String toString() {
 
         int counter = 1;
-        String toStringedPlaylist = "PlayList Name: " + playlistName + '\n';
+        String toStringedPlaylist = "PlayList Name: " + playlistName + "PlayList ID: "+ getPlayListID() + '\n';
         for(Track track : TracksList) {
             toStringedPlaylist += track.toString() + '\n';
             counter++;

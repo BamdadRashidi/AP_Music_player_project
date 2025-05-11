@@ -9,6 +9,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
     private String password;
     private boolean doesExist = true;
 
+    private String userId;
+
     private boolean canShareWith = true;
     ArrayList<PlayList> PlayListList = new ArrayList<>();
     ArrayList<Track> allTracks = new ArrayList<>();
@@ -17,6 +19,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
         AccountName = accName;
         Username = name;
         password = pass;
+        userId = Id_generator.generateId();
         /// WIP THING TO TEST ADMIN
         Admin.addAccountToList(this);
     }
@@ -83,6 +86,10 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
         return password;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
     public boolean doesExist() {
         return doesExist;
     }
@@ -137,7 +144,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
 
     @Override
     public String toString(){
-        String toStringedAccount = "[Account Name: " + AccountName +"]" + " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]" + '\n';
+        String toStringedAccount = "[Account Name: " + AccountName +"]" + " ,[Id: " + getUserId() + " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]" + '\n';
         for(PlayList playList : PlayListList){
             toStringedAccount += playList.toString() + '\n';
         }
