@@ -1,8 +1,6 @@
 import javax.imageio.stream.ImageInputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
+
 public class Helper_Classes {
 }
 
@@ -21,33 +19,31 @@ interface infoShower{
 }
 
 class AudioSorter{
-    public ArrayList<Track> sortTracksAlphabetically(ArrayList<Track> allTracks) {
-        Collections.sort(allTracks);
-        return allTracks;
+    public Set<Track> sortTracksAlphabetically(Collection<Track> allTracks) {
+        Set<Track> sortedSet = new TreeSet<>(Comparator.comparing(Track::getTrackName));
+        sortedSet.addAll(allTracks);
+        return sortedSet;
     }
 
-    public ArrayList<Track> sortTracksByDate(ArrayList<Track> allTracks){
-        Comparator<Track> trackComparator = new Comparator<Track>() {
-            @Override
-            public int compare(Track o1, Track o2) {
-                return o1.getTrackDate().compareTo(o2.getTrackDate());
-            }
-        };
-        Collections.sort(allTracks, trackComparator);
-        return allTracks;
+    public Set<Track> sortTracksByDate(Collection<Track> allTracks) {
+        Set<Track> sortedSet = new TreeSet<>(Comparator.comparing(Track::getTrackDate));
+        sortedSet.addAll(allTracks);
+        return sortedSet;
     }
 
-    public ArrayList<Track> sortTracksByLikes(ArrayList<Track> allTracks){
-        Comparator<Track> likesComp = new Comparator<Track>() {
-            @Override
-            public int compare(Track o1, Track o2) {
-                return o1.getLikes().compareTo(o2.getLikes());
-            }
-        };
-        Collections.sort(allTracks, likesComp);
-        return allTracks;
+    public Set<Track> sortTracksByLikes(Collection<Track> allTracks) {
+        Set<Track> sortedSet = new TreeSet<>(Comparator.comparing(Track::getLikes));
+        sortedSet.addAll(allTracks);
+        return sortedSet;
     }
+
 }
+
+
+
+
+
+
 
 class Id_generator{
     static String charactersToSelect = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

@@ -2,7 +2,7 @@ import java.util.*;
 
 public class PlayList extends AudioSorter implements TrackManager,infoShower{
 
-    ArrayList<Track> TracksList = new ArrayList<>();
+    Set<Track> TracksList = new HashSet<>();
     private String playlistName;
     private String playListID;
 
@@ -31,15 +31,15 @@ public class PlayList extends AudioSorter implements TrackManager,infoShower{
         }
     }
 
-    public ArrayList<Track> alphabeticalSort(){
+    public Set<Track> alphabeticalSort(){
         return sortTracksAlphabetically(TracksList);
     }
 
-    public ArrayList<Track> sortTracksByYear(){
+    public Set<Track> sortTracksByYear(){
         return sortTracksByDate(TracksList);
     }
 
-    public ArrayList<Track> sortTracksByLikes(){
+    public Set<Track> sortTracksByLikes(){
         return sortTracksByLikes(TracksList);
     }
 

@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Track implements Serializable , Comparable<Track> {
     private String trackName;
@@ -70,5 +71,17 @@ public class Track implements Serializable , Comparable<Track> {
     @Override
     public String toString() {
         return "[trackName: " + trackName + "]" +"[trackId: " + trackId +", [trackDate: " + trackDate + "]" + ", [Likes: " +  + likes + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Track)) return false;
+        Track track = (Track) o;
+        return isLiked == track.isLiked && Objects.equals(trackName, track.trackName) && Objects.equals(trackId, track.trackId) && Objects.equals(trackDate, track.trackDate) && Objects.equals(likes, track.likes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(trackName, trackId, trackDate, isLiked, likes);
     }
 }

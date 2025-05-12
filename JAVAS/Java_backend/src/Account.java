@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Set;
+import java.util.List;
 
 
 public class Account extends AudioSorter implements CanShare,TrackManager,infoShower{
@@ -14,6 +16,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     private boolean canShareWith = true;
     ArrayList<PlayList> PlayListList = new ArrayList<>();
     ArrayList<Track> allTracks = new ArrayList<>();
+
+
 
     public Account(String accName,String name,String pass){
         AccountName = accName;
@@ -131,17 +135,18 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
 
     /// EVERYTHING RELATED TO ALL TRACKS MANAGEMENT
 
-    public ArrayList<Track> alphabeticalSort(){
+    public Set<Track> alphabeticalSort() {
         return sortTracksAlphabetically(allTracks);
     }
 
-    public ArrayList<Track> sortTracksByYear(){
+    public Set<Track> sortTracksByYear() {
         return sortTracksByDate(allTracks);
     }
 
-    public ArrayList<Track> sortTracksByLikes(){
+    public Set<Track> sortTracksByLikes() {
         return sortTracksByLikes(allTracks);
     }
+
 
     @Override
     public String toString(){
