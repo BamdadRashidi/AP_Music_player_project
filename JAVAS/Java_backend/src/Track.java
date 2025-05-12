@@ -1,16 +1,17 @@
 import java.io.Serializable;
 import java.util.Objects;
+import java.time.*;
 
 public class Track implements Serializable , Comparable<Track> {
     private String trackName;
     private String trackId;
-    private Integer trackDate;
+    private LocalTime trackDate;
     private boolean isLiked;
     private Integer likes = 0;
 
-    public Track(String trackName, Integer trackDate) {
+    public Track(String trackName) {
         this.trackName = trackName;
-        this.trackDate = trackDate;
+        this.trackDate = LocalTime.now();
         this.trackId = Id_generator.generateId();
         Admin.addTrackToList(this);
     }
@@ -40,11 +41,11 @@ public class Track implements Serializable , Comparable<Track> {
         this.trackName = trackName;
     }
 
-    public Integer getTrackDate() {
+    public LocalTime getTrackDate() {
         return trackDate;
     }
 
-    public void setTrackDate(Integer trackDate) {
+    public void setTrackDate(LocalTime trackDate) {
         this.trackDate = trackDate;
     }
 
