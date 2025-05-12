@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class PlayList extends AudioSorter implements TrackManager{
+public class PlayList extends AudioSorter implements TrackManager,infoShower{
 
     ArrayList<Track> TracksList = new ArrayList<>();
     private String playlistName;
@@ -73,7 +73,7 @@ public class PlayList extends AudioSorter implements TrackManager{
         return toStringedPlaylist;
     }
 
-    public String showTracksinPlaylist() {
+    public String showInfo() {
         String songsnames = "";
         for(Track track : TracksList) {
             songsnames += track.toString() + '\n';

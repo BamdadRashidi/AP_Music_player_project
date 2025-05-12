@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class Account extends AudioSorter implements CanShare,TrackManager{
+public class Account extends AudioSorter implements CanShare,TrackManager,infoShower{
     private String Username;
     private String AccountName; // people see the account with this name
     private String password;
@@ -128,6 +128,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
         AccountName = accountName;
     }
 
+
     /// EVERYTHING RELATED TO ALL TRACKS MANAGEMENT
 
     public ArrayList<Track> alphabeticalSort(){
@@ -147,7 +148,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager{
         String toStringedAccount = "[Account Name: " + AccountName +"]" + " ,[Id: " + getUserId() + " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]" + '\n';
         return toStringedAccount;
     }
-    public String showPlaylists(){
+    public String showInfo(){
         String PlaylistNames = "";
         for(PlayList playList : PlayListList){
             PlaylistNames += playList.toString() + '\n';

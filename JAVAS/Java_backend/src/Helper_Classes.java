@@ -16,6 +16,10 @@ interface TrackManager{
     void removeTrack(Track track);
 }
 
+interface infoShower{
+    public String showInfo() throws IdNotFoundException;
+}
+
 class AudioSorter{
     public ArrayList<Track> sortTracksAlphabetically(ArrayList<Track> allTracks) {
         Collections.sort(allTracks);

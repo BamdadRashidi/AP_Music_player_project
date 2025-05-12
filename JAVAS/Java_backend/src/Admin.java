@@ -1,7 +1,13 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Admin {
 
+    //TODO: VERY VERY VERY VERY VERY VERY VERY VERY VERY IMPORTANT
+    //TODO: MAP THE ACCOUNTS WITH THEIR ID (done)
+    //TODO: USE LOCALTIME INSTEAD OF INTEGER FOR THE DATE IN MUSIC
+    //TODO: IMPLEMENT SHOWINFO METHOD USING POLYMORPHISM (done)
 
     //TODO: add a DB in which whenever someone makes a new Account, it adds that to the DB
     //TODO: same thing applies to what is above for playlists and tracks
@@ -9,14 +15,14 @@ public class Admin {
 
 
     ///WIP
-    static ArrayList<Account> AccountList = new ArrayList();
-    static ArrayList<PlayList> PlaylistList = new ArrayList();
+    static Map<Account,String> AccountList = new HashMap<Account,String>();
+    static Map<PlayList,String> PlaylistList = new HashMap<PlayList,String>();
     static ArrayList<Track> TrackList = new ArrayList();
     static void addAccountToList(Account account) {
-        AccountList.add(account);
+        AccountList.put(account,account.getUserId());
     }
     static void addPlaylistToList(PlayList playlist) {
-        PlaylistList.add(playlist);
+        PlaylistList.put(playlist, playlist.getPlayListID());
     }
     static void addTrackToList(Track track) {
         TrackList.add(track);
@@ -45,11 +51,11 @@ public class Admin {
     }
 
     public void getAccountInfo(String accountId, boolean shouldExpand) throws IdNotFoundException {
-        for(Account account : AccountList){
-            if(account.getUserId().equals(accountId)){
+        for (Account account : AccountList.keySet()) {
+            if (account.getUserId().equals(accountId)) {
                 System.out.println(account.toString());
-                if(shouldExpand){
-                    System.out.println(account.showPlaylists());
+                if (shouldExpand) {
+                    System.out.println(account.showInfo());
                 }
                 return;
             }
@@ -57,17 +63,18 @@ public class Admin {
         throw new IdNotFoundException("There is no account with this id.");
     }
     public void getPlayListInfo(String playlistId, boolean shouldExpand) throws IdNotFoundException {
-        for(PlayList playlist : PlaylistList){
-            if(playlist.getPlayListID().equals(playlistId)){
+        for (PlayList playlist : PlaylistList.keySet()){
+            if (playlist.getPlayListID().equals(playlistId)) {
                 System.out.println(playlist.toString());
-                if(shouldExpand){
-                    System.out.println(playlist.showTracksinPlaylist());
+                if (shouldExpand) {
+                    System.out.println(playlist.showInfo());
                 }
                 return;
             }
         }
         throw new IdNotFoundException("There is no playlist with this id.");
     }
+
 
     public void getTrackInfo(String Trackname) throws IdNotFoundException {
         for(Track track : TrackList){
