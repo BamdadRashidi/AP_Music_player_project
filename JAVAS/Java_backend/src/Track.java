@@ -5,12 +5,14 @@ import java.time.*;
 public class Track implements Serializable , Comparable<Track> {
     private String trackName;
     private String trackId;
+    private String artistName;
     private LocalTime trackDate;
     private boolean isLiked;
     private Integer likes = 0;
 
-    public Track(String trackName) {
+    public Track(String trackName, String artistName) {
         this.trackName = trackName;
+        this.artistName = artistName;
         this.trackDate = LocalTime.now();
         this.trackId = Id_generator.generateId();
         Admin.addTrackToList(this);
@@ -69,9 +71,14 @@ public class Track implements Serializable , Comparable<Track> {
         return trackId;
     }
 
+    public String getArtistName() {
+        return artistName;
+    }
+
+
     @Override
     public String toString() {
-        return "[trackName: " + trackName + "]" +"[trackId: " + trackId +", [trackDate: " + trackDate + "]" + ", [Likes: " +  + likes + "]";
+        return "[trackName: " + trackName + "]" +"[trackId: " + trackId +", [Artist Name: " + artistName + ", [trackDate: " + trackDate + "]" + ", [Likes: " +  + likes + "]";
     }
 
     @Override

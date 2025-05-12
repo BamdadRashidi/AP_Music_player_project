@@ -4,11 +4,6 @@ import java.util.Map;
 
 public class Admin {
 
-    //TODO: VERY VERY VERY VERY VERY VERY VERY VERY VERY IMPORTANT
-    //TODO: MAP THE ACCOUNTS WITH THEIR ID (done)
-    //TODO: USE LOCALTIME INSTEAD OF INTEGER FOR THE DATE IN MUSIC (done)
-    //TODO: IMPLEMENT SHOWINFO METHOD USING POLYMORPHISM (done)
-
     //TODO: add a DB in which whenever someone makes a new Account, it adds that to the DB
     //TODO: same thing applies to what is above for playlists and tracks
     //TODO: add a method where we cycle through every song and pick the top 10 or top 5 most likedTracks and return that
