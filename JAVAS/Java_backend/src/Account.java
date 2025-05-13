@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Set;
-import java.util.List;
+import java.util.*;
 
 
 public class Account extends AudioSorter implements CanShare,TrackManager,infoShower{
@@ -16,8 +12,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     private History trackHistory;
 
     private boolean canShareWith = true;
-    ArrayList<PlayList> PlayListList = new ArrayList<>();
-    ArrayList<Track> allTracks = new ArrayList<>();
+    Set<PlayList> PlayListList = new HashSet<PlayList>();
+    Set<Track> allTracks = new HashSet<>();
 
 
 
@@ -64,6 +60,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     public void Removeplaylist(PlayList p){
         PlayListList.remove(p);
     }
+
+    // temp upload
     public void addTrack(Track t){
         trackHistory.addToHistory(t);
         allTracks.add(t);
@@ -116,7 +114,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         return doesExist;
     }
 
-    public ArrayList<PlayList> getPlayLists() {
+    public Set<PlayList> getPlayLists() {
         return PlayListList;
     }
 
