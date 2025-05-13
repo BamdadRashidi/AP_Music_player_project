@@ -11,11 +11,16 @@ public class exceptions {
             Track t1 = new Track("Sonne","Rammstein");
             Track t2 = new Track("Toxicity","System of a Down");
             Track t3 = new Track("Sweden","C418");
+            PlayList pl1 = new PlayList("German");
+            PlayList pl2 = new PlayList("Armenia");
 
             try
             {
-                acc1.Addplaylist(new PlayList("German"));
-                acc1.Addplaylist(new PlayList("Armenia"));
+                acc1.Addplaylist(pl1);
+                acc1.Addplaylist(pl2);
+                acc1.addTrackToPlayList(t1,pl1);
+                acc1.addTrackToPlayList(t2,pl2);
+                acc1.addTrackToAnotherPlaylist(t1,pl2);
 
             }
             catch(Exception e){

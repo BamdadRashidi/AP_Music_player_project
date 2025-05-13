@@ -2,7 +2,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.*;
 
-public class PlayList extends AudioSorter implements infoShower{
+public class PlayList extends AudioSorter implements infoShower,TrackManager{
 
     Set<Track> TracksList = new HashSet<>();
     private String playlistName;
@@ -22,6 +22,13 @@ public class PlayList extends AudioSorter implements infoShower{
         playListID = Id_generator.generateId();
         this.playlistTime = Duration.ZERO;
         Admin.addPlaylistToList(this);
+    }
+
+    public void addTrack(Track t){
+        TracksList.add(t);
+    }
+    public void removeTrack(Track t){
+        TracksList.remove(t);
     }
 
 

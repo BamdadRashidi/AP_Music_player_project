@@ -49,13 +49,15 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         }
     }
 
-    public void Addplaylist(PlayList p) throws RedundantPlayListNameException{
+    public PlayList Addplaylist(PlayList p) throws RedundantPlayListNameException{
         for(PlayList playList : PlayListList){
             if(p.getPlaylistName().equals(playList.getPlaylistName())){
                 throw new RedundantPlayListNameException("There is a playlist with the same name!");
             }
         }
-        PlayListList.add(p);
+        PlayList newPlayList = new PlayList(p.getPlaylistName());
+        PlayListList.add(newPlayList);
+        return newPlayList;
     }
     public void Removeplaylist(PlayList p){
         PlayListList.remove(p);
@@ -72,7 +74,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     }
     public void addTrackToPlayList(Track track,PlayList playList) {
         if(track != null) {
-            playList.getTracksList().add(track);
+            playList.addTrack(track);
             playList.setPlaylistTime(playList.getPlaylistTime().plus(track.getTrackLength()));
             playList.setPlayListTimeStringed(String.format("%02d:%02d",
                     playList.getPlaylistTime().toMinutes(), playList.getPlaylistTime()));
@@ -90,7 +92,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
 
     public void removeTrackFromPlayList(Track track,PlayList playList) {
         if(track != null && playList.getTracksList().contains(track)) {
-            playList.getTracksList().remove(track);
+            playList.removeTrack(track);
             playList.setSongCount(playList.getSongCount() - 1);
         }
     }
