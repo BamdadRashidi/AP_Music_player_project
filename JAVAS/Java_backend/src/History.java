@@ -4,7 +4,6 @@ import java.util.List;
 public class History {
     private static final int Max = 10;
     private List<Track> history;
-
     public History() {
         history = new LinkedList<>();
     }
@@ -27,9 +26,10 @@ public class History {
     public void displayHistory() {
         if (history.isEmpty()) {
             System.out.println("There is no song");
-        } else {
-            for (Track song :history) {
-                System.out.println( song.getArtistName());
+        }
+        else {
+            for (Track song : history) {
+                System.out.println(song.getTrackName() + " : " + song.getArtistName());
             }
         }
     }

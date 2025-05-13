@@ -52,7 +52,27 @@ class WrongUserNameException extends Exception{
     }
 }
 
-//TODO: OPTIONAL WE CAN ADD EXCEPTIONS FOR REDUNDANCY
+class RedundantUsernameException extends Exception{
+    // email/phone
+    String message;
+    public RedundantUsernameException() {
+        super();
+    }
+    public RedundantUsernameException(String message) {
+        super(message);
+    }
+}
+
+class RedundantAccountNameException extends Exception{
+    // account name duuuuh!
+    String message;
+    public RedundantAccountNameException() {
+        super();
+    }
+    public RedundantAccountNameException(String message) {
+        super(message);
+    }
+}
 
 
 class IdNotFoundException extends Exception{

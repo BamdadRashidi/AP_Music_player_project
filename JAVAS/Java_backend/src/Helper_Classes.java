@@ -39,11 +39,6 @@ class AudioSorter{
 }
 
 
-
-
-
-
-
 class Id_generator{
     static String charactersToSelect = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 

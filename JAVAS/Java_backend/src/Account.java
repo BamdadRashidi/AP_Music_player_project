@@ -13,6 +13,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
 
     private String userId;
 
+    private History trackHistory;
+
     private boolean canShareWith = true;
     ArrayList<PlayList> PlayListList = new ArrayList<>();
     ArrayList<Track> allTracks = new ArrayList<>();
@@ -20,6 +22,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
 
 
     public Account(String accName,String name,String pass){
+        trackHistory = new History();
         AccountName = accName;
         Username = name;
         password = pass;
@@ -62,7 +65,9 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         PlayListList.remove(p);
     }
     public void addTrack(Track t){
+        trackHistory.addToHistory(t);
         allTracks.add(t);
+
     }
     public void removeTrack(Track t){
         allTracks.remove(t);
