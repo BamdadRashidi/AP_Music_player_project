@@ -44,6 +44,25 @@ public class Admin {
         }
         return mostLikedTracks;
     }
+    public String findTheMostListenedTracks(){
+        Track[] mostPlayed = new Track[10];
+        String mostLikedTracks = "";
+        int maxPlays = 0;
+        int i = 0;
+        for(Track track : TrackList){
+            if(track.getNumberOfListens() > maxPlays){
+                maxPlays = track.getNumberOfListens();
+                mostPlayed[i++] = track;
+                if(i == 9){
+                    break;
+                }
+            }
+        }
+        for(Track track : mostPlayed){
+            mostLikedTracks += track.toString() + "\n";
+        }
+        return mostLikedTracks;
+    }
 
     public void getAccountInfo(String accountId, boolean shouldExpand) throws IdNotFoundException {
         for (Account account : AccountList.keySet()) {

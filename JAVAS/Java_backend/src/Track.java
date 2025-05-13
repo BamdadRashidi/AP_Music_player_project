@@ -16,6 +16,8 @@ public class Track implements Serializable , Comparable<Track> {
     private boolean isLiked;
     private Integer likes = 0;
 
+    private int numberOfListens;
+
     //TODO: IMPLEMENT THE SYSTEM THAT TAKES THE LENGTH OF A TRACK
     public Track(String trackName, String artistName) {
         this.trackName = trackName;
@@ -43,7 +45,9 @@ public class Track implements Serializable , Comparable<Track> {
     }
 
     //TODO: add feature to play a track
-    public void PlayTrack(){}
+    public void PlayTrack(){
+        numberOfListens++;
+    }
     public String getTrackName() {
         return trackName;
     }
@@ -104,9 +108,13 @@ public class Track implements Serializable , Comparable<Track> {
         this.trackLength = trackLength;
     }
 
+    public int getNumberOfListens() {
+        return numberOfListens;
+    }
+
     @Override
     public String toString() {
-        return "[trackName: " + trackName + "]" +"[trackId: " + trackId +", [Artist Name: " + artistName + ", [trackDate: " + trackDateStringed + "]" + ", [Likes: " +  + likes + "]";
+        return "[trackName: " + trackName + "]" +", [trackId: " + trackId + ", Plays: " + getNumberOfListens() +", [Artist Name: " + artistName + ", [trackDate: " + trackDateStringed + "]" + ", [Likes: " +  + likes + "]";
     }
 
     @Override

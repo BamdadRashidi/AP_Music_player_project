@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class History {
-    private static final int Max = 10;
+    private static final int MaxHistories = 10;
     private List<Track> history;
     public History() {
         history = new LinkedList<>();
@@ -11,7 +11,7 @@ public class History {
 
     public void addToHistory(Track song) {
         if (!history.contains(song)) {
-            if (history.size() >= Max) {
+            if (history.size() >= MaxHistories) {
                 history.remove(0);
             }
             history.add(song);

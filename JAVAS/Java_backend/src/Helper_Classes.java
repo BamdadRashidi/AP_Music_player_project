@@ -36,7 +36,14 @@ class AudioSorter{
         return sortedSet;
     }
 
+    public Set<Track> sortTracksByListens(Collection<Track> allTracks) {
+        Set<Track> sortedSet = new TreeSet<>(Comparator.comparing(Track::getNumberOfListens));
+        sortedSet.addAll(allTracks);
+        return sortedSet;
+    }
 }
+
+//TODO: adding a filter interface and adding the methods to this class and making others extend it
 
 
 class Id_generator{
