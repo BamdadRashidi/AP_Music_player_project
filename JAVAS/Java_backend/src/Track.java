@@ -7,12 +7,12 @@ public class Track implements Serializable , Comparable<Track> {
     private String trackName;
     private String trackId;
     private String artistName;
-    private LocalTime trackDate;
+    private LocalDate trackDate;
     private String trackDateStringed;
 
     //TODO: using the variables below
-    private LocalTime trackLength;
-    private String trackLengthStringed;
+    private Duration trackLength;
+    private String trackLengthString;
     private boolean isLiked;
     private Integer likes = 0;
 
@@ -22,7 +22,7 @@ public class Track implements Serializable , Comparable<Track> {
     public Track(String trackName, String artistName) {
         this.trackName = trackName;
         this.artistName = artistName;
-        this.trackDate = LocalTime.now();
+        this.trackDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         trackDateStringed = trackDate.format(formatter);
         this.trackId = Id_generator.generateId();
@@ -56,12 +56,8 @@ public class Track implements Serializable , Comparable<Track> {
         this.trackName = trackName;
     }
 
-    public LocalTime getTrackDate() {
+    public LocalDate  getTrackDate() {
         return trackDate;
-    }
-
-    public void setTrackDate(LocalTime trackDate) {
-        this.trackDate = trackDate;
     }
 
     public boolean isLiked() {
@@ -92,7 +88,7 @@ public class Track implements Serializable , Comparable<Track> {
         this.artistName = artistName;
     }
 
-    public LocalTime getTrackLength() {
+    public Duration getTrackLength() {
         return trackLength;
     }
 
@@ -104,8 +100,10 @@ public class Track implements Serializable , Comparable<Track> {
         this.trackDateStringed = trackDateStringed;
     }
 
-    public void setTrackLength(LocalTime trackLength) {
+    public void setTrackLength(Duration trackLength) {
         this.trackLength = trackLength;
+        trackDateStringed = String.format("%02d:%02d",
+                trackLength.toMinutes(), trackLength);
     }
 
     public int getNumberOfListens() {

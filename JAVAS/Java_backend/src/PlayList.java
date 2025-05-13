@@ -1,3 +1,4 @@
+import java.time.Duration;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -12,19 +13,24 @@ public class PlayList extends AudioSorter implements TrackManager,infoShower{
     private int songCount = 0;
 
     //TODO: use the two variables below
-    private LocalTime playlistTime;
+    private Duration playlistTime;
     private String playListTimeStringed;
 
     //TODO: add a system which sums the length of the tracks and adds them to the playListTime;
     public PlayList(String playlistName) {
         this.playlistName = playlistName;
         playListID = Id_generator.generateId();
+        this.playlistTime = Duration.ZERO;
         Admin.addPlaylistToList(this);
     }
 
     public void addTrack(Track track) {
         if(track != null) {
             TracksList.add(track);
+            playlistTime = playlistTime.plus(track.getTrackLength());
+            playListTimeStringed = String.format("%02d:%02d",
+                    playlistTime.toMinutes(), playlistTime);
+
             songCount++;
         }
     }

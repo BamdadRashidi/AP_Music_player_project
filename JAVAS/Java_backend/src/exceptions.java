@@ -1,5 +1,14 @@
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.*;
+import org.junit.jupiter.api.Test;
+
 public class exceptions {
-    /// USE THIS TO TEST THE PROGRAM AS A PROTOTYPE
+
+    @Test
+    public void addingAccountTest() {
+
+    }
 }
 
 class CanNotShareWithException extends Exception{
