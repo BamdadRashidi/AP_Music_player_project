@@ -78,6 +78,19 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         }
     }
 
+    //TODO: signing 'in' and logging 'in' and their 'out' counterparts
+
+    public void signIn() throws WrongPasswordException,WrongUserNameException
+                                ,RedundantUsernameException,RedundantAccountNameException{
+
+    }
+    public void logIn() throws WrongPasswordException,WrongUserNameException
+                                ,RedundantUsernameException,RedundantAccountNameException{
+
+    }
+    public void logOut(){
+
+    }
 
     //TODO: add downloading and uploading feature
     public void downloadTrack(){}

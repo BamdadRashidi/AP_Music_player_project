@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.time.*;
 
@@ -7,13 +8,21 @@ public class Track implements Serializable , Comparable<Track> {
     private String trackId;
     private String artistName;
     private LocalTime trackDate;
+    private String trackDateStringed;
+
+    //TODO: using the variables below
+    private LocalTime trackLength;
+    private String trackLengthStringed;
     private boolean isLiked;
     private Integer likes = 0;
 
+    //TODO: IMPLEMENT THE SYSTEM THAT TAKES THE LENGTH OF A TRACK
     public Track(String trackName, String artistName) {
         this.trackName = trackName;
         this.artistName = artistName;
         this.trackDate = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        trackDateStringed = trackDate.format(formatter);
         this.trackId = Id_generator.generateId();
         Admin.addTrackToList(this);
     }
@@ -75,10 +84,29 @@ public class Track implements Serializable , Comparable<Track> {
         return artistName;
     }
 
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    public LocalTime getTrackLength() {
+        return trackLength;
+    }
+
+    public String getTrackDateStringed() {
+        return trackDateStringed;
+    }
+
+    public void setTrackDateStringed(String trackDateStringed) {
+        this.trackDateStringed = trackDateStringed;
+    }
+
+    public void setTrackLength(LocalTime trackLength) {
+        this.trackLength = trackLength;
+    }
 
     @Override
     public String toString() {
-        return "[trackName: " + trackName + "]" +"[trackId: " + trackId +", [Artist Name: " + artistName + ", [trackDate: " + trackDate + "]" + ", [Likes: " +  + likes + "]";
+        return "[trackName: " + trackName + "]" +"[trackId: " + trackId +", [Artist Name: " + artistName + ", [trackDate: " + trackDateStringed + "]" + ", [Likes: " +  + likes + "]";
     }
 
     @Override

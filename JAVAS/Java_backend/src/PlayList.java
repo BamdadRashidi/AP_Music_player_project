@@ -1,3 +1,4 @@
+import java.time.LocalTime;
 import java.util.*;
 
 public class PlayList extends AudioSorter implements TrackManager,infoShower{
@@ -6,6 +7,15 @@ public class PlayList extends AudioSorter implements TrackManager,infoShower{
     private String playlistName;
     private String playListID;
 
+    private String playListDate;
+
+    private int songCount = 0;
+
+    //TODO: use the two variables below
+    private LocalTime playlistTime;
+    private String playListTimeStringed;
+
+    //TODO: add a system which sums the length of the tracks and adds them to the playListTime;
     public PlayList(String playlistName) {
         this.playlistName = playlistName;
         playListID = Id_generator.generateId();
@@ -15,6 +25,7 @@ public class PlayList extends AudioSorter implements TrackManager,infoShower{
     public void addTrack(Track track) {
         if(track != null) {
             TracksList.add(track);
+            songCount++;
         }
     }
     public void addTrackToAnotherPlaylist(Track track,PlayList... playLists) {
@@ -28,6 +39,7 @@ public class PlayList extends AudioSorter implements TrackManager,infoShower{
     public void removeTrack(Track track) {
         if(track != null && TracksList.contains(track)) {
             TracksList.remove(track);
+            songCount--;
         }
     }
 
@@ -55,6 +67,14 @@ public class PlayList extends AudioSorter implements TrackManager,infoShower{
         this.playlistName = playlistName;
     }
 
+    public String getPlayListTimeStringed() {
+        return playListTimeStringed;
+    }
+
+    public int getSongCount() {
+        return songCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof PlayList)) return false;
@@ -69,7 +89,7 @@ public class PlayList extends AudioSorter implements TrackManager,infoShower{
 
     @Override
     public String toString() {
-        String toStringedPlaylist = "PlayList Name: " + playlistName + "PlayList ID: "+ getPlayListID() + '\n';
+        String toStringedPlaylist = "PlayList Name: " + playlistName + " PlayList ID: "+ getPlayListID() + " Tracks: "+ getSongCount() + '\n';
         return toStringedPlaylist;
     }
 
