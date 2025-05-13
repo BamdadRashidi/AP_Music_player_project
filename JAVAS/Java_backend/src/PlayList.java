@@ -2,7 +2,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.*;
 
-public class PlayList extends AudioSorter implements TrackManager,infoShower{
+public class PlayList extends AudioSorter implements infoShower{
 
     Set<Track> TracksList = new HashSet<>();
     private String playlistName;
@@ -62,6 +62,9 @@ public class PlayList extends AudioSorter implements TrackManager,infoShower{
     }
 
     public void setSongCount(int songCount) {
+        if(songCount <= 0){
+            songCount = 0;
+        }
         this.songCount = songCount;
     }
 

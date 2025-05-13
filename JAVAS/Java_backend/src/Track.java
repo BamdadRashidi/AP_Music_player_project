@@ -73,6 +73,9 @@ public class Track implements Serializable , Comparable<Track> {
     }
 
     public void setLikes(Integer likes) {
+        if(likes <= 0){
+            this.likes = 0;
+        }
         this.likes = likes;
     }
 
