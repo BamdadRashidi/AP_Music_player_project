@@ -5,10 +5,24 @@ import org.junit.jupiter.api.Test;
 
 public class exceptions {
 
-    @Test
-    public void addingAccountTest() {
+    public static void main(String[] args) {
 
-    }
+            Account acc1 = new Account("MamadGholi","099059099083","mamad83983");
+            Track t1 = new Track("Sonne","Rammstein");
+            Track t2 = new Track("Toxicity","System of a Down");
+            Track t3 = new Track("Sweden","C418");
+
+            try
+            {
+                acc1.Addplaylist(new PlayList("German"));
+                acc1.Addplaylist(new PlayList("Armenia"));
+
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+
 }
 
 class CanNotShareWithException extends Exception{

@@ -24,29 +24,9 @@ public class PlayList extends AudioSorter implements TrackManager,infoShower{
         Admin.addPlaylistToList(this);
     }
 
-    public void addTrack(Track track) {
-        if(track != null) {
-            TracksList.add(track);
-            playlistTime = playlistTime.plus(track.getTrackLength());
-            playListTimeStringed = String.format("%02d:%02d",
-                    playlistTime.toMinutes(), playlistTime);
 
-            songCount++;
-        }
-    }
-    public void addTrackToAnotherPlaylist(Track track,PlayList... playLists) {
-        for (PlayList playList : playLists) {
-            if(track != null && playList != null) {
-                playList.addTrack(track);
-            }
-        }
-    }
-
-    public void removeTrack(Track track) {
-        if(track != null && TracksList.contains(track)) {
-            TracksList.remove(track);
-            songCount--;
-        }
+    public Set<Track> getTracksList() {
+        return TracksList;
     }
 
     public Set<Track> alphabeticalSort(){
@@ -79,6 +59,27 @@ public class PlayList extends AudioSorter implements TrackManager,infoShower{
 
     public int getSongCount() {
         return songCount;
+    }
+
+    public void setSongCount(int songCount) {
+        this.songCount = songCount;
+    }
+
+    public Duration getPlaylistTime() {
+        return playlistTime;
+    }
+
+    public void setPlaylistTime(Duration playlistTime) {
+        this.playlistTime = playlistTime;
+    }
+
+
+    public void setPlayListTimeStringed(String playListTimeStringed) {
+        this.playListTimeStringed = playListTimeStringed;
+    }
+
+    public String getPlayListDate() {
+        return playListDate;
     }
 
     @Override

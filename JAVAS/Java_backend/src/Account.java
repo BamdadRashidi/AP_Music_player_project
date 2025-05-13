@@ -70,6 +70,30 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     public void removeTrack(Track t){
         allTracks.remove(t);
     }
+    public void addTrackToPlayList(Track track,PlayList playList) {
+        if(track != null) {
+            playList.getTracksList().add(track);
+            playList.setPlaylistTime(playList.getPlaylistTime().plus(track.getTrackLength()));
+            playList.setPlayListTimeStringed(String.format("%02d:%02d",
+                    playList.getPlaylistTime().toMinutes(), playList.getPlaylistTime()));
+
+            playList.setSongCount(playList.getSongCount() + 1);
+        }
+    }
+    public void addTrackToAnotherPlaylist(Track track,PlayList... playLists) {
+        for (PlayList playList : playLists) {
+            if(track != null && playList != null) {
+                playList.addTrack(track);
+            }
+        }
+    }
+
+    public void removeTrackFromPlayList(Track track,PlayList playList) {
+        if(track != null && playList.getTracksList().contains(track)) {
+            playList.getTracksList().remove(track);
+            playList.setSongCount(playList.getSongCount() - 1);
+        }
+    }
     public void Exist(String s){
         if(s.equals("delete")){
             doesExist = false;
