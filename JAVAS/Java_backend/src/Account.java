@@ -6,19 +6,17 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     private String AccountName; // people see the account with this name
     private String password;
     private boolean doesExist = true;
+    private Set<PlayList> playists = new HashSet<>();
 
-    private final String userId;
-
-    private History trackHistory;
+    private String userId;
 
     private boolean canShareWith = true;
-    Set<PlayList> PlayListList = new HashSet<PlayList>();
+
     Set<Track> allTracks = new HashSet<>();
 
 
 
     public Account(String accName,String name,String pass){
-        trackHistory = new History();
         AccountName = accName;
         Username = name;
         password = pass;
@@ -38,7 +36,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         }
     }
     public void sharePlayList(PlayList playList, Account... accounts) throws CanNotShareWithException,
-                                                                            RedundantPlayListNameException{
+            RedundantPlayListNameException{
         for(Account acc :accounts){
             if(!acc.canShareWith){
                 throw new CanNotShareWithException("Can not share Playlist with this user");
@@ -50,55 +48,80 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     }
 
     public void Addplaylist(PlayList p) throws RedundantPlayListNameException{
-        for(PlayList playList : PlayListList){
+        for(PlayList playList : playists){
             if(p.getPlaylistName().equals(playList.getPlaylistName())){
                 throw new RedundantPlayListNameException("There is a playlist with the same name!");
             }
         }
-        PlayListList.add(p);
+        playists.add(p);
     }
     public void Removeplaylist(PlayList p){
-        PlayListList.remove(p);
+        playists.remove(p);
     }
-
-    // temp upload
     public void addTrack(Track t){
-        trackHistory.addToHistory(t);
         allTracks.add(t);
-
     }
     public void removeTrack(Track t){
         allTracks.remove(t);
-    }
-    public void addTrackToPlayList(Track track,PlayList playList) {
-        if(track != null) {
-            playList.addTrack(track);
-        }
-    }
-
-    public void removeTrackFromPlayList(Track track,PlayList playList) {
-        if(track != null && playList.getTracksList().contains(track)) {
-            playList.removeTrack(track);
-        }
     }
     public void Exist(String s){
         if(s.equals("delete")){
             doesExist = false;
         }
-    }
-
-    //TODO: signing 'in' and logging 'in' and their 'out' counterparts
-
-    public void signIn() throws WrongPasswordException,WrongUserNameException
-                                ,RedundantUsernameException,RedundantAccountNameException{
 
     }
-    public void logIn() throws WrongPasswordException,WrongUserNameException
-                                ,RedundantUsernameException,RedundantAccountNameException{
 
+    public Set<Track> getSongs(){
+        return allTracks;
     }
-    public void logOut(){
+    public Set<Track> getTop10Songs() {
+        Set<Track> allSongs = getSongs();
+        List<Track> sortedSongs = new ArrayList<>(allSongs);
+        sortedSongs.sort((track1, track2) -> Integer.compare(track2.getPlays(), track1.getPlays()));
+        Set<Track> top10Songs = new LinkedHashSet<>();
+        int count = 0;
+        for (Track track : sortedSongs) {
+            if (count == 10) break;
+            top10Songs.add(track);
+            count++;
+        }
+        return top10Songs;
+    }
 
+
+    public Set<Track> FiltredArtistName(String name){
+        Set<Track> filterByName=new HashSet<>();
+        Set<Track>allsongs=new HashSet<>(getSongs());
+        for(Track track:allsongs){
+            if(track.getArtistName().equals(name)){
+                filterByName.add(track);
+            }
+        }
+        return filterByName;
+    }
+    public Set<Track> FiltredByDate(int year){
+        Set<Track>FiltredByYear=new HashSet<>();
+        Set<Track>allsongs=new HashSet<>(getSongs());
+        for (Track track:allsongs){
+            if(year==track.getTrackDate().getYear()){
+                FiltredByYear.add(track);
+            }
+        }
+        return FiltredByYear;
+    }
+
+
+    public void addTrackToPlayList(Track track, PlayList playList) throws NoneExistentAlbumException{
+        if(playList != null){
+            playList.addTrack(track);
+        }
+        throw new NoneExistentAlbumException("No album found");
+    }
+    public void removeTrackFromPlayList(Track track, PlayList playList) throws NoneExistentAlbumException{
+        if(playList != null){
+            playList.removeTrack(track);
+        }
+        throw new NoneExistentAlbumException("No album found");
     }
 
     //TODO: add downloading and uploading feature
@@ -126,7 +149,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     }
 
     public Set<PlayList> getPlayLists() {
-        return PlayListList;
+        return playists;
     }
 
     public void setUsername(String username) {
@@ -177,16 +200,15 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
 
     @Override
     public String toString(){
-        return "[Account Name: " + AccountName +"]" + " ,[Id: " + getUserId() + " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]" + '\n';
+        String toStringedAccount = "[Account Name: " + AccountName +"]" + " ,[Id: " + getUserId() + " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]" + '\n';
+        return toStringedAccount;
     }
     public String showInfo(){
         String PlaylistNames = "";
-        for(PlayList playList : PlayListList){
+        for(PlayList playList : playists){
             PlaylistNames += playList.toString() + '\n';
         }
         return PlaylistNames;
     }
 
 }
-
-

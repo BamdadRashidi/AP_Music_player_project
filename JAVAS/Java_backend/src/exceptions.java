@@ -154,3 +154,13 @@ class IdNotFoundException extends Exception{
         super(message);
     }
 }
+
+class NoneExistentAlbumException extends Exception{
+    String message;
+    public NoneExistentAlbumException() {
+        super();
+    }
+    public NoneExistentAlbumException(String message) {
+        super(message);
+    }
+}

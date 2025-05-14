@@ -49,8 +49,8 @@ public class Admin {
         int maxPlays = 0;
         int i = 0;
         for(Track track : TrackList){
-            if(track.getNumberOfListens() > maxPlays){
-                maxPlays = track.getNumberOfListens();
+            if(track.getPlays() > maxPlays){
+                maxPlays = track.getPlays();
                 mostPlayed[i++] = track;
                 if(i == 9){
                     break;
