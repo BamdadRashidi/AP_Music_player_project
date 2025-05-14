@@ -85,7 +85,7 @@ public class Admin {
                 return;
             }
         }
-        throw new IdNotFoundException("There is no playlist with this id.");
+        throw new IdNotFoundException("There is no playlist with this id."); //TODO: make it so that if it didn't find an ID in the ID DB, it throws this same for others
     }
 
 

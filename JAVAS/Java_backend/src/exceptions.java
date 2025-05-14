@@ -33,6 +33,9 @@ public class exceptions {
             acc1.Addplaylist(pl2);
             t1.likeTrack();
             t2.likeTrack();
+            t2.likeTrack();
+            t3.likeTrack();
+            t3.likeTrack();
             t3.likeTrack();
             pl1.addTrack(t1);
             pl1.addTrack(t2);
@@ -42,7 +45,7 @@ public class exceptions {
             acc1.addTrack(t4);
             acc1.addTrack(t5);
             System.out.println("------------");
-            System.out.println(acc1.FilterByBeingLiked());
+            acc1.sortTracksByLikes();
 
 
         }
@@ -53,10 +56,6 @@ public class exceptions {
 
 
 
-
-
-
-        // test 4 admin tests
 
     }
 

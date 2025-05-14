@@ -103,7 +103,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         Set<Track>FiltredByYear=new HashSet<>();
         Set<Track>allsongs=new HashSet<>(getSongs());
         for (Track track:allsongs){
-            if(year==track.getTrackDate().getYear()){
+            if(year==track.getTrackDate()){
                 FiltredByYear.add(track);
             }
         }
@@ -196,16 +196,25 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
 
     /// EVERYTHING RELATED TO ALL TRACKS MANAGEMENT
 
-    public Set<Track> alphabeticalSort() {
-        return sortTracksAlphabetically(allTracks);
+    public void alphabeticalSort() {
+        ArrayList<Track> sorted = sortTracksAlphabetically(allTracks);
+        for (Track track : sorted) {
+            System.out.println(track);
+        }
     }
 
-    public Set<Track> sortTracksByYear() {
-        return sortTracksByDate(allTracks);
+    public void sortTracksByYear() {
+        ArrayList<Track> sorted = sortTracksByDate(allTracks);
+        for (Track track : sorted) {
+            System.out.println(track);
+        }
     }
 
-    public Set<Track> sortTracksByLikes() {
-        return sortTracksByLikes(allTracks);
+    public void sortTracksByLikes() {
+        ArrayList<Track> sorted = sortTracksByLikes(allTracks);
+        for (Track track : sorted) {
+            System.out.println(track);
+        }
     }
 
 

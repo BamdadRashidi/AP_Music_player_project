@@ -18,29 +18,29 @@ interface infoShower{
 }
 
 class AudioSorter{
-    public Set<Track> sortTracksAlphabetically(Collection<Track> allTracks) {
-        Set<Track> sortedSet = new TreeSet<>(Comparator.comparing(Track::getTrackName));
-        sortedSet.addAll(allTracks);
-        return sortedSet;
+    public ArrayList<Track> sortTracksAlphabetically(Collection<Track> allTracks) {
+        ArrayList<Track> sortedList = new ArrayList<>(allTracks);
+        sortedList.sort(Comparator.comparing(Track::getTrackName));
+        return sortedList;
     }
 
-    public Set<Track> sortTracksByDate(Collection<Track> allTracks) {
-        Set<Track> sortedSet = new TreeSet<>(Comparator.comparing(Track::getTrackDate));
-        sortedSet.addAll(allTracks);
-        return sortedSet;
+    public ArrayList<Track> sortTracksByDate(Collection<Track> allTracks) {
+        ArrayList<Track> sortedList = new ArrayList<>(allTracks);
+        sortedList.sort(Comparator.comparing(Track::getTrackDate));
+        return sortedList;
     }
 
-    public Set<Track> sortTracksByLikes(Collection<Track> allTracks) {
-        Set<Track> sortedSet = new TreeSet<>(Comparator.comparing(Track::getLikes));
-        sortedSet.addAll(allTracks);
-        return sortedSet;
+    public ArrayList<Track> sortTracksByLikes(Collection<Track> allTracks) {
+        ArrayList<Track> sortedList = new ArrayList<>(allTracks);
+        sortedList.sort(Comparator.comparingInt(Track::getLikes));
+        return sortedList;
     }
 
-    public Set<Track> sortTracksByListens(Collection<Track> allTracks) {
-        Set<Track> sortedSet = new TreeSet<>(Comparator.comparing(Track::getPlays));
-        sortedSet.addAll(allTracks);
-        return sortedSet;
+    public ArrayList<Track> sortTracksByListens(Collection<Track> allTracks) {
+        ArrayList<Track> sortedList = new ArrayList<>(allTracks);
+        return sortedList;
     }
+
 }
 
 

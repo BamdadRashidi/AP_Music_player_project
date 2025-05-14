@@ -46,8 +46,8 @@ public class Track implements Serializable , Comparable<Track> {
         this.trackName = trackName;
     }
 
-    public LocalDate getTrackDate() {
-        return trackDate;
+    public int getTrackDate() {
+        return trackDate.getYear();
     }
 
     public void setTrackDate(LocalDate trackDate) {
@@ -56,10 +56,6 @@ public class Track implements Serializable , Comparable<Track> {
 
     public boolean isLiked() {
         return isLiked;
-    }
-
-    public void setLiked(boolean liked) {
-        isLiked = liked;
     }
 
     public Integer getLikes() {
@@ -81,7 +77,7 @@ public class Track implements Serializable , Comparable<Track> {
 
     @Override
     public String toString() {
-        return "[trackName: " + trackName + "]" +"[trackId: " + trackId + "]" + ", [Artist Name: " + artistName + ", [trackDate: " + trackDate + "]" + ", [Likes: " +  + likes + "]" + ", [Explicit: " + isExplicit + "]";
+        return "[trackName: " + trackName + "]"+ ", [Plays:" + getPlays()+ "]" +", [trackId: " + trackId + "]" + ", [Artist Name: " + artistName + "]" + ", [trackDate: " + trackDate.getYear() + "]" + ", [Likes: " +  + likes + "]" + ", [Explicit: " + isExplicit + "]";
     }
 
     @Override

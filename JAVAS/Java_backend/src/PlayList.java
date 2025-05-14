@@ -35,15 +35,15 @@ public class PlayList extends AudioSorter implements infoShower,TrackManager{
         return TracksList;
     }
 
-    public Set<Track> alphabeticalSort(){
+    public ArrayList<Track> alphabeticalSort(){
         return sortTracksAlphabetically(TracksList);
     }
 
-    public Set<Track> sortTracksByYear(){
+    public ArrayList<Track> sortTracksByYear(){
         return sortTracksByDate(TracksList);
     }
 
-    public Set<Track> sortTracksByLikes(){
+    public ArrayList<Track> sortTracksByLikes(){
         return sortTracksByLikes(TracksList);
     }
 
