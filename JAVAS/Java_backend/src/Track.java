@@ -1,34 +1,23 @@
 import java.io.Serializable;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.time.*;
 
 public class Track implements Serializable , Comparable<Track> {
     private String trackName;
-    private final String trackId;
+    private String trackId;
     private String artistName;
     private LocalDate trackDate;
-    private String trackDateStringed;
-
-    private boolean isExplicitContent = false;
-    //TODO: using the variables below
-    private Duration trackLength;
-    private String trackLengthString;
     private boolean isLiked;
     private Integer likes = 0;
+    private int counter;
 
-    private int numberOfListens;
-
-    //TODO: IMPLEMENT THE SYSTEM THAT TAKES THE LENGTH OF A TRACK
-    public Track(String trackName, String artistName,boolean explicit) {
+    public Track(String trackName, String artistName) {
         this.trackName = trackName;
         this.artistName = artistName;
         this.trackDate = LocalDate.now();
-        this.isExplicitContent = explicit;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
-        trackDateStringed = trackDate.format(formatter);
         this.trackId = Id_generator.generateId();
         Admin.addTrackToList(this);
+        counter=0;
     }
 
     @Override
@@ -47,9 +36,7 @@ public class Track implements Serializable , Comparable<Track> {
     }
 
     //TODO: add feature to play a track
-    public void PlayTrack(){
-        numberOfListens++;
-    }
+    public void PlayTrack(){}
     public String getTrackName() {
         return trackName;
     }
@@ -58,8 +45,12 @@ public class Track implements Serializable , Comparable<Track> {
         this.trackName = trackName;
     }
 
-    public LocalDate  getTrackDate() {
+    public LocalDate getTrackDate() {
         return trackDate;
+    }
+
+    public void setTrackDate(LocalDate trackDate) {
+        this.trackDate = trackDate;
     }
 
     public boolean isLiked() {
@@ -75,9 +66,6 @@ public class Track implements Serializable , Comparable<Track> {
     }
 
     public void setLikes(Integer likes) {
-        if(likes <= 0){
-            this.likes = 0;
-        }
         this.likes = likes;
     }
 
@@ -89,43 +77,10 @@ public class Track implements Serializable , Comparable<Track> {
         return artistName;
     }
 
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
-    }
-
-    public Duration getTrackLength() {
-        return trackLength;
-    }
-
-    public String getTrackDateStringed() {
-        return trackDateStringed;
-    }
-
-    public void setTrackDateStringed(String trackDateStringed) {
-        this.trackDateStringed = trackDateStringed;
-    }
-
-    public void setTrackLength(Duration trackLength) {
-        this.trackLength = trackLength;
-        trackDateStringed = String.format("%02d:%02d",
-                trackLength.toMinutes(), trackLength);
-    }
-
-    public boolean isExplicitContent() {
-        return isExplicitContent;
-    }
-
-    public void setExplicitContent(boolean explicitContent) {
-        isExplicitContent = explicitContent;
-    }
-
-    public int getNumberOfListens() {
-        return numberOfListens;
-    }
 
     @Override
     public String toString() {
-        return "[trackName: " + trackName + "]" +", [trackId: " + trackId + ", Plays: " + getNumberOfListens() +", [Artist Name: " + artistName + ", [trackDate: " + trackDateStringed + "]" + ", [Likes: " +  + likes + "]" + ", [isExplicitContent: " + isExplicitContent + "]";
+        return "[trackName: " + trackName + "]" +"[trackId: " + trackId +", [Artist Name: " + artistName + ", [trackDate: " + trackDate + "]" + ", [Likes: " +  + likes + "]";
     }
 
     @Override
@@ -138,5 +93,13 @@ public class Track implements Serializable , Comparable<Track> {
     @Override
     public int hashCode() {
         return Objects.hash(trackName, trackId, trackDate, isLiked, likes);
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+    public int getCounter() {
+        return counter;
     }
 }
