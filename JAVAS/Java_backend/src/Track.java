@@ -10,6 +10,7 @@ public class Track implements Serializable , Comparable<Track> {
     private LocalDate trackDate;
     private String trackDateStringed;
 
+    private boolean isExplicitContent = false;
     //TODO: using the variables below
     private Duration trackLength;
     private String trackLengthString;
@@ -19,10 +20,11 @@ public class Track implements Serializable , Comparable<Track> {
     private int numberOfListens;
 
     //TODO: IMPLEMENT THE SYSTEM THAT TAKES THE LENGTH OF A TRACK
-    public Track(String trackName, String artistName) {
+    public Track(String trackName, String artistName,boolean explicit) {
         this.trackName = trackName;
         this.artistName = artistName;
         this.trackDate = LocalDate.now();
+        this.isExplicitContent = explicit;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         trackDateStringed = trackDate.format(formatter);
         this.trackId = Id_generator.generateId();
@@ -109,13 +111,21 @@ public class Track implements Serializable , Comparable<Track> {
                 trackLength.toMinutes(), trackLength);
     }
 
+    public boolean isExplicitContent() {
+        return isExplicitContent;
+    }
+
+    public void setExplicitContent(boolean explicitContent) {
+        isExplicitContent = explicitContent;
+    }
+
     public int getNumberOfListens() {
         return numberOfListens;
     }
 
     @Override
     public String toString() {
-        return "[trackName: " + trackName + "]" +", [trackId: " + trackId + ", Plays: " + getNumberOfListens() +", [Artist Name: " + artistName + ", [trackDate: " + trackDateStringed + "]" + ", [Likes: " +  + likes + "]";
+        return "[trackName: " + trackName + "]" +", [trackId: " + trackId + ", Plays: " + getNumberOfListens() +", [Artist Name: " + artistName + ", [trackDate: " + trackDateStringed + "]" + ", [Likes: " +  + likes + "]" + ", [isExplicitContent: " + isExplicitContent + "]";
     }
 
     @Override

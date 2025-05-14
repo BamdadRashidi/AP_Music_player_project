@@ -7,26 +7,15 @@ public class exceptions {
 
     public static void main(String[] args) {
 
-            Account acc1 = new Account("MamadGholi","099059099083","mamad83983");
-            Track t1 = new Track("Sonne","Rammstein");
-            Track t2 = new Track("Toxicity","System of a Down");
-            Track t3 = new Track("Sweden","C418");
-            PlayList pl1 = new PlayList("German");
-            PlayList pl2 = new PlayList("Armenia");
+        //test 1 making accounts, tracks, playlists etc...
 
-            try
-            {
-                acc1.Addplaylist(pl1);
-                acc1.Addplaylist(pl2);
-                acc1.addTrackToPlayList(t1,pl1);
-                acc1.addTrackToPlayList(t2,pl2);
-                acc1.addTrackToAnotherPlaylist(t1,pl2);
+        //test 2 sharing playlists
 
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-            }
-        }
+        // test 3 adding playlists, tracks and to each other etc...
+
+        // test 4 admin tests
+
+    }
 
 }
 
