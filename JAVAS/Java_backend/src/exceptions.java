@@ -10,8 +10,12 @@ public class exceptions {
 
 
 
+        //TODO: SHIT TO FIX
+        //TODO: 1 make the IDS to stay the same regardless and not be randomized each time we start the program
+        //TODO: 2 fix the null methods in admin for most likes and plays
 
         try{
+            Admin admin = new Admin();
             Account acc1 = new Account("Hamed Pahlan","hamham@gmail.com","1234");
             Account acc2 = new Account("Mamad gholi", "mamad@gmail.com","abc1487");
             Track t1 = new Track("Needles","System of a Down",true);
@@ -37,26 +41,30 @@ public class exceptions {
             acc2.addTrackToPlayList(t3,pl3);
             acc2.addTrackToPlayList(t4,pl3);
             acc2.addTrackToPlayList(t1,pl3);
+            for(int i = 0; i < 100; i++){
+                t1.likeTrack();
+                t1.likeTrack();
+            }
+            for(int i = 0; i < 50; i++){
+                t2.likeTrack();
+                t2.PlayTrack();
+            }
+
+            System.out.println(admin.findTheMostLikedTracks());
+            System.out.println("----------------------------");
+            System.out.println(admin.findTheMostListenedTracks());
 
 
-            System.out.println("--------------");
-            System.out.println(acc1.toString());
-            System.out.println(acc1.showInfo());
-            System.out.println("--------------");
-            System.out.println(acc2.toString());
-            System.out.println(acc2.showInfo());
         }
         catch(Exception e){
             System.out.println(e.getMessage());
+            e.getStackTrace();
         }
 
 
 
 
 
-        //test 2 sharing playlists
-
-        // test 3 adding playlists, tracks and to each other etc...
 
         // test 4 admin tests
 

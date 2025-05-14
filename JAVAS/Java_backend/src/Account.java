@@ -49,15 +49,13 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         }
     }
 
-    public PlayList Addplaylist(PlayList p) throws RedundantPlayListNameException{
+    public void Addplaylist(PlayList p) throws RedundantPlayListNameException{
         for(PlayList playList : PlayListList){
             if(p.getPlaylistName().equals(playList.getPlaylistName())){
                 throw new RedundantPlayListNameException("There is a playlist with the same name!");
             }
         }
-        PlayList newPlayList = new PlayList(p.getPlaylistName());
-        PlayListList.add(newPlayList);
-        return newPlayList;
+        PlayListList.add(p);
     }
     public void Removeplaylist(PlayList p){
         PlayListList.remove(p);
