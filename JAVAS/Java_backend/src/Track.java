@@ -5,7 +5,7 @@ import java.time.*;
 
 public class Track implements Serializable , Comparable<Track> {
     private String trackName;
-    private String trackId;
+    private final String trackId;
     private String artistName;
     private LocalDate trackDate;
     private String trackDateStringed;
@@ -25,7 +25,7 @@ public class Track implements Serializable , Comparable<Track> {
         this.artistName = artistName;
         this.trackDate = LocalDate.now();
         this.isExplicitContent = explicit;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
         trackDateStringed = trackDate.format(formatter);
         this.trackId = Id_generator.generateId();
         Admin.addTrackToList(this);

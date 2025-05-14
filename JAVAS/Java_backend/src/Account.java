@@ -7,7 +7,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     private String password;
     private boolean doesExist = true;
 
-    private String userId;
+    private final String userId;
 
     private History trackHistory;
 
@@ -75,25 +75,12 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     public void addTrackToPlayList(Track track,PlayList playList) {
         if(track != null) {
             playList.addTrack(track);
-            playList.setPlaylistTime(playList.getPlaylistTime().plus(track.getTrackLength()));
-            playList.setPlayListTimeStringed(String.format("%02d:%02d",
-                    playList.getPlaylistTime().toMinutes(), playList.getPlaylistTime()));
-
-            playList.setSongCount(playList.getSongCount() + 1);
-        }
-    }
-    public void addTrackToAnotherPlaylist(Track track,PlayList... playLists) {
-        for (PlayList playList : playLists) {
-            if(track != null && playList != null) {
-                playList.addTrack(track);
-            }
         }
     }
 
     public void removeTrackFromPlayList(Track track,PlayList playList) {
         if(track != null && playList.getTracksList().contains(track)) {
             playList.removeTrack(track);
-            playList.setSongCount(playList.getSongCount() - 1);
         }
     }
     public void Exist(String s){
@@ -192,8 +179,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
 
     @Override
     public String toString(){
-        String toStringedAccount = "[Account Name: " + AccountName +"]" + " ,[Id: " + getUserId() + " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]" + '\n';
-        return toStringedAccount;
+        return "[Account Name: " + AccountName +"]" + " ,[Id: " + getUserId() + " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]" + '\n';
     }
     public String showInfo(){
         String PlaylistNames = "";

@@ -6,11 +6,10 @@ public class PlayList extends AudioSorter implements infoShower,TrackManager{
 
     Set<Track> TracksList = new HashSet<>();
     private String playlistName;
-    private String playListID;
+    private final String playListID;
 
     private String playListDate;
 
-    private int songCount = 0;
 
     //TODO: use the two variables below
     private Duration playlistTime;
@@ -65,15 +64,9 @@ public class PlayList extends AudioSorter implements infoShower,TrackManager{
     }
 
     public int getSongCount() {
-        return songCount;
+        return TracksList.size();
     }
 
-    public void setSongCount(int songCount) {
-        if(songCount <= 0){
-            songCount = 0;
-        }
-        this.songCount = songCount;
-    }
 
     public Duration getPlaylistTime() {
         return playlistTime;
@@ -106,7 +99,7 @@ public class PlayList extends AudioSorter implements infoShower,TrackManager{
 
     @Override
     public String toString() {
-        String toStringedPlaylist = "PlayList Name: " + playlistName + " PlayList ID: "+ getPlayListID() + " Tracks: "+ getSongCount() + '\n';
+        String toStringedPlaylist = "PlayList Name: " + playlistName + ", PlayList ID: "+ getPlayListID() + ", Tracks: "+ TracksList.size() + '\n';
         return toStringedPlaylist;
     }
 

@@ -7,7 +7,52 @@ public class exceptions {
 
     public static void main(String[] args) {
 
-        //test 1 making accounts, tracks, playlists etc...
+
+
+
+
+        try{
+            Account acc1 = new Account("Hamed Pahlan","hamham@gmail.com","1234");
+            Account acc2 = new Account("Mamad gholi", "mamad@gmail.com","abc1487");
+            Track t1 = new Track("Needles","System of a Down",true);
+            Track t2 = new Track("Sweden","C418",false);
+            Track t3 = new Track("Sonne", "Rammstein", false);
+            Track t4 = new Track("Moai", "Exyl", false);
+            PlayList pl1 = new PlayList("thefirst");
+            PlayList pl2 = new PlayList("thesecond");
+            PlayList pl3 = new PlayList("thethird");
+            PlayList pl4 = new PlayList("thefourth");
+
+            acc2.setCanShareWith(false);
+
+            acc1.Addplaylist(pl1);
+            acc1.Addplaylist(pl2);
+            acc1.addTrackToPlayList(t1,pl1);
+            acc1.addTrackToPlayList(t2,pl1);
+            acc1.addTrackToPlayList(t2,pl2);
+
+
+            acc2.Addplaylist(pl3);
+            acc2.Addplaylist(pl4);
+            acc2.addTrackToPlayList(t3,pl3);
+            acc2.addTrackToPlayList(t4,pl3);
+            acc2.addTrackToPlayList(t1,pl3);
+
+
+            System.out.println("--------------");
+            System.out.println(acc1.toString());
+            System.out.println(acc1.showInfo());
+            System.out.println("--------------");
+            System.out.println(acc2.toString());
+            System.out.println(acc2.showInfo());
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
+
+
 
         //test 2 sharing playlists
 
