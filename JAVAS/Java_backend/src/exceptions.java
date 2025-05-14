@@ -19,6 +19,7 @@ public class exceptions {
             Account acc1 = new Account("Hamed Pahlan","hamham@gmail.com","1234");
             Account acc2 = new Account("Mamad gholi", "mamad@gmail.com","abc1487");
             Track t1 = new Track("Needles","System of a Down",true);
+            Track t5 = new Track("Toxicity","System of a Down",true);
             Track t2 = new Track("Sweden","C418",false);
             Track t3 = new Track("Sonne", "Rammstein", false);
             Track t4 = new Track("Moai", "Exyl", false);
@@ -27,32 +28,21 @@ public class exceptions {
             PlayList pl3 = new PlayList("thethird");
             PlayList pl4 = new PlayList("thefourth");
 
-            acc2.setCanShareWith(false);
 
             acc1.Addplaylist(pl1);
             acc1.Addplaylist(pl2);
-            acc1.addTrackToPlayList(t1,pl1);
-            acc1.addTrackToPlayList(t2,pl1);
-            acc1.addTrackToPlayList(t2,pl2);
-
-
-            acc2.Addplaylist(pl3);
-            acc2.Addplaylist(pl4);
-            acc2.addTrackToPlayList(t3,pl3);
-            acc2.addTrackToPlayList(t4,pl3);
-            acc2.addTrackToPlayList(t1,pl3);
-            for(int i = 0; i < 100; i++){
-                t1.likeTrack();
-                t1.likeTrack();
-            }
-            for(int i = 0; i < 50; i++){
-                t2.likeTrack();
-                t2.PlayTrack();
-            }
-
-            System.out.println(admin.findTheMostLikedTracks());
-            System.out.println("----------------------------");
-            System.out.println(admin.findTheMostListenedTracks());
+            t1.likeTrack();
+            t2.likeTrack();
+            t3.likeTrack();
+            pl1.addTrack(t1);
+            pl1.addTrack(t2);
+            acc1.addTrack(t1);
+            acc1.addTrack(t2);
+            acc1.addTrack(t3);
+            acc1.addTrack(t4);
+            acc1.addTrack(t5);
+            System.out.println("------------");
+            System.out.println(acc1.FilterByBeingLiked());
 
 
         }

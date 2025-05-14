@@ -81,7 +81,7 @@ public class Track implements Serializable , Comparable<Track> {
 
     @Override
     public String toString() {
-        return "[trackName: " + trackName + "]" +"[trackId: " + trackId +", [Artist Name: " + artistName + ", [trackDate: " + trackDate + "]" + ", [Likes: " +  + likes + "]" + ", [Explicit: " + isExplicit + "]";
+        return "[trackName: " + trackName + "]" +"[trackId: " + trackId + "]" + ", [Artist Name: " + artistName + ", [trackDate: " + trackDate + "]" + ", [Likes: " +  + likes + "]" + ", [Explicit: " + isExplicit + "]";
     }
 
     @Override
@@ -103,6 +103,7 @@ public class Track implements Serializable , Comparable<Track> {
     public int getPlays() {
         return plays;
     }
+
 
     public void setExplicit(boolean explicit) {
         isExplicit = explicit;

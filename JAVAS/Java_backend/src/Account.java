@@ -110,6 +110,17 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         return FiltredByYear;
     }
 
+    public Set<Track> FilterByBeingLiked(){
+        Set<Track>FilteredByLikes=new HashSet<>();
+        Set<Track>allsongs=new HashSet<>(getSongs());
+        for (Track track:allsongs){
+            if(track.isLiked()){
+                FilteredByLikes.add(track);
+            }
+        }
+        return FilteredByLikes;
+    }
+
 
     public void addTrackToPlayList(Track track, PlayList playList) throws NoneExistentAlbumException{
         if(playList != null){
@@ -200,7 +211,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
 
     @Override
     public String toString(){
-        String toStringedAccount = "[Account Name: " + AccountName +"]" + " ,[Id: " + getUserId() + " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]" + '\n';
+        String toStringedAccount = "[Account Name: " + AccountName +"]" + " ,[Id: " + getUserId() + "]"+ " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]" + '\n';
         return toStringedAccount;
     }
     public String showInfo(){
