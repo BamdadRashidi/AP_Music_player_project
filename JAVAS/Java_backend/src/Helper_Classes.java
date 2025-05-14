@@ -18,25 +18,25 @@ interface infoShower{
 }
 
 class AudioSorter{
-    public ArrayList<Track> sortTracksAlphabetically(Collection<Track> allTracks) {
+    public static ArrayList<Track> sortTracksAlphabetically(Collection<Track> allTracks) {
         ArrayList<Track> sortedList = new ArrayList<>(allTracks);
         sortedList.sort(Comparator.comparing(Track::getTrackName));
         return sortedList;
     }
 
-    public ArrayList<Track> sortTracksByDate(Collection<Track> allTracks) {
+    public static ArrayList<Track> sortTracksByDate(Collection<Track> allTracks) {
         ArrayList<Track> sortedList = new ArrayList<>(allTracks);
         sortedList.sort(Comparator.comparing(Track::getTrackDate));
         return sortedList;
     }
 
-    public ArrayList<Track> sortTracksByLikes(Collection<Track> allTracks) {
+    public static ArrayList<Track> sortTracksByLikes(Collection<Track> allTracks) {
         ArrayList<Track> sortedList = new ArrayList<>(allTracks);
         sortedList.sort(Comparator.comparingInt(Track::getLikes).reversed());
         return sortedList;
     }
 
-    public ArrayList<Track> sortTracksByListens(Collection<Track> allTracks) {
+    public static ArrayList<Track> sortTracksByListens(Collection<Track> allTracks) {
         ArrayList<Track> sortedList = new ArrayList<>(allTracks);
         Collections.sort(sortedList, Comparator.comparing(Track::getPlays).reversed());
         return sortedList;

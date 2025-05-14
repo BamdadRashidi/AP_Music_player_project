@@ -24,7 +24,7 @@ public class Admin extends AudioSorter{
 
     /// END OF WIP
 
-    public String findTheMostLikedTracks(){
+    public static String findTheMostLikedTracks(){
         ArrayList<Track> sorted = sortTracksByLikes(TrackList);
         StringBuilder mostLikedTracks = new StringBuilder();
 
@@ -35,7 +35,7 @@ public class Admin extends AudioSorter{
 
         return mostLikedTracks.toString();
     }
-    public String findTheMostListenedTracks(){
+    public static String findTheMostListenedTracks(){
         ArrayList<Track> sorted = sortTracksByListens(TrackList);
         StringBuilder mostListened = new StringBuilder();
 
@@ -47,7 +47,7 @@ public class Admin extends AudioSorter{
         return mostListened.toString();
     }
 
-    public void getAccountInfo(String accountId, boolean shouldExpand) throws IdNotFoundException {
+    public static void getAccountInfo(String accountId, boolean shouldExpand) throws IdNotFoundException {
         for (Account account : AccountList.keySet()) {
             if (account.getUserId().equals(accountId)) {
                 System.out.println(account.toString());
@@ -59,7 +59,7 @@ public class Admin extends AudioSorter{
         }
         throw new IdNotFoundException("There is no account with this id.");
     }
-    public void getPlayListInfo(String playlistId, boolean shouldExpand) throws IdNotFoundException {
+    public static void getPlayListInfo(String playlistId, boolean shouldExpand) throws IdNotFoundException {
         for (PlayList playlist : PlaylistList.keySet()){
             if (playlist.getPlaylistName().equals(playlistId)) {
                 System.out.println(playlist.toString());
