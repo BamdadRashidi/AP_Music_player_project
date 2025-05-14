@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Admin extends AudioSorter{
 
@@ -61,7 +62,7 @@ public class Admin extends AudioSorter{
     }
     public static void getPlayListInfo(String playlistId, boolean shouldExpand) throws IdNotFoundException {
         for (PlayList playlist : PlaylistList.keySet()){
-            if (playlist.getPlaylistName().equals(playlistId)) {
+            if (playlist.getPlayListID().equals(playlistId)) {
                 System.out.println(playlist.toString());
                 if (shouldExpand) {
                     System.out.println(playlist.showInfo());
@@ -85,6 +86,58 @@ public class Admin extends AudioSorter{
 
 
     public static void main(String[] args) {
+        Account acc1 = new Account("Hamed Pahlan","hamham@gmail.com","1234");
+        Account acc2 = new Account("Mamad gholi", "mamad@gmail.com","abc1487");
+        Track t1 = new Track("Needles","System of a Down",true);
+        Track t5 = new Track("Toxicity","System of a Down",true);
+        Track t2 = new Track("Sweden","C418",false);
+        Track t3 = new Track("Sonne", "Rammstein", false);
+        Track t4 = new Track("Moai", "Exyl", false);
+        PlayList pl1 = new PlayList("thefirst");
+        PlayList pl2 = new PlayList("thesecond");
+        PlayList pl3 = new PlayList("thethird");
+        PlayList pl4 = new PlayList("thefourth");
 
+
+        while(true) {
+            int choice = 0;
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Welcome to the Admin Menu. please choose a number");
+            System.out.println("1: checking an account (account id , more info or not (true/false))");
+            System.out.println("2: checking a playlist (playlist id , more info or not (true/false))");
+            System.out.println("3: find the top 10 most liked tracks");
+            System.out.println("4: find the top 10 most played tracks");
+            System.out.println("5: exit");
+            choice = scanner.nextInt();
+            try {
+                switch (choice) {
+                    case 1:
+                        String accountId = scanner.next();
+                        boolean shouldExpand = scanner.nextBoolean();
+                        getAccountInfo(accountId, shouldExpand);
+                        break;
+                    case 2:
+                        String playlistID = scanner.next();
+                        boolean expandornot = scanner.nextBoolean();
+                        getPlayListInfo(playlistID, expandornot);
+                        break;
+                    case 3:
+                        System.out.println(findTheMostLikedTracks());
+                        break;
+                    case 4:
+                        System.out.println(findTheMostListenedTracks());
+                        break;
+                    case 5:
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Invalid choice.");
+                }
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                scanner.nextLine();
+            }
+        }
     }
 }
