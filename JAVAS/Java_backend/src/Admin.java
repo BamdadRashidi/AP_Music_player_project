@@ -86,19 +86,6 @@ public class Admin extends AudioSorter{
 
 
     public static void main(String[] args) {
-        Account acc1 = new Account("Hamed Pahlan","hamham@gmail.com","1234");
-        Account acc2 = new Account("Mamad gholi", "mamad@gmail.com","abc1487");
-        Track t1 = new Track("Needles","System of a Down",true);
-        Track t5 = new Track("Toxicity","System of a Down",true);
-        Track t2 = new Track("Sweden","C418",false);
-        Track t3 = new Track("Sonne", "Rammstein", false);
-        Track t4 = new Track("Moai", "Exyl", false);
-        PlayList pl1 = new PlayList("thefirst");
-        PlayList pl2 = new PlayList("thesecond");
-        PlayList pl3 = new PlayList("thethird");
-        PlayList pl4 = new PlayList("thefourth");
-
-
         while(true) {
             int choice = 0;
             Scanner scanner = new Scanner(System.in);
