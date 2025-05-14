@@ -31,11 +31,22 @@ public class exceptions {
 
             acc1.Addplaylist(pl1);
             acc1.Addplaylist(pl2);
+            t1.PlayTrack();
+            t2.PlayTrack();
+            t2.PlayTrack();
+            t2.PlayTrack();
+            t3.PlayTrack();
+            t3.PlayTrack();
+            t4.PlayTrack();
+            t3.PlayTrack();
+
             t1.likeTrack();
             t2.likeTrack();
             t2.likeTrack();
+            t2.likeTrack();
             t3.likeTrack();
             t3.likeTrack();
+            t4.likeTrack();
             t3.likeTrack();
             pl1.addTrack(t1);
             pl1.addTrack(t2);
@@ -45,7 +56,7 @@ public class exceptions {
             acc1.addTrack(t4);
             acc1.addTrack(t5);
             System.out.println("------------");
-            acc1.sortTracksByLikes();
+
 
 
         }

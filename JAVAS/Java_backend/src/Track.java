@@ -37,7 +37,9 @@ public class Track implements Serializable , Comparable<Track> {
     }
 
     //TODO: add feature to play a track
-    public void PlayTrack(){}
+    public void PlayTrack(){
+        plays++;
+    }
     public String getTrackName() {
         return trackName;
     }

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Admin {
+public class Admin extends AudioSorter{
 
     //TODO: add a DB in which whenever someone makes a new Account, it adds that to the DB
     //TODO: same thing applies to what is above for playlists and tracks
@@ -25,42 +25,26 @@ public class Admin {
     /// END OF WIP
 
     public String findTheMostLikedTracks(){
-        Track[] mostLiked = new Track[10];
-        String mostLikedTracks = "";
-        int maxLikes = 0;
-        int i = 0;
-        for(Track track : TrackList){
-            if(track.getLikes() > maxLikes){
-                maxLikes = track.getLikes();
-                mostLiked[i++] = track;
-                if(i == 9){
-                    break;
-                }
-            }
+        ArrayList<Track> sorted = sortTracksByLikes(TrackList);
+        StringBuilder mostLikedTracks = new StringBuilder();
+
+        int count = Math.min(10, sorted.size());
+        for (int i = 0; i < count; i++) {
+            mostLikedTracks.append(sorted.get(i).toString()).append("\n");
         }
-        for(Track track : mostLiked){
-            mostLikedTracks += track.toString() + "\n";
-        }
-        return mostLikedTracks;
+
+        return mostLikedTracks.toString();
     }
     public String findTheMostListenedTracks(){
-        Track[] mostPlayed = new Track[10];
-        String mostLikedTracks = "";
-        int maxPlays = 0;
-        int i = 0;
-        for(Track track : TrackList){
-            if(track.getPlays() > maxPlays){
-                maxPlays = track.getPlays();
-                mostPlayed[i++] = track;
-                if(i == 9){
-                    break;
-                }
-            }
+        ArrayList<Track> sorted = sortTracksByListens(TrackList);
+        StringBuilder mostListened = new StringBuilder();
+
+        int count = Math.min(10, sorted.size());
+        for (int i = 0; i < count; i++) {
+            mostListened.append(sorted.get(i).toString()).append("\n");
         }
-        for(Track track : mostPlayed){
-            mostLikedTracks += track.toString() + "\n";
-        }
-        return mostLikedTracks;
+
+        return mostListened.toString();
     }
 
     public void getAccountInfo(String accountId, boolean shouldExpand) throws IdNotFoundException {
@@ -77,7 +61,7 @@ public class Admin {
     }
     public void getPlayListInfo(String playlistId, boolean shouldExpand) throws IdNotFoundException {
         for (PlayList playlist : PlaylistList.keySet()){
-            if (playlist.getPlayListID().equals(playlistId)) {
+            if (playlist.getPlaylistName().equals(playlistId)) {
                 System.out.println(playlist.toString());
                 if (shouldExpand) {
                     System.out.println(playlist.showInfo());

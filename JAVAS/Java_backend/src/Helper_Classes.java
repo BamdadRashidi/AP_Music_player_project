@@ -32,12 +32,13 @@ class AudioSorter{
 
     public ArrayList<Track> sortTracksByLikes(Collection<Track> allTracks) {
         ArrayList<Track> sortedList = new ArrayList<>(allTracks);
-        sortedList.sort(Comparator.comparingInt(Track::getLikes));
+        sortedList.sort(Comparator.comparingInt(Track::getLikes).reversed());
         return sortedList;
     }
 
     public ArrayList<Track> sortTracksByListens(Collection<Track> allTracks) {
         ArrayList<Track> sortedList = new ArrayList<>(allTracks);
+        Collections.sort(sortedList, Comparator.comparing(Track::getPlays).reversed());
         return sortedList;
     }
 
