@@ -32,8 +32,8 @@ class LoginPage extends StatelessWidget {
                 center: Alignment(-0.4,-0.3),
                 radius: 1.2,
                 colors: [
-                  Color.fromRGBO(255, 193,7,1),
-                  Color.fromRGBO(233, 30,99, 1),
+                  Color.fromRGBO(234, 181, 36, 1.0),
+                  Color.fromRGBO(220, 38, 93, 1.0),
                   Color.fromRGBO(33, 33,33, 1),
                 ],
                 stops: [0.1,0.4,1.0],
@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.all(24),
                           decoration: BoxDecoration(
-                              image: DecorationImage(image: AssetImage('image/back.png'),fit: BoxFit.cover,),
+                              image: DecorationImage(image: AssetImage('image/back_clean.png'),fit: BoxFit.cover,),
                               borderRadius: BorderRadius.horizontal(left: Radius.circular(20)),
 
                               border: Border.all(
@@ -84,7 +84,7 @@ class LoginPage extends StatelessWidget {
                                 "Please sign in to continue access",
                                 style: TextStyle(fontSize: 17,color: Colors.white,fontFamily: 'custom'),
                               ),SizedBox(height: 15,),
-                              Text("Music is the bond of mankind with the universe the key of understanding it \u00A0\ \u00A0\ \u00A0\ \u00A0\  being by one's ear",
+                              Text("Music is the bond of mankind with the universe the key of understanding it \u00A0\ \u00A0\ \u00A0\ \u00A0\  being one's ear",
                                 style:TextStyle(fontSize: 15,color: Colors.pink,fontFamily: 'custom'),)
 
                             ],
@@ -104,13 +104,13 @@ class LoginPage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [ TextField(
-    decoration: InputDecoration(labelText: "Account name",
+    decoration: InputDecoration(labelText: "Account name (name of your account)",
     prefixIcon: Icon(Icons.email),),
     ),
     SizedBox(height: 16),
 
                           TextField(
-                            decoration: InputDecoration(labelText: "Username",
+                            decoration: InputDecoration(labelText: "Username (email/phone number)",
                               prefixIcon: Icon(Icons.email),),
                           ),
                           SizedBox(height: 16),

@@ -162,15 +162,15 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
 
     /// EVERYTHING RELATED TO ALL TRACKS MANAGEMENT
 
-    public Set<Track> alphabeticalSort() {
+    public ArrayList<Track> alphabeticalSort() {
         return sortTracksAlphabetically(allTracks);
     }
 
-    public Set<Track> sortTracksByYear() {
+    public ArrayList<Track> sortTracksByYear() {
         return sortTracksByDate(allTracks);
     }
 
-    public Set<Track> sortTracksByLikes() {
+    public ArrayList<Track> sortTracksByLikes() {
         return sortTracksByLikes(allTracks);
     }
 
