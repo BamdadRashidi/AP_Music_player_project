@@ -1,18 +1,10 @@
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.*;
-import org.junit.jupiter.api.Test;
+package models;
+
+
 
 public class exceptions {
 
     public static void main(String[] args) {
-
-
-
-
-        //TODO: SHIT TO FIX
-        //TODO: 1 make the IDS to stay the same regardless and not be randomized each time we start the program
-        //TODO: 2 fix the null methods in admin for most likes and plays
 
         try{
             Admin admin = new Admin();
@@ -56,7 +48,7 @@ public class exceptions {
             acc1.addTrack(t4);
             acc1.addTrack(t5);
             System.out.println("------------");
-            admin.getAccountInfo("Hamed Pahlan",true);
+            admin.getTrackInfo("Needles");
 
 
         }
@@ -64,8 +56,6 @@ public class exceptions {
             System.out.println(e.getMessage());
             e.getStackTrace();
         }
-
-
 
 
     }
