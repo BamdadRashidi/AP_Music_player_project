@@ -20,6 +20,7 @@ the Json protocol structure for all almost everything your account is capable of
     "password": ""
   }
 }
+// the response for this task creates: a userID and also a boolean whether that account is logged in or not
 
 // for logging in
 {
@@ -29,6 +30,10 @@ the Json protocol structure for all almost everything your account is capable of
     "password": ""
   }
 }
+// the response for this task not only returns userID but also the accountName 
+
+
+
 ```
 
 
@@ -41,10 +46,77 @@ all the Json protocols related to track is below:
 ### The albums page:
 this is where you create albums and playlists in order to sort your tracks to your liking. you are able to share playlists, add or remove or change things to your liking here.
 all the json protocols for playlist related tasks is below:
+```
+// uploading track
+{
+  "action": "upload_track",
+  "payload": {
+    "userId": "",
+    "title": "",
+    "artist": "",
+    "album": "",
+    "genre": "",
+    "isExplicit": //true or false,
+    "trackDate" : "//the date based on year",
+    "coverArtBase64": "// image base64",
+    "audioBase64": "//audio base 64"
+  }
+}
+// and the response should return the track's ID
+
+// download track
+{
+  "action": "download_track",
+  "payload": {
+    "trackId": "",
+    "userId": ""
+  }
+}
+
+// share track
+{
+  "action": "share+track",
+  "payload": {
+    "fromUserId": "acc_12345",
+    "trackId": "",
+    "targetUserIds": ["", "",...]
+  }
+}
+
+
+// like and unlike
+{
+  "action": "like_track",
+  "payload": {
+    "userId": "",
+    "trackId": ""
+  }
+}
+{
+  "action": "unlike_track",
+  "payload": {
+    "userId": "",
+    "trackId": ""
+  }
+}
+// and the response shall return the new like count
+
+// increasing the listens count each time you play the song
+{
+  "action": "add_to_play_count",
+  "payload": {
+    "trackId": ""
+  }
+}
+// the response returns the new amount
+
+
+
+```
 
 ### The Now playing (track) page:
 just a simple controller for playing your tracks and such
-Json prototypes:
+
 
 
 ### The user settings page:
@@ -87,6 +159,7 @@ more advanced account related protocols are down below:
     "userId": ""
   }
 }
+// the response shall return the false for isloggedin
 
 // for removing an account
 {
