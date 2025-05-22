@@ -9,7 +9,27 @@ like any good program, you can create an account in order to sign in and log in
 1. Your username which is either your gmail or your phone number.
 2. your password which is self explanatory.
 3. your account name this is what other users see from your account.
-the Json protocol structure for all almost everything your account is capable of doing is below (request and responses included):
+the Json protocol structure for all almost everything your account is capable of doing is below (only request as response is almost the same for each):
+```
+// for signing in
+{
+  "action": "sign_up",
+  "payload": {
+    "username": "",
+    "accountName": "",
+    "password": ""
+  }
+}
+
+// for logging in
+{
+  "action": "log_in",
+  "payload": {
+    "username": "",
+    "password": ""
+  }
+}
+```
 
 
 
@@ -30,5 +50,65 @@ Json prototypes:
 ### The user settings page:
 this is where you customize your account whether you want to add a profile picture, change your account related data, delete or log out from an account and other customizing actions.
 more advanced account related protocols are down below:
+```
+// for changing password
+{
+  "action": "change_password",
+  "payload": {
+    "userId": "",
+    "oldPassword": "",
+    "newPassword": ""
+  }
+}
+
+//for chaning username
+{
+  "action": "change_username",
+  "payload": {
+    "userId": "",
+    "oldUsername": "",
+    "newUsername": ""
+  }
+}
+
+// for changning the accountname
+{
+  "action": "change_accountname",
+  "payload": {
+    "userId": "",
+    "newaccountname": ""
+  }
+}
+
+// for logging out
+{
+  "action": "log_out",
+  "payload": {
+    "userId": ""
+  }
+}
+
+// for removing an account
+{
+  "action": "delete_account",
+  "payload": {
+    "userId": "",
+    "password": ""
+  }
+}
+
+// to change pfp
+{
+  "action": "change_profile_picture",
+  "payload": {
+    "userId": "",
+    "imageBase64": "insert the base64 data of the image here"
+  }
+}
+
+
+
+
+```
 
 
