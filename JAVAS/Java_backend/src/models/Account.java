@@ -6,7 +6,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     private String Username;
     private String AccountName; // people see the account with this name
     private String password;
-    private boolean doesExist = true;
+    private boolean isLoggedin = false;
 
     private final String userId;
 
@@ -82,10 +82,12 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
             playList.removeTrack(track);
         }
     }
-    public void Exist(String s){
-        if(s.equals("delete")){
-            doesExist = false;
-        }
+
+    public boolean isLoggedIn(){
+        return isLoggedin;
+    }
+    public void isLoggedIn(boolean isInUSe){
+        this.isLoggedin = isInUSe;
     }
 
     //TODO: signing 'in' and logging 'in' and their 'out' counterparts
@@ -122,8 +124,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         return userId;
     }
 
-    public boolean doesExist() {
-        return doesExist;
+    public boolean isLoggedin() {
+        return isLoggedin;
     }
 
     public Set<PlayList> getPlayLists() {
@@ -138,8 +140,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         this.password = password;
     }
 
-    public void setDoesExist(boolean doesExist) {
-        this.doesExist = doesExist;
+    public void setLoggedin(boolean loggedin) {
+        this.isLoggedin = loggedin;
     }
 
 

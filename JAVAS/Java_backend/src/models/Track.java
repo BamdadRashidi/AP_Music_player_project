@@ -8,17 +8,19 @@ public class Track implements Serializable , Comparable<Track> {
     private String trackName;
     private String trackId;
     private String artistName;
+    private String genre;
     private LocalDate trackDate;
     private boolean isLiked;
     private Integer likes = 0;
     private int plays = 0;
 
     private boolean isExplicit = false;
-    public Track(String trackName, String artistName, boolean explicit) {
+    public Track(String trackName, String artistName, String genre, boolean explicit) {
         this.trackName = trackName;
         this.artistName = artistName;
         this.trackDate = LocalDate.now();
         this.isExplicit = explicit;
+        this.genre = genre;
         this.trackId = Id_generator.generateId();
         Admin.addTrackToList(this);
     }
@@ -38,7 +40,7 @@ public class Track implements Serializable , Comparable<Track> {
         likes--;
     }
 
-    //TODO: add feature to play a track
+
     public void PlayTrack(){
         plays++;
     }
@@ -81,7 +83,7 @@ public class Track implements Serializable , Comparable<Track> {
 
     @Override
     public String toString() {
-        return "[trackName: " + trackName + "]"+ ", [Plays:" + getPlays()+ "]" +", [trackId: " + trackId + "]" + ", [Artist Name: " + artistName + "]" + ", [trackDate: " + trackDate.getYear() + "]" + ", [Likes: " +  + likes + "]" + ", [Explicit: " + isExplicit + "]";
+        return "[trackName: " + trackName + "]"+ ", [Plays:" + getPlays()+ "]" +", [trackId: " + trackId + "]" + ", [Artist Name: " + artistName + "]"+ ", [Genre: "+ genre + "]" + ", [trackDate: " + trackDate.getYear() + "]" + ", [Likes: " +  + likes + "]" + ", [Explicit: " + isExplicit + "]";
     }
 
     @Override

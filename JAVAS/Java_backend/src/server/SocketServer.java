@@ -1,3 +1,4 @@
+package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -7,8 +8,7 @@ public class SocketServer {
 
     public static  void main(String []args) {
 
-
-        try (ServerSocket server = new ServerSocket(12345))
+        try (ServerSocket server = new ServerSocket(1080))
         {
             System.out.println("Conecting...");
            while (true){
