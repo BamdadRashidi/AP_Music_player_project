@@ -42,10 +42,6 @@ the Json protocol structure for all almost everything your account is capable of
 this is the main hub of your program where you can upload, download and search for tracks
 you can like or unlike them, set them to be explicit or not, see your top history, and navigate to other pages if you so wish.
 all the Json protocols related to track is below:
-
-### The albums page:
-this is where you create albums and playlists in order to sort your tracks to your liking. you are able to share playlists, add or remove or change things to your liking here.
-all the json protocols for playlist related tasks is below:
 ```
 // uploading track
 {
@@ -111,6 +107,66 @@ all the json protocols for playlist related tasks is below:
 // the response returns the new amount
 
 
+
+```
+
+### The albums and playlists page:
+this is where you create albums and playlists in order to sort your tracks to your liking. you are able to share playlists, add or remove or change things to your liking here.
+all the json protocols for playlist related tasks is below:
+```
+// creating a playlist
+{
+  "action": "create_playlist",
+  "payload": {
+    "userId": "",
+    "playlistName": ""
+  }
+}
+// it's response returns and playlistID should the playlist be a duplicate, it will return an error
+
+// removing a playlist
+{
+  "action": "remove_playlist",
+  "payload": {
+    "userId": "",
+    "playlistId": ""
+  }
+}
+
+// adding a track to a playlist or a bunch
+{
+  "action": "add_track_to_playlists",
+  "payload": {
+    "userId": "",
+    "trackId": "",
+    "playlistId": ""
+  }
+}
+
+
+
+// sharing playlist
+{
+  "action": "share_playlist",
+  "payload": {
+    "fromUserId": "",
+    "playlistId": "",
+    "toUserIds": ["", ""]
+  }
+}
+
+// this is a response example for partial success. it becomes full failure if the album is not shared with anybody and a full success if it is shared with all
+{
+  "status": "partial_success",
+  "message": "Playlist shared with some users.",
+  "sharedWith": ["// insert ID"],
+  "failedToShareWith": [
+    {
+      "userId": "",
+      "reason": "User has disabled sharing."
+    }
+  ]
+}
 
 ```
 
