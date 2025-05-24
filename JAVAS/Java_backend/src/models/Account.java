@@ -6,8 +6,8 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     private String Username;
     private String AccountName; // people see the account with this name
     private String password;
-    private boolean isLoggedin = false;
 
+    private final String UserToken;
     private final String userId;
 
     private History trackHistory;
@@ -24,7 +24,9 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         Username = name;
         password = pass;
         userId = Id_generator.generateId();
+        UserToken = Id_generator.generateToken();
         /// WIP THING TO TEST ADMIN
+        //TODO: fix the random ID and Token Generator to be a one-use thing only
         Admin.addAccountToList(this);
     }
 
@@ -83,13 +85,6 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         }
     }
 
-    public boolean isLoggedIn(){
-        return isLoggedin;
-    }
-    public void isLoggedIn(boolean isInUSe){
-        this.isLoggedin = isInUSe;
-    }
-
     //TODO: signing 'in' and logging 'in' and their 'out' counterparts
 
     public void signIn() throws WrongPasswordException,WrongUserNameException
@@ -109,7 +104,6 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
 
     public void UploadTrack(){}
 
-    //------------------------------------------
 
 
     public String getUsername() {
@@ -124,9 +118,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         return userId;
     }
 
-    public boolean isLoggedin() {
-        return isLoggedin;
-    }
+
 
     public Set<PlayList> getPlayLists() {
         return PlayListList;
@@ -140,11 +132,10 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         this.password = password;
     }
 
-    public void setLoggedin(boolean loggedin) {
-        this.isLoggedin = loggedin;
+
+    public String getUserToken() {
+        return UserToken;
     }
-
-
 
     public boolean CanShareWith() {
         return canShareWith;

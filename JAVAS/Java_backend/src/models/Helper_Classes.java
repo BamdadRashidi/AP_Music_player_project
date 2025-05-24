@@ -49,19 +49,19 @@ class AudioSorter{
 
 
 class Id_generator{
-    static String charactersToSelect = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    static String TokenForUser;
 
+    static String userId;
     static Random random = new Random();
 
     static String generateId(){
-        String id = "";
-        int i = 0;
-        while(i < 10){
-            int index = random.nextInt(charactersToSelect.length());
-            id += charactersToSelect.charAt(index);
-            i++;
-        }
-        return id;
+        userId = UUID.randomUUID().toString();
+        return userId;
 
+    }
+
+    static String generateToken(){
+        TokenForUser = UUID.randomUUID().toString();
+        return TokenForUser;
     }
 }
