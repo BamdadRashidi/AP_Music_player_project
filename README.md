@@ -172,7 +172,21 @@ all the json protocols for playlist related tasks is below:
 
 ### The Now playing (track) page:
 just a simple controller for playing your tracks and such
+```
+// for incrementing the plays counter
+{
+  "action": "increment_play",
+  "songId": "",
+  "userId": ""
+}
+// response
+{
+  "status": "success",
+  "songId": "",
+  "newPlayCount": // a number here
+}
 
+```
 
 
 ### The user settings page:
