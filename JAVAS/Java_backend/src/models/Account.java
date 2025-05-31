@@ -8,7 +8,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
     private String password;
 
     private final String UserToken;
-    private final String userId;
+    private final String userId; //TODO: make the id smaller
 
     private History trackHistory;
 
