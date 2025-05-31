@@ -1,16 +1,17 @@
 package models;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
-public class PlayList extends AudioSorter implements infoShower,TrackManager{
+public class PlayList implements infoShower,TrackManager{
 
     Set<Track> TracksList = new HashSet<>();
     private String playlistName;
     private final String playListID;
 
-    private String playListDate;
+    private LocalDate playListDate;
 
 
     //TODO: use the two variables below
@@ -22,7 +23,7 @@ public class PlayList extends AudioSorter implements infoShower,TrackManager{
         this.playlistName = playlistName;
         playListID = Id_generator.generateId();
         this.playlistTime = Duration.ZERO;
-        Admin.addPlaylistToList(this);
+//        Admin.addPlaylistToList(this);
     }
 
     public void addTrack(Track t){
@@ -37,17 +38,7 @@ public class PlayList extends AudioSorter implements infoShower,TrackManager{
         return TracksList;
     }
 
-    public ArrayList<Track> alphabeticalSort(){
-        return sortTracksAlphabetically(TracksList);
-    }
 
-    public ArrayList<Track> sortTracksByYear(){
-        return sortTracksByDate(TracksList);
-    }
-
-    public ArrayList<Track> sortTracksByLikes(){
-        return sortTracksByLikes(TracksList);
-    }
 
     public String getPlayListID() {
         return playListID;
@@ -83,9 +74,11 @@ public class PlayList extends AudioSorter implements infoShower,TrackManager{
         this.playListTimeStringed = playListTimeStringed;
     }
 
-    public String getPlayListDate() {
+    public LocalDate getPlayListDate() {
         return playListDate;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

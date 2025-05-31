@@ -2,7 +2,7 @@ package models;
 
 import java.util.*;
 
-public class Account extends AudioSorter implements CanShare,TrackManager,infoShower{
+public class Account implements TrackManager,infoShower{
     private String Username;
     private String AccountName; // people see the account with this name
     private String password;
@@ -14,7 +14,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
 
     private boolean canShareWith = true;
     Set<PlayList> PlayListList = new HashSet<PlayList>();
-    Set<Track> allTracks = new HashSet<>();
+    static Set<Track> allTracks = new HashSet<>();
 
 
 
@@ -27,30 +27,10 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         UserToken = Id_generator.generateToken();
         /// WIP THING TO TEST ADMIN
         //TODO: fix the random ID and Token Generator to be a one-use thing only
-        Admin.addAccountToList(this);
+//        Admin.addAccountToList(this);
     }
 
-    public void shareTrack(Track track, Account... accounts) throws CanNotShareWithException {
-        for(Account acc :accounts){
-            if(!acc.canShareWith){
-                throw new CanNotShareWithException("Can not share Track with this user");
-            }
-            if(acc != null){
-                acc.addTrack(track);
-            }
-        }
-    }
-    public void sharePlayList(PlayList playList, Account... accounts) throws CanNotShareWithException,
-                                                                            RedundantPlayListNameException{
-        for(Account acc :accounts){
-            if(!acc.canShareWith){
-                throw new CanNotShareWithException("Can not share Playlist with this user");
-            }
-            if(acc != null){
-                acc.Addplaylist(playList);
-            }
-        }
-    }
+
 
     public void Addplaylist(PlayList p) throws RedundantPlayListNameException{
         for(PlayList playList : PlayListList){
@@ -64,7 +44,7 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         PlayListList.remove(p);
     }
 
-    // temp upload
+
     public void addTrack(Track t){
         trackHistory.addToHistory(t);
         allTracks.add(t);
@@ -84,26 +64,6 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
             playList.removeTrack(track);
         }
     }
-
-    //TODO: signing 'in' and logging 'in' and their 'out' counterparts
-
-    public void signIn() throws WrongPasswordException,WrongUserNameException
-                                ,RedundantUsernameException,RedundantAccountNameException{
-
-    }
-    public void logIn() throws WrongPasswordException,WrongUserNameException
-                                ,RedundantUsernameException,RedundantAccountNameException{
-
-    }
-    public void logOut(){
-
-    }
-
-    //TODO: add downloading and uploading feature
-    public void downloadTrack(){}
-
-    public void UploadTrack(){}
-
 
 
     public String getUsername() {
@@ -153,20 +113,13 @@ public class Account extends AudioSorter implements CanShare,TrackManager,infoSh
         AccountName = accountName;
     }
 
+    public static Set<Track> getAllTracks() {
+        return allTracks;
+    }
 
     /// EVERYTHING RELATED TO ALL TRACKS MANAGEMENT
 
-    public ArrayList<Track> alphabeticalSort() {
-        return sortTracksAlphabetically(allTracks);
-    }
 
-    public ArrayList<Track> sortTracksByYear() {
-        return sortTracksByDate(allTracks);
-    }
-
-    public ArrayList<Track> sortTracksByLikes() {
-        return sortTracksByLikes(allTracks);
-    }
 
 
     @Override

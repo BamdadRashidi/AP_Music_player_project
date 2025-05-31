@@ -8,21 +8,23 @@ public class Track implements Serializable , Comparable<Track> {
     private String trackName;
     private String trackId;
     private String artistName;
-    private String genre;
+    private Genres genre;
     private LocalDate trackDate;
     private boolean isLiked;
     private Integer likes = 0;
     private int plays = 0;
-
     private boolean isExplicit = false;
-    public Track(String trackName, String artistName, String genre, boolean explicit) {
+
+    //TODO: implement the track Base64 and image potential
+
+    public Track(String trackName, String artistName, Genres genre, boolean explicit) {
         this.trackName = trackName;
         this.artistName = artistName;
         this.trackDate = LocalDate.now();
         this.isExplicit = explicit;
         this.genre = genre;
         this.trackId = Id_generator.generateId();
-        Admin.addTrackToList(this);
+//        Admin.addTrackToList(this);
     }
 
     @Override
