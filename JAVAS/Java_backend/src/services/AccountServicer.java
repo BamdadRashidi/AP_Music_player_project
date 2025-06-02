@@ -10,33 +10,33 @@ public class AccountServicer extends AudioSorter implements CanShare{
     public AccountServicer(Account account) {
         this.account = account;
     }
-    public void signIn(){
+    public static void signIn(){
 
     }
-    public void logIn(){
-
-    }
-
-    public void logOut(){
+    public static void logIn(){
 
     }
 
-    public void changeEmail(){
-
-    }
-    public void changePassword(){
+    public static void logOut(){
 
     }
 
-    public void changeUsername(){
+    public static void changeEmail(){
+
+    }
+    public static void changePassword(){
 
     }
 
-    public void downloadTrack(){
+    public static void changeUsername(){
 
     }
 
-    public void UploadTrack(){
+    public static void downloadTrack(){
+
+    }
+
+    public static void UploadTrack(){
 
 
     }

@@ -46,6 +46,19 @@ public class Track implements Serializable , Comparable<Track> {
     public void PlayTrack(){
         plays++;
     }
+
+    public Genres getGenre() {
+        return genre;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    public void setGenre(Genres genre) {
+        this.genre = genre;
+    }
+
     public String getTrackName() {
         return trackName;
     }
