@@ -17,7 +17,7 @@ public class DataBase {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private final ReentrantReadWriteLock ReadAndWriteLock = new ReentrantReadWriteLock();
 
-    private static volatile DataBase db = new DataBase();
+    private static volatile DataBase db = getInstance();
 
     public DataBase() {
         loadDbFile();
@@ -94,7 +94,7 @@ public class DataBase {
         }
     }
 
-    public Account getAccount(String userId) {
+    public Account fetchAccount(String userId) {
         ReadAndWriteLock.readLock().lock();
         try {
             return accounts.get(userId);
@@ -114,7 +114,7 @@ public class DataBase {
         }
     }
 
-    public Track getTrack(String id) {
+    public Track fetchTrack(String id) {
         ReadAndWriteLock.readLock().lock();
         try {
             return tracks.get(id);
@@ -135,7 +135,7 @@ public class DataBase {
         }
     }
 
-    public PlayList getPlaylist(String id) {
+    public PlayList fetchPlaylist(String id) {
         ReadAndWriteLock.readLock().lock();
         try {
             return playlists.get(id);
@@ -144,6 +144,36 @@ public class DataBase {
             ReadAndWriteLock.readLock().unlock();
         }
     }
+
+    public ConcurrentHashMap<String, Account> getAccounts() {
+        ReadAndWriteLock.readLock().lock();
+        try{
+            return accounts;
+        }
+        finally {
+            ReadAndWriteLock.readLock().unlock();
+        }
+    }
+    public ConcurrentHashMap<String, PlayList> getPlaylists() {
+        ReadAndWriteLock.readLock().lock();
+        try{
+            return playlists;
+        }
+        finally {
+            ReadAndWriteLock.readLock().unlock();
+        }
+    }
+    public ConcurrentHashMap<String, Track> getTracks() {
+        ReadAndWriteLock.readLock().lock();
+        try{
+            return tracks;
+        }
+        finally {
+            ReadAndWriteLock.readLock().unlock();
+        }
+    }
+
+
 
 
 
