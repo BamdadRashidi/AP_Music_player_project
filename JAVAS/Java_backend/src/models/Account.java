@@ -25,9 +25,6 @@ public class Account implements TrackManager,infoShower{
         password = pass;
         userId = Id_generator.generateId();
         UserToken = Id_generator.generateToken();
-        /// WIP THING TO TEST ADMIN
-        //TODO: fix the random ID and Token Generator to be a one-use thing only
-//        Admin.addAccountToList(this);
     }
 
 

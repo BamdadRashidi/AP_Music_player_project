@@ -94,6 +94,17 @@ public class DataBase {
         }
     }
 
+    public void removeAccount(Account acc) {
+        ReadAndWriteLock.writeLock().lock();
+        try{
+            accounts.remove(acc.getUserId());
+            saveDbFile();
+        }
+        finally {
+            ReadAndWriteLock.writeLock().unlock();
+        }
+    }
+
     public Account fetchAccount(String userId) {
         ReadAndWriteLock.readLock().lock();
         try {
