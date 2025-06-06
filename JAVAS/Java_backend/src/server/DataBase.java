@@ -10,9 +10,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.*;
 public class DataBase {
-    private final ConcurrentHashMap<String, Account> accounts = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, Track> tracks = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, PlayList> playlists = new ConcurrentHashMap<>();
+    private final Map<String, Account> accounts = Collections.synchronizedMap(new LinkedHashMap<>());
+
+    private final Map<String, Track> tracks = Collections.synchronizedMap(new LinkedHashMap<>());
+
+    private final Map<String, PlayList> playlists = Collections.synchronizedMap(new LinkedHashMap<>());
+
     private final String dataBaseFile = "db.json";
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private final ReentrantReadWriteLock ReadAndWriteLock = new ReentrantReadWriteLock();
@@ -156,7 +159,7 @@ public class DataBase {
         }
     }
 
-    public ConcurrentHashMap<String, Account> getAccounts() {
+    public Map<String, Account> getAccounts() {
         ReadAndWriteLock.readLock().lock();
         try{
             return accounts;
@@ -165,7 +168,7 @@ public class DataBase {
             ReadAndWriteLock.readLock().unlock();
         }
     }
-    public ConcurrentHashMap<String, PlayList> getPlaylists() {
+    public Map<String, PlayList> getPlaylists() {
         ReadAndWriteLock.readLock().lock();
         try{
             return playlists;
@@ -174,7 +177,7 @@ public class DataBase {
             ReadAndWriteLock.readLock().unlock();
         }
     }
-    public ConcurrentHashMap<String, Track> getTracks() {
+    public Map<String, Track> getTracks() {
         ReadAndWriteLock.readLock().lock();
         try{
             return tracks;

@@ -1,14 +1,21 @@
 package models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.*;
 
 public class Account implements TrackManager,infoShower{
+    @SerializedName("username")
     private String Username;
-    private String AccountName; // people see the account with this name
+    @SerializedName("password")
     private String password;
+    @SerializedName("accountName")
+    private String AccountName; // people see the account with this name
 
+    @SerializedName("userToken")
     private final String UserToken;
-    private final String userId; //TODO: make the id smaller
+    @SerializedName("userId")
+    private final String userId;
 
     private History trackHistory;
 
@@ -18,13 +25,13 @@ public class Account implements TrackManager,infoShower{
 
 
 
-    public Account(String accName,String name,String pass){
-        trackHistory = new History();
-        AccountName = accName;
+    public Account(String name,String pass,String accName){
         Username = name;
         password = pass;
+        AccountName = accName;
         userId = Id_generator.generateId();
         UserToken = Id_generator.generateToken();
+        trackHistory = new History();
     }
 
 

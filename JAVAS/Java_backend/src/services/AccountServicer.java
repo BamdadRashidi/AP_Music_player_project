@@ -12,15 +12,16 @@ public class AccountServicer extends AudioSorter implements CanShare{
     private Account account;
     private static DataBase dataBase = DataBase.getInstance();
     private static final Gson gson = new Gson();
+
     private static Account activeAccount;
 
     public AccountServicer(Account account) {
         this.account = account;
     }
     public static Response signIn(JsonObject payload){
+        String accountName = payload.get("accountName").getAsString();
         String username = payload.get("username").getAsString();
         String password = payload.get("password").getAsString();
-        String accountName = payload.get("accountName").getAsString();
         for(Account acc : dataBase.getAccounts().values()){
             if (acc.getUsername().equals(username)) {
                 return new Response("fail", "This username Already Exists.", null);
@@ -36,7 +37,6 @@ public class AccountServicer extends AudioSorter implements CanShare{
     public static Response logIn(JsonObject payload){
         String username = payload.get("username").getAsString();
         String password = payload.get("password").getAsString();
-        String accountName = payload.get("accountName").getAsString();
         JsonObject accountPayload = new JsonObject();
         for(Account acc : dataBase.getAccounts().values()){
             if (acc.getUsername().equals(username) && acc.getPassword().equals(password)) {
@@ -66,6 +66,7 @@ public class AccountServicer extends AudioSorter implements CanShare{
         for(Account acc : dataBase.getAccounts().values()){
             if (acc.getUserId().equals(userId)) {
                 acc.setPassword(newPassword);
+                dataBase.addAccount(acc);
                 return new Response("success", "Password changed.", null);
             }
         }
@@ -80,6 +81,7 @@ public class AccountServicer extends AudioSorter implements CanShare{
         for(Account acc : dataBase.getAccounts().values()){
             if (acc.getUserId().equals(userId)) {
                 acc.setUsername(newUsername);
+                dataBase.addAccount(acc);
                 return new Response("success", "Username changed.", null);
             }
         }
@@ -92,7 +94,8 @@ public class AccountServicer extends AudioSorter implements CanShare{
         String newAccountName = payload.get("newAccountName").getAsString();
         for(Account acc : dataBase.getAccounts().values()){
             if (acc.getUserId().equals(userId)) {
-                acc.setUsername(newAccountName);
+                acc.setAccountName(newAccountName);
+                dataBase.addAccount(acc);
                 return new Response("success", "Account name changed.", null);
             }
         }

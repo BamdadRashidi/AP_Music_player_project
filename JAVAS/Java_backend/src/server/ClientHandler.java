@@ -27,10 +27,12 @@ public class ClientHandler extends Thread {
             String responseString;
 
             while ((jsonString=reader.readLine())!=null){
+                System.out.println("Raw input: " + request);
                 request = gson.fromJson(jsonString, Request.class);
                 response = RequestHandler.handle(request);
                 responseString = gson.toJson(response);
                 writer.println(responseString);
+                System.out.println("Received payload: " + response);
             }
         }catch (IOException e){
             System.out.println(e.getMessage());

@@ -1,0 +1,27 @@
+# Flutter & Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+build/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# Android
+**/android/.gradle/
+**/android/app/build/
+**/android/local.properties
+**/android/.idea/
+**/android/app/.cxx/
+
+# Java & IntelliJ/Android Studio
+*.iml
+.idea/
+*.class
+out/
+bin/
+
+# System files
+.DS_Store
+Thumbs.db

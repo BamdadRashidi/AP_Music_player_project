@@ -19,6 +19,5 @@ public class SocketServer {
             System.out.println(w.getMessage());
         }
 
-
     }
 }
