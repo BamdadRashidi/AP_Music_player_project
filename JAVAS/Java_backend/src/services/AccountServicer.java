@@ -19,9 +19,9 @@ public class AccountServicer extends AudioSorter implements CanShare{
         this.account = account;
     }
     public static Response signIn(JsonObject payload){
-        String accountName = payload.get("accountName").getAsString();
         String username = payload.get("username").getAsString();
         String password = payload.get("password").getAsString();
+        String accountName = payload.get("accountName").getAsString();
         for(Account acc : dataBase.getAccounts().values()){
             if (acc.getUsername().equals(username)) {
                 return new Response("fail", "This username Already Exists.", null);
