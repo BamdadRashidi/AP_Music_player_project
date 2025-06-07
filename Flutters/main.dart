@@ -27,7 +27,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class Loginstate extends State<LoginPage> {
-  final accountNameController =TextEditingController();
   final usernameController =TextEditingController();
   final passwordController =TextEditingController();
 
@@ -47,38 +46,61 @@ class Loginstate extends State<LoginPage> {
 
 
   Future<void> sendLoginRequest() async {
-    final accountName =accountNameController.text.trim();
-    final username =usernameController.text.trim();
-    final password =passwordController.text.trim();
+    final username = usernameController.text.trim();
+    final password = passwordController.text.trim();
 
     if (!validatePassword(password)) {
       setState(() {
-        passError ="Password must be at least 8 characters, include upper and lower case letters and numbers.";
+        passError = "Password must be at least 8 characters, include upper and lower case letters and numbers.";
       });
       return;
     } else {
       setState(() {
-        passError=null;
+        passError = null;
       });
     }
 
     try {
-      final socket=await Socket.connect('10.0.2.2', 1080);
-      final jsonMap={
-        "action":"logIn",
-        "payload":{
-          "username":username,
-          "password":password
+      final socket = await Socket.connect('10.0.2.2', 1080);
+      final jsonMap = {
+        "action": "logIn",
+        "payload": {
+          "username": username,
+          "password": password
         }
       };
 
-      final jsonString =jsonEncode(jsonMap);
+      final jsonString = jsonEncode(jsonMap);
       socket.write(jsonString + '\n');
-      socket.destroy();
+
+      // Read response
+      socket.listen((List<int> event) {
+        final responseString = utf8.decode(event);
+        final response = jsonDecode(responseString);
+
+        socket.destroy();
+
+        if (response['status'] == 'success') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SecondPage()),
+          );
+        } else {
+          // Show error as SnackBar
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(response['message'] ?? 'Login failed. Please sign in first.')),
+          );
+        }
+      });
+
     } catch (e) {
       print("Connection error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Server connection error.")),
+      );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +130,7 @@ class Loginstate extends State<LoginPage> {
               children: [
                 Align(
                   alignment:Alignment.center,
-                  child: Image.asset("image/logo2 (1).png"),
+                  child: Image.asset("image/navakLogo.png"),
 
                 )
               ],
@@ -156,7 +178,7 @@ class Loginstate extends State<LoginPage> {
         children: [
          Align(
            alignment: Alignment.topCenter,
-           child: Image( image: AssetImage('image/logo2 (1).png'),height: MediaQuery.of(context).size.height*0.15,),
+           child: Image( image: AssetImage('image/navakLogo.png'),height: MediaQuery.of(context).size.height*0.15,),
          )
           ,
           LayoutBuilder(
@@ -181,16 +203,6 @@ class Loginstate extends State<LoginPage> {
               );
             },
           ),
-          TextField(
-            controller: accountNameController,
-            style: const TextStyle(color: Colors.white),
-            decoration: const InputDecoration(
-              labelText: "Account name",
-              labelStyle: TextStyle(color: Colors.white),
-              prefixIcon: Icon(Icons.email, color: Colors.white),
-            ),
-          ),
-          const SizedBox(height: 16),
           TextField(
             controller: usernameController,
             style: const TextStyle(color: Colors.white),
@@ -227,12 +239,6 @@ class Loginstate extends State<LoginPage> {
           ElevatedButton(
             onPressed: () {
               final password = passwordController.text.trim();
-              if (accountNameController.text.trim().isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Account name cannot be empty!")),
-                );
-                return;
-              }
               if (usernameController.text.trim().isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("Username cannot be empty!")),
