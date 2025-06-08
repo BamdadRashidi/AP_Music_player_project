@@ -15,7 +15,8 @@ public class SocketServer {
                System.out.println("New user connected");
                new ClientHandler(socket).start();
            }
-        }catch (IOException w){
+        }
+        catch (IOException w){
             System.out.println(w.getMessage());
         }
 

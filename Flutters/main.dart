@@ -65,7 +65,6 @@ class Loginstate extends State<LoginPage> {
     try {
       final socket = await Socket.connect('192.168.1.101', 1080).timeout(Duration(seconds: 5));
 
-
       final jsonMap = {
         "action": "logIn",
         "payload":{
