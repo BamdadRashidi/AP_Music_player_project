@@ -49,6 +49,8 @@ class Loginstate extends State<LoginPage> {
     final username = usernameController.text.trim();
     final password = passwordController.text.trim();
 
+  
+
     if (!validatePassword(password)) {
       setState(() {
         passError = "Password must be at least 8 characters, include upper and lower case letters and numbers.";
@@ -61,45 +63,73 @@ class Loginstate extends State<LoginPage> {
     }
 
     try {
-      final socket = await Socket.connect('10.0.2.2', 1080);
+      final socket = await Socket.connect('192.168.1.101', 1080).timeout(Duration(seconds: 5));
+
+
       final jsonMap = {
         "action": "logIn",
-        "payload": {
-          "username": username,
-          "password": password
+        "payload":{
+          "username":username,
+          "password":password,
         }
       };
 
       final jsonString = jsonEncode(jsonMap);
       socket.write(jsonString + '\n');
 
-      // Read response
-      socket.listen((List<int> event) {
-        final responseString = utf8.decode(event);
-        final response = jsonDecode(responseString);
 
-        socket.destroy();
+      socket.listen(
+            (data) {
+          final responseString =utf8.decode(data);
 
-        if (response['status'] == 'success') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SecondPage()),
-          );
-        } else {
-          // Show error as SnackBar
+
+          try {
+            final Map<String, dynamic> response = jsonDecode(responseString);
+            final status =response['status']?.toLowerCase();
+            final message =response['message'] ??'No message from server.';
+
+            if (status =='success') {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) =>SecondPage()),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content:Text(message),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          } catch (e) {
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content:Text("Invalid response from server.")),
+            );
+          } finally {
+            socket.destroy();
+          }
+        },
+        onError: (error){
+
+          socket.destroy();
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(response['message'] ?? 'Login failed. Please sign in first.')),
+            SnackBar(content: Text("Socket error.")),
           );
-        }
-      });
+        },
+        onDone: () {
 
+        },
+      );
     } catch (e) {
-      print("Connection error: $e");
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Server connection error.")),
       );
     }
   }
+
+
 
 
   @override
@@ -130,7 +160,7 @@ class Loginstate extends State<LoginPage> {
               children: [
                 Align(
                   alignment:Alignment.center,
-                  child: Image.asset("image/navakLogo.png"),
+                  child: Image.asset("image/navaklogo.png"),
 
                 )
               ],
@@ -178,7 +208,7 @@ class Loginstate extends State<LoginPage> {
         children: [
          Align(
            alignment: Alignment.topCenter,
-           child: Image( image: AssetImage('image/navakLogo.png'),height: MediaQuery.of(context).size.height*0.15,),
+           child: Image( image: AssetImage("image/navaklogo.png"),height: MediaQuery.of(context).size.height*0.15,),
          )
           ,
           LayoutBuilder(
@@ -266,10 +296,6 @@ class Loginstate extends State<LoginPage> {
 
               sendLoginRequest();
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SecondPage()),
-              );
             },
 
             style: ElevatedButton.styleFrom(
