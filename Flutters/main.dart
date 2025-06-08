@@ -65,6 +65,7 @@ class Loginstate extends State<LoginPage> {
     try {
       final socket = await Socket.connect('192.168.1.101', 1080).timeout(Duration(seconds: 5));
 
+
       final jsonMap = {
         "action": "logIn",
         "payload":{
@@ -374,11 +375,6 @@ class setting extends StatelessWidget {
 }
 
 
-
-
-
-
-
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
 
@@ -421,21 +417,68 @@ class _SignupState extends State<Signup> {
     }
 
     try {
-      final socket =await Socket.connect('10.0.2.2', 1080);
+      final socket =await Socket.connect('192.168.1.101', 1080);
       final jsonMap ={
         "action": "signIn",
         "payload":{
+          "accountName": accountName,
           "username": username,
           "password": password,
-          "accountName": accountName
+
         }
       };
 
       final jsonString =jsonEncode(jsonMap);
       socket.write(jsonString + '\n');
-      socket.destroy();
+
+      socket.listen(
+            (data) {
+          final responseString =utf8.decode(data);
+
+
+          try {
+            final Map<String, dynamic> response = jsonDecode(responseString);
+            final status =response['status']?.toLowerCase();
+            final message =response['message'] ??'No message from server.';
+
+            if (status =='success') {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) =>LoginPage()),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content:Text(message),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          } catch (e) {
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content:Text("Invalid response from server.")),
+            );
+          } finally {
+            socket.destroy();
+          }
+        },
+        onError: (error){
+
+          socket.destroy();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Socket error.")),
+          );
+        },
+        onDone: () {
+
+        },
+      );
     } catch (e) {
-      print("Connection error: $e");
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Server connection error.")),
+      );
     }
   }
 
