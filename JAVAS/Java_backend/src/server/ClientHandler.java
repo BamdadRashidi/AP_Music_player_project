@@ -32,7 +32,7 @@ public class ClientHandler extends Thread {
                 response = RequestHandler.handle(request);
                 responseString = gson.toJson(response);
                 writer.println(responseString);
-                System.out.println("Received payload: " + response);
+                System.out.println("Received payload: " + response.status + " : " + response.message);
             }
         }catch (IOException e){
             System.out.println(e.getMessage());

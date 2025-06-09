@@ -63,7 +63,7 @@ class Loginstate extends State<LoginPage> {
     }
 
     try {
-      final socket = await Socket.connect('192.168.1.101', 1080).timeout(Duration(seconds: 5));
+      final socket = await Socket.connect('192.168.1.4', 1080).timeout(Duration(seconds: 5));
 
 
       final jsonMap = {
@@ -160,7 +160,7 @@ class Loginstate extends State<LoginPage> {
               children: [
                 Align(
                   alignment:Alignment.center,
-                  child: Image.asset("image/navaklogo.png"),
+                  child: Image.asset("image/navakLogo.png"),
 
                 )
               ],
@@ -208,7 +208,7 @@ class Loginstate extends State<LoginPage> {
         children: [
          Align(
            alignment: Alignment.topCenter,
-           child: Image( image: AssetImage("image/navaklogo.png"),height: MediaQuery.of(context).size.height*0.15,),
+           child: Image( image: AssetImage("image/navakLogo.png"),height: MediaQuery.of(context).size.height*0.15,),
          )
           ,
           LayoutBuilder(
@@ -417,7 +417,7 @@ class _SignupState extends State<Signup> {
     }
 
     try {
-      final socket =await Socket.connect('192.168.1.101', 1080);
+      final socket =await Socket.connect('192.168.1.4', 1080);
       final jsonMap ={
         "action": "signIn",
         "payload":{

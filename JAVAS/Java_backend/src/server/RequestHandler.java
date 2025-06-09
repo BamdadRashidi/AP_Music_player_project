@@ -21,6 +21,7 @@ public class RequestHandler {
             case "changePassword": response = AccountServicer.changePassword(payload); break;
             case "changeUsername": response = AccountServicer.changeUsername(payload); break;
             case "DeleteAccount": response = AccountServicer.DeleteAccount(payload); break;
+            case "SetCanShare" : response = AccountServicer.setCanShareWith(payload); break;
             //TODO: more actions coming soon!
             default:
                 return new Response("Failed","incorrect action",null);
