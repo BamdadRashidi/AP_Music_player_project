@@ -1,17 +1,23 @@
+
 package services;
 import API_messages.Response;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import models.*;
 import server.*;
 import models.utility.*;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class AccountServicer extends AudioSorter implements CanShare{
+public class AccountServicer extends AudioSorter implements CanShare {
     private Account account;
     private static DataBase dataBase = DataBase.getInstance();
-    private static final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalAdaptor()).setPrettyPrinting()
+            .create();
+
 
     private static Account activeAccount;
 
@@ -19,9 +25,9 @@ public class AccountServicer extends AudioSorter implements CanShare{
         this.account = account;
     }
     public static Response signIn(JsonObject payload){
+        String accountName = payload.get("accountName").getAsString();
         String username = payload.get("username").getAsString();
         String password = payload.get("password").getAsString();
-        String accountName = payload.get("accountName").getAsString();
         for(Account acc : dataBase.getAccounts().values()){
             if (acc.getUsername().equals(username)) {
                 return new Response("fail", "This username Already Exists.", null);
@@ -32,7 +38,7 @@ public class AccountServicer extends AudioSorter implements CanShare{
         JsonObject accountPayload = new JsonObject();
         accountPayload.addProperty("userId", account.getUserId());
         accountPayload.addProperty("Token", account.getUserToken());
-        return new Response("success","Account created",accountPayload);
+        return new Response("Success","Account created",accountPayload);
     }
     public static Response logIn(JsonObject payload){
         String username = payload.get("username").getAsString();
@@ -44,9 +50,11 @@ public class AccountServicer extends AudioSorter implements CanShare{
                 accountPayload.addProperty("userId", acc.getUserId());
                 accountPayload.addProperty("Token", acc.getUserToken());
                 accountPayload.addProperty("accountName", acc.getAccountName());
+                System.out.println("seccess");
                 return new Response("success", "Login successful.", accountPayload);
             }
         }
+        System.out.println("fail");
         return new Response("fail", "Couldn't log in :(", null);
     }
 
@@ -111,23 +119,6 @@ public class AccountServicer extends AudioSorter implements CanShare{
         }
         return new Response("fail", "Couldn't delete your account :(", null);
     }
-    public static Response setCanShareWith(JsonObject payload){
-        String userId = payload.get("userId").getAsString();
-        for(Account acc : dataBase.getAccounts().values()){
-            if (acc.getUserId().equals(userId)) {
-                if(acc.CanShareWith()){
-                    acc.setCanShareWith(false);
-                }
-                else{
-                    acc.setCanShareWith(true);
-                }
-                dataBase.addAccount(acc);
-                return new Response("success", "CanShareWith successfully set.", null);
-            }
-        }
-        return new Response("fail", "Couldn't set CanShareWith", null);
-    }
-
     public static Response downloadTrack(JsonObject payload){
         return null;
     }
