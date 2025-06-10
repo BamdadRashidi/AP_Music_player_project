@@ -1,4 +1,5 @@
 package server;
+
 import models.Account;
 import models.PlayList;
 import models.Track;
@@ -20,7 +21,7 @@ public class DataBase {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private final ReentrantReadWriteLock ReadAndWriteLock = new ReentrantReadWriteLock();
 
-    private static volatile DataBase db = getInstance();
+    private static volatile DataBase db ;
 
     public DataBase() {
         loadDbFile();
