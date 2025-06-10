@@ -50,7 +50,7 @@ public class AccountServicer extends AudioSorter implements CanShare {
                 accountPayload.addProperty("userId", acc.getUserId());
                 accountPayload.addProperty("Token", acc.getUserToken());
                 accountPayload.addProperty("accountName", acc.getAccountName());
-                System.out.println("seccess");
+                System.out.println("success");
                 return new Response("success", "Login successful.", accountPayload);
             }
         }
@@ -119,6 +119,24 @@ public class AccountServicer extends AudioSorter implements CanShare {
         }
         return new Response("fail", "Couldn't delete your account :(", null);
     }
+
+    public static Response setCanShareWith(JsonObject payload){
+        String userId = payload.get("userId").getAsString();
+        for(Account acc : dataBase.getAccounts().values()){
+            if (acc.getUserId().equals(userId)) {
+                if(acc.CanShareWith()){
+                    acc.setCanShareWith(false);
+                }
+                else{
+                    acc.setCanShareWith(true);
+                }
+                dataBase.addAccount(acc);
+                return new Response("success", "CanShareWith successfully set.", null);
+            }
+        }
+        return new Response("fail", "Couldn't set CanShareWith", null);
+    }
+
     public static Response downloadTrack(JsonObject payload){
         return null;
     }
