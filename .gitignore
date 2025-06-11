@@ -21,6 +21,7 @@ ios/Flutter/Flutter.podspec
 *.class
 out/
 bin/
+outputs/
 
 # System files
 .DS_Store
