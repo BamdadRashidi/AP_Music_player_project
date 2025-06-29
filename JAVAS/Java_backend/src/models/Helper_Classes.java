@@ -8,8 +8,11 @@ public class Helper_Classes {
 
 
 interface TrackManager{
-    void addTrack(Track track);
-    void removeTrack(Track track);
+    static void addTrack(Track track) {
+
+    }
+
+    static void removeTrack(Track track){}
 }
 
 interface infoShower{

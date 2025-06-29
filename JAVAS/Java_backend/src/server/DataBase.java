@@ -109,6 +109,25 @@ public class DataBase {
         }
     }
 
+    public void addTrackAndAssignToUser(Track track, String userId) {
+        ReadAndWriteLock.writeLock().lock();
+        try {
+            tracks.put(track.getTrackId(), track);
+            Account acc = accounts.get(userId);
+            if (acc != null) {
+                acc.addOwnedTrack(track.getTrackId());
+            }
+            saveDbFile();
+        }
+        finally {
+            ReadAndWriteLock.writeLock().unlock();
+        }
+    }
+
+    public void removeTrack(){
+
+    }
+
     public Account fetchAccount(String userId) {
         ReadAndWriteLock.readLock().lock();
         try {

@@ -17,7 +17,7 @@ public class Account implements TrackManager,infoShower{
     @SerializedName("userId")
     private final String userId;
 
-    private History trackHistory;
+    private static History trackHistory;
 
     private boolean canShareWith = true;
     Set<PlayList> PlayListList = new HashSet<PlayList>();
@@ -52,7 +52,6 @@ public class Account implements TrackManager,infoShower{
     public void addTrack(Track t){
         trackHistory.addToHistory(t);
         allTracks.add(t);
-
     }
     public void removeTrack(Track t){
         allTracks.remove(t);
@@ -67,6 +66,16 @@ public class Account implements TrackManager,infoShower{
         if(track != null && playList.getTracksList().contains(track)) {
             playList.removeTrack(track);
         }
+    }
+    @SerializedName("ownedTracks")
+    private final Set<String> ownedTrackIds = new HashSet<>();
+
+    public void addOwnedTrack(String trackId) {
+        ownedTrackIds.add(trackId);
+    }
+
+    public Set<String> getOwnedTrackIds() {
+        return ownedTrackIds;
     }
 
 

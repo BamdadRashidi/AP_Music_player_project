@@ -22,7 +22,7 @@ public class RequestHandler {
             case "changeUsername": response = AccountServicer.changeUsername(payload); break;
             case "DeleteAccount": response = AccountServicer.DeleteAccount(payload); break;
             case "SetCanShare" : response = AccountServicer.setCanShareWith(payload); break;
-            //TODO: more actions coming soon!
+            case "upload_track" : response = TrackServicer.uploadTrack(payload); break;
             default:
                 return new Response("Failed","incorrect action",null);
         }
