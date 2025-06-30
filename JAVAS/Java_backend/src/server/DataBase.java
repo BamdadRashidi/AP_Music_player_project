@@ -73,7 +73,7 @@ public class DataBase {
         }
     }
 
-    private void saveDbFile(){
+    public void saveDbFile(){
         try (Writer writer = new FileWriter(dataBaseFile)) {
             Map<String, Object> data = new HashMap<>();
             data.put("accounts", accounts);
@@ -102,6 +102,17 @@ public class DataBase {
         ReadAndWriteLock.writeLock().lock();
         try{
             accounts.remove(acc.getUserId());
+            saveDbFile();
+        }
+        finally {
+            ReadAndWriteLock.writeLock().unlock();
+        }
+    }
+
+    public void removePlayList(PlayList pl) {
+        ReadAndWriteLock.writeLock().lock();
+        try{
+            playlists.remove(pl.getPlayListID());
             saveDbFile();
         }
         finally {

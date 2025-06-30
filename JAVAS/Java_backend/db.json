@@ -1,53 +1,56 @@
 {
-  "playlists": {},
+  "playlists": {
+    "e846339f-fdf0-458a-8a90-389a0ca5b709": {
+      "TracksList": [],
+      "playlistName": "firstPL",
+      "playListID": "e846339f-fdf0-458a-8a90-389a0ca5b709",
+      "playListDate": 2025
+    }
+  },
   "accounts": {
-    "ba9893e3-acb6-4b47-bcfb-b5a5e7f814cb": {
-      "username": "Virtual@gmail.com",
-      "password": "Vg10203040",
-      "accountName": "virtualGuy",
-      "userToken": "cf31cb07-d244-4937-aa9d-c5cce51eb233",
-      "userId": "ba9893e3-acb6-4b47-bcfb-b5a5e7f814cb",
-      "trackHistory": {
-        "history": []
-      },
-      "canShareWith": true,
-      "PlayListList": []
+    "89f87ffa-295c-4b48-b64a-758a9a682ba4": {
+      "username": "Bamdadrshydy@gmail.com",
+      "password": "MMbb1084351403",
+      "accountName": "Deez",
+      "userToken": "55337faf-9f3a-4d5e-8741-7e98ca9eb508",
+      "userId": "89f87ffa-295c-4b48-b64a-758a9a682ba4",
+      "canShareWith": false,
+      "PlayListList": [],
+      "ownedTracks": []
     },
-    "7662de20-6489-4943-9c60-1594c8edfc8f": {
-      "username": "virtualgirl@gmail.com",
-      "password": "Vg88996655",
-      "accountName": "VirtualGal",
-      "userToken": "f7cbfaef-b8a2-4d06-a73c-9eadafa455ea",
-      "userId": "7662de20-6489-4943-9c60-1594c8edfc8f",
-      "trackHistory": {
-        "history": []
-      },
+    "b528abe8-4a03-4c5d-b192-4d8d40c6142a": {
+      "username": "bamblieburg",
+      "password": "bambBOMB5544",
+      "accountName": "xx_Moai_gamer_xx",
+      "userToken": "69bb2ecb-0e01-4fc2-8111-c395f8d89cce",
+      "userId": "b528abe8-4a03-4c5d-b192-4d8d40c6142a",
       "canShareWith": true,
-      "PlayListList": []
+      "PlayListList": [
+        {
+          "TracksList": [],
+          "playlistName": "firstPL",
+          "playListID": "e846339f-fdf0-458a-8a90-389a0ca5b709",
+          "playListDate": 2025
+        }
+      ],
+      "ownedTracks": []
     },
-    "3205cd1b-bf61-49db-97a8-c3e60eab498b": {
-      "username": "Phoneguy@gmail.com",
-      "password": "Pg109238",
-      "accountName": "Phone",
-      "userToken": "30e165dd-b813-42c5-85a5-7e26e9702c58",
-      "userId": "3205cd1b-bf61-49db-97a8-c3e60eab498b",
-      "trackHistory": {
-        "history": []
-      },
+    "436f42cd-3314-4f95-91b0-f10ab17ad6ef": {
+      "username": "second",
+      "password": "NNvv80200",
+      "accountName": "NewSecondary",
+      "userToken": "815fc82e-0950-494f-9f35-a5ea6f0ba964",
+      "userId": "436f42cd-3314-4f95-91b0-f10ab17ad6ef",
       "canShareWith": true,
-      "PlayListList": []
-    },
-    "fc1680c7-8b17-423d-a1c6-e009e2868604": {
-      "username": "multdif@gmail.com",
-      "password": "Md55332211",
-      "accountName": "multidiffer",
-      "userToken": "a46342f7-7b04-4e7a-a756-dbb39ac52b53",
-      "userId": "fc1680c7-8b17-423d-a1c6-e009e2868604",
-      "trackHistory": {
-        "history": []
-      },
-      "canShareWith": true,
-      "PlayListList": []
+      "PlayListList": [
+        {
+          "TracksList": [],
+          "playlistName": "firstPL",
+          "playListID": "e846339f-fdf0-458a-8a90-389a0ca5b709",
+          "playListDate": 2025
+        }
+      ],
+      "ownedTracks": []
     }
   },
   "tracks": {}

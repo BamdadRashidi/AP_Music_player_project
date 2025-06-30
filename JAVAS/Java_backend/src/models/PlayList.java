@@ -11,19 +11,19 @@ public class PlayList implements infoShower,TrackManager{
     private String playlistName;
     private final String playListID;
 
-    private LocalDate playListDate;
+    private int playListDate;
 
 
     //TODO: use the two variables below
-    private Duration playlistTime;
-    private String playListTimeStringed;
+    //private Duration playlistTime;
+    //private String playListTimeStringed;
 
     //TODO: add a system which sums the length of the tracks and adds them to the playListTime;
     public PlayList(String playlistName) {
         this.playlistName = playlistName;
         playListID = Id_generator.generateId();
-        this.playlistTime = Duration.ZERO;
-//        Admin.addPlaylistToList(this);
+        playListDate = LocalDate.now().getYear();
+        //this.playlistTime = Duration.ZERO;
     }
 
     public void addTrack(Track t){
@@ -48,35 +48,39 @@ public class PlayList implements infoShower,TrackManager{
         return playlistName;
     }
 
+    public int getPlayListDate() {
+        return playListDate;
+    }
+
     public void setPlaylistName(String playlistName) {
         this.playlistName = playlistName;
     }
 
-    public String getPlayListTimeStringed() {
-        return playListTimeStringed;
-    }
+//    public String getPlayListTimeStringed() {
+//        return playListTimeStringed;
+//    }
 
     public int getSongCount() {
         return TracksList.size();
     }
 
 
-    public Duration getPlaylistTime() {
-        return playlistTime;
-    }
-
-    public void setPlaylistTime(Duration playlistTime) {
-        this.playlistTime = playlistTime;
-    }
-
-
-    public void setPlayListTimeStringed(String playListTimeStringed) {
-        this.playListTimeStringed = playListTimeStringed;
-    }
-
-    public LocalDate getPlayListDate() {
-        return playListDate;
-    }
+//    public Duration getPlaylistTime() {
+//        return playlistTime;
+//    }
+//
+//    public void setPlaylistTime(Duration playlistTime) {
+//        this.playlistTime = playlistTime;
+//    }
+//
+//
+//    public void setPlayListTimeStringed(String playListTimeStringed) {
+//        this.playListTimeStringed = playListTimeStringed;
+//    }
+//
+//    public LocalDate getPlayListDate() {
+//        return playListDate;
+//    }
 
 
 
