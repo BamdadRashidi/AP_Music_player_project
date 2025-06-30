@@ -22,15 +22,24 @@ public class RequestHandler {
             case "changeUsername": response = AccountServicer.changeUsername(payload); break;
             case "DeleteAccount": response = AccountServicer.DeleteAccount(payload); break;
             case "SetCanShare" : response = AccountServicer.setCanShareWith(payload); break;
-            case "upload_track" : response = TrackServicer.uploadTrack(payload); break;
-            //TODO: add one for removing track and another for liking the track
+            //TODO: setting pfp
+            case "upload_track" : response = TrackServicer.uploadTrack(payload); break; //TODO : WIP
+            //TODO: remove track
+            case "likeTrack" : response = TrackServicer.likeTrack(payload); break;
             case "addPlaylist" : response = PlayListServicer.addPlayList(payload); break;
             case "removePlaylist" : response = PlayListServicer.removePlayList(payload); break;
             case "sharePlaylist" : response = PlayListServicer.sharePlayListWith(payload); break;
             /*TODO: the following
               1. adding a song to a playlist
               2. removing one from a playlist
-              3. transfering one to another playlist
+              3. transferring one to another playlist
+            */
+
+            /*TODO:also the following
+                changing the name of the song
+                changing the artist
+                changing the genre
+                changing the picture
             */
 
             default:

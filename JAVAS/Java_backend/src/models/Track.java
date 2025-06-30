@@ -12,7 +12,7 @@ public class Track implements Serializable , Comparable<Track> {
     private LocalDate trackDate;
     private boolean isLiked;
     private Integer likes = 0;
-    private int plays = 0;
+//    private int plays = 0;
     private boolean isExplicit = false;
 
     //TODO: implement the track Base64 and image potential
@@ -33,19 +33,17 @@ public class Track implements Serializable , Comparable<Track> {
     }
 
     public void likeTrack(){
-        isLiked = true;
-        likes++;
+        isLiked = !isLiked;
+        if(isLiked){
+            likes++;
+        }
+        else{
+            likes--;
+        }
     }
-
-    public void unlikeTrack(){
-        isLiked = false;
-        likes--;
-    }
-
-
-    public void PlayTrack(){
-        plays++;
-    }
+//    public void PlayTrack(){
+//        plays++;
+//    }
 
     public Genres getGenre() {
         return genre;
@@ -98,7 +96,7 @@ public class Track implements Serializable , Comparable<Track> {
 
     @Override
     public String toString() {
-        return "[trackName: " + trackName + "]"+ ", [Plays:" + getPlays()+ "]" +", [trackId: " + trackId + "]" + ", [Artist Name: " + artistName + "]"+ ", [Genre: "+ genre + "]" + ", [trackDate: " + trackDate.getYear() + "]" + ", [Likes: " +  + likes + "]" + ", [Explicit: " + isExplicit + "]";
+        return "[trackName: " + trackName + "]"+ /*", [Plays:" + getPlays()+ "]"*/ ", [trackId: " + trackId + "]" + ", [Artist Name: " + artistName + "]"+ ", [Genre: "+ genre + "]" + ", [trackDate: " + trackDate.getYear() + "]" + ", [Likes: " +  + likes + "]" + ", [Explicit: " + isExplicit + "]";
     }
 
     @Override
@@ -113,14 +111,14 @@ public class Track implements Serializable , Comparable<Track> {
         return Objects.hash(trackName, trackId, trackDate, isLiked, likes);
     }
 
-    public void setPlays(int plays) {
-        this.plays = plays;
-    }
-
-    public int getPlays() {
-        return plays;
-    }
-
+//    public void setPlays(int plays) {
+//        this.plays = plays;
+//    }
+//
+//    public int getPlays() {
+//        return plays;
+//    }
+//
 
     public void setExplicit(boolean explicit) {
         isExplicit = explicit;

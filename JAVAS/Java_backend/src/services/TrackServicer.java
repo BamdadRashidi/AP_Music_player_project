@@ -14,6 +14,8 @@ public class TrackServicer {
 
     private static final String TRACKS_DIR = "server_tracks";
     private Account account;
+
+    private static DataBase dataBase = DataBase.getInstance();
     public static Response uploadTrack(JsonObject payload) {
         try {
             File dir = new File(TRACKS_DIR);
@@ -44,6 +46,25 @@ public class TrackServicer {
             e.printStackTrace();
             return new Response("fail", "Track did not upload successfully!", null);
         }
+    }
+
+    public static Response likeTrack(JsonObject payload) {
+        String trackId = payload.get("trackId").getAsString();
+        String userId = payload.get("userId").getAsString();
+        for(Account acc : dataBase.getAccounts().values()){
+            if(acc.getUserId().equals(userId)){
+                for(Track t: acc.getAllTracks()){
+                    if(t.getTrackId().equals(trackId)){
+                        t.likeTrack();
+                        JsonObject trackResponse = new JsonObject();
+                        trackResponse.addProperty("likes",t.getLikes());
+                        dataBase.saveDbFile();
+                        return new Response("success", "Track like successfully", trackResponse);
+                    }
+                }
+            }
+        }
+        return new Response("fail", "Track did not get liked!", null);
     }
 
 
