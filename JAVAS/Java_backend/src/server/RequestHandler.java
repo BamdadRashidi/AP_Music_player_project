@@ -29,17 +29,20 @@ public class RequestHandler {
             case "addPlaylist" : response = PlayListServicer.addPlayList(payload); break;
             case "removePlaylist" : response = PlayListServicer.removePlayList(payload); break;
             case "sharePlaylist" : response = PlayListServicer.sharePlayListWith(payload); break;
-            /*TODO: the following
+            case "changePlaylistName": response = PlayListServicer.changePlName(payload); break;
+            /*
+            TODO: the following
               1. adding a song to a playlist
               2. removing one from a playlist
-              3. transferring one to another playlist
+              3. transferring one track to another playlist
             */
 
-            /*TODO:also the following
+            /*
+            TODO:also the following
                 changing the name of the song
                 changing the artist
                 changing the genre
-                changing the picture
+                changing the picture (optional but eh)
             */
 
             default:

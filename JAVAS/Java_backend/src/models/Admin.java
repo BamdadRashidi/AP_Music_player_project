@@ -18,17 +18,17 @@ public class Admin extends AudioSorter{
         }
         return mostLikedTracks.toString();
     }
-    public static String findTheMostListenedTracks(){
-        ArrayList<Track> sorted = sortTracksByListens(DataBase.getInstance().getTracks().values());
-        StringBuilder mostListened = new StringBuilder();
-
-        int count = Math.min(10, sorted.size());
-        for (int i = 0; i < count; i++) {
-            mostListened.append(sorted.get(i).toString()).append("\n");
-        }
-
-        return mostListened.toString();
-    }
+//    public static String findTheMostListenedTracks(){
+//        ArrayList<Track> sorted = sortTracksByListens(DataBase.getInstance().getTracks().values());
+//        StringBuilder mostListened = new StringBuilder();
+//
+//        int count = Math.min(10, sorted.size());
+//        for (int i = 0; i < count; i++) {
+//            mostListened.append(sorted.get(i).toString()).append("\n");
+//        }
+//
+//        return mostListened.toString();
+//    }
 
     public static void getAccountInfo(String accountId, boolean shouldExpand) throws IdNotFoundException {
         for (Account account : DataBase.getInstance().getAccounts().values()) {
@@ -94,7 +94,7 @@ public class Admin extends AudioSorter{
                         System.out.println(findTheMostLikedTracks());
                         break;
                     case 4:
-                        System.out.println(findTheMostListenedTracks());
+//                        System.out.println(findTheMostListenedTracks());
                         break;
                     case 5:
                         System.exit(0);

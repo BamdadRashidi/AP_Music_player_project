@@ -25,10 +25,10 @@ public class AudioSorter{
         return sortedList;
     }
 
-    public static ArrayList<Track> sortTracksByListens(Collection<Track> allTracks) {
-        ArrayList<Track> sortedList = new ArrayList<>(allTracks);
-        Collections.sort(sortedList, Comparator.comparing(Track::getPlays).reversed());
-        return sortedList;
-    }
+//    public static ArrayList<Track> sortTracksByListens(Collection<Track> allTracks) {
+//        ArrayList<Track> sortedList = new ArrayList<>(allTracks);
+//        Collections.sort(sortedList, Comparator.comparing(Track::getPlays).reversed());
+//        return sortedList;
+//    }
 
 }

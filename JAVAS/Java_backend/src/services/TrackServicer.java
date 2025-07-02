@@ -17,35 +17,9 @@ public class TrackServicer {
 
     private static DataBase dataBase = DataBase.getInstance();
     public static Response uploadTrack(JsonObject payload) {
-        try {
-            File dir = new File(TRACKS_DIR);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-
-            String userId = payload.get("userId").getAsString();
-            String trackName = payload.get("trackName").getAsString();
-            String artistName = payload.get("artistName").getAsString();
-            String genreStr = payload.get("genre").getAsString();
-            boolean explicit = payload.get("explicit").getAsBoolean();
-
-            byte[] fileBytes = Base64.getDecoder().decode(payload.get("audioBase64").getAsString());
-            String trackId = UUID.randomUUID().toString();
-            Path path = Paths.get(TRACKS_DIR, trackId + ".mp3");
-            Files.write(path, fileBytes);
-
-            Genres genre = Genres.valueOf(genreStr);
-            Track newTrack = new Track(trackName, artistName, genre, explicit);
 
 
-            DataBase.getInstance().addTrackAndAssignToUser(newTrack, userId);
-
-            return new Response("success", "Track uploaded successfully", null);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return new Response("fail", "Track did not upload successfully!", null);
-        }
+        return new Response("fail","couldn't upload track",null);
     }
 
     public static Response likeTrack(JsonObject payload) {

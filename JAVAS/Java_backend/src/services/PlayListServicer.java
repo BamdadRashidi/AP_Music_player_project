@@ -101,6 +101,28 @@ public class PlayListServicer extends AudioSorter {
         }
     }
 
+    public static Response changePlName(JsonObject payload) {
+        String userId = payload.get("userId").getAsString();
+        String playlistId = payload.get("playlistId").getAsString();
+        String newPlaylistName = payload.get("newPlName").getAsString();
+        for(Account acc : dataBase.getAccounts().values()){
+            if(acc.getUserId().equals(userId)){
+                for(PlayList p : acc.getPlayLists()){
+                    if(p.getPlaylistName().equals(newPlaylistName)){
+                        return new Response("fail", "playlist already exists", null);
+                    }
+                    if(p.getPlayListID().equals(playlistId)){
+                        p.setPlaylistName(newPlaylistName);
+                        dataBase.saveDbFile();
+                        return new Response("success", "playlist name updated", null);
+                    }
+                }
+            }
+        }
+        return new Response("failed", "playlist didn't update found", null);
+    }
+
+
     public ArrayList<Track> alphabeticalSort(){
         return sortTracksAlphabetically(playlist.getTracksList());
     }
