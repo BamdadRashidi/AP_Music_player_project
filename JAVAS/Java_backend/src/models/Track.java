@@ -2,9 +2,9 @@ package models;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.time.*;
+import java.time.LocalDate;
 
-public class Track implements Serializable , Comparable<Track> {
+public class Track implements Serializable, Comparable<Track> {
     private String trackName;
     private String trackId;
     private String artistName;
@@ -12,119 +12,88 @@ public class Track implements Serializable , Comparable<Track> {
     private LocalDate trackDate;
     private boolean isLiked;
     private Integer likes = 0;
-//    private int plays = 0;
     private boolean isExplicit = false;
 
-    //TODO: implement the track Base64 and image potential
+
+    private String songUrl;
+
+    // Constructors
+    public Track() {
+        this.trackDate = LocalDate.now();
+        this.trackId = Id_generator.generateId();
+    }
 
     public Track(String trackName, String artistName, Genres genre, boolean explicit) {
         this.trackName = trackName;
         this.artistName = artistName;
-        this.trackDate = LocalDate.now();
-        this.isExplicit = explicit;
         this.genre = genre;
+        this.isExplicit = explicit;
+        this.trackDate = LocalDate.now();
         this.trackId = Id_generator.generateId();
-//        Admin.addTrackToList(this);
     }
+
+    // Getter & Setter ها
+    public String getTrackName() { return trackName; }
+    public void setTrackName(String trackName) { this.trackName = trackName; }
+
+    public String getTrackId() { return trackId; }
+    public void setTrackId(String trackId) { this.trackId = trackId; }
+
+    public String getArtistName() { return artistName; }
+    public void setArtistName(String artistName) { this.artistName = artistName; }
+
+    public Genres getGenre() { return genre; }
+    public void setGenre(Genres genre) { this.genre = genre; }
+
+    public LocalDate getFullTrackDate() { return trackDate; }
+    public void setTrackDate(LocalDate trackDate) { this.trackDate = trackDate; }
+    public String getTrackDate() { return trackDate.toString(); }
+
+    public boolean isLiked() { return isLiked; }
+    public void likeTrack() {
+        isLiked = !isLiked;
+        if (isLiked) likes++; else likes--;
+    }
+
+    public Integer getLikes() { return likes; }
+    public void setLikes(Integer likes) { this.likes = likes; }
+
+    public boolean isExplicit() { return isExplicit; }
+    public void setExplicit(boolean explicit) { isExplicit = explicit; }
+
+    public String getSongUrl() { return songUrl; }
+    public void setSongUrl(String songUrl) { this.songUrl = songUrl; }
 
     @Override
     public int compareTo(Track other) {
         return this.trackName.compareToIgnoreCase(other.trackName);
     }
 
-    public void likeTrack(){
-        isLiked = !isLiked;
-        if(isLiked){
-            likes++;
-        }
-        else{
-            likes--;
-        }
-    }
-//    public void PlayTrack(){
-//        plays++;
-//    }
-
-    public Genres getGenre() {
-        return genre;
-    }
-
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
-    }
-
-    public void setGenre(Genres genre) {
-        this.genre = genre;
-    }
-
-    public String getTrackName() {
-        return trackName;
-    }
-
-    public void setTrackName(String trackName) {
-        this.trackName = trackName;
-    }
-
-    public int getTrackDate() {
-        return trackDate.getYear();
-    }
-
-    public void setTrackDate(LocalDate trackDate) {
-        this.trackDate = trackDate;
-    }
-
-    public boolean isLiked() {
-        return isLiked;
-    }
-
-    public Integer getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Integer likes) {
-        this.likes = likes;
-    }
-
-    public String getTrackId() {
-        return trackId;
-    }
-
-    public String getArtistName() {
-        return artistName;
-    }
-
-
     @Override
     public String toString() {
-        return "[trackName: " + trackName + "]"+ /*", [Plays:" + getPlays()+ "]"*/ ", [trackId: " + trackId + "]" + ", [Artist Name: " + artistName + "]"+ ", [Genre: "+ genre + "]" + ", [trackDate: " + trackDate.getYear() + "]" + ", [Likes: " +  + likes + "]" + ", [Explicit: " + isExplicit + "]";
+        return "[trackName: " + trackName + "]" +
+                ", [trackId: " + trackId + "]" +
+                ", [Artist Name: " + artistName + "]" +
+                ", [Genre: " + genre + "]" +
+                ", [trackDate: " + trackDate + "]" +
+                ", [Likes: " + likes + "]" +
+                ", [Explicit: " + isExplicit + "]" +
+                ", [songUrl: " + songUrl + "]";
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Track)) return false;
         Track track = (Track) o;
-        return isLiked == track.isLiked && Objects.equals(trackName, track.trackName) && Objects.equals(trackId, track.trackId) && Objects.equals(trackDate, track.trackDate) && Objects.equals(likes, track.likes);
+        return Objects.equals(trackId, track.trackId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(trackName, trackId, trackDate, isLiked, likes);
-    }
-
-//    public void setPlays(int plays) {
-//        this.plays = plays;
-//    }
-//
-//    public int getPlays() {
-//        return plays;
-//    }
-//
-
-    public void setExplicit(boolean explicit) {
-        isExplicit = explicit;
-    }
-
-    public boolean isExplicit() {
-        return isExplicit;
+        return Objects.hash(trackId);
     }
 }
+
+
+
+

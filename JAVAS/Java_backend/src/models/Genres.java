@@ -3,14 +3,14 @@ package models;
 public enum Genres {
     Rock,
     Metal,
-    Orchestra,
+    Classic,
     Pop,
     Jazz,
-    Hip_Hop,
+    HipHop,
     country,
     EDM,
-    RNB,
-    Lo_fi,
+    Lofi,
     Ambient,
-    VGM
+    VGM,
+    Default
 }

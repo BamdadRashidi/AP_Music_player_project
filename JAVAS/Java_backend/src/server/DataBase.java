@@ -1,30 +1,41 @@
 package server;
 
-import models.Account;
-import models.PlayList;
-import models.Track;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import models.*;
+import java.net.URL;
+import java.io.InputStream;
+
+
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.nio.file.*;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 public class DataBase {
     private final Map<String, Account> accounts = Collections.synchronizedMap(new LinkedHashMap<>());
-
     private final Map<String, Track> tracks = Collections.synchronizedMap(new LinkedHashMap<>());
-
     private final Map<String, PlayList> playlists = Collections.synchronizedMap(new LinkedHashMap<>());
 
     private final String dataBaseFile = "db.json";
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private final ReentrantReadWriteLock ReadAndWriteLock = new ReentrantReadWriteLock();
+    private final ReentrantReadWriteLock readAndWriteLock = new ReentrantReadWriteLock();
 
-    private static volatile DataBase db ;
+    private static volatile DataBase db;
 
-    public DataBase() {
-        loadDbFile();
+    public static final String TRACKS_FOLDER = "tracks";
+    static {
+        File tracksDir = new File(TRACKS_FOLDER);
+        if (!tracksDir.exists()) {
+            boolean ok = tracksDir.mkdirs();
+            if (!ok) System.out.println("Warning: could not create tracks folder");
+        }
+    }
+
+    private DataBase() {
+        loadDbFileAndSyncTracks();
     }
 
     public static DataBase getInstance() {
@@ -38,42 +49,133 @@ public class DataBase {
         return db;
     }
 
-    private void loadDbFile(){
-        File file = new File(dataBaseFile);
-        if (!file.exists()){
-            return;
-        }
-
-        try (Reader reader = new FileReader(file)) {
-            Type listType = new TypeToken<Map<String, JsonElement>>() {}.getType();
-            Map<String, JsonElement> jsonData = gson.fromJson(reader, listType);
-
-            if (jsonData != null) {
-                Type accountMapType = new TypeToken<ConcurrentHashMap<String, Account>>() {}.getType();
-                Type trackMapType = new TypeToken<ConcurrentHashMap<String, Track>>() {}.getType();
-                Type playlistMapType = new TypeToken<ConcurrentHashMap<String, PlayList>>() {}.getType();
-
-                //TODO: just wrote this in case shit goes wrong due to the strings in jsonData.get("insert your String here"); to make debugging easier
-                ConcurrentHashMap<String, Account> loadedAccounts = gson.fromJson(jsonData.get("accounts"), accountMapType);
-                ConcurrentHashMap<String, Track> loadedTracks = gson.fromJson(jsonData.get("tracks"), trackMapType);
-                ConcurrentHashMap<String, PlayList> loadedPlaylists = gson.fromJson(jsonData.get("playlists"), playlistMapType);
-
-                if (loadedAccounts != null){
-                    accounts.putAll(loadedAccounts);
-                }
-                if (loadedTracks != null){
-                    tracks.putAll(loadedTracks);
-                }
-                if (loadedPlaylists != null){
-                    playlists.putAll(loadedPlaylists);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    public List<Track> getUserLibrary(String userId) {
+        readAndWriteLock.readLock().lock();
+        try {
+            Account acc = accounts.get(userId);
+            if (acc == null) return Collections.emptyList();
+            return new ArrayList<>(acc.getTracks().values());
+        } finally {
+            readAndWriteLock.readLock().unlock();
         }
     }
 
-    public void saveDbFile(){
+    public void reloadDataFromFile() {
+        readAndWriteLock.writeLock().lock();
+        try {
+            accounts.clear();
+            tracks.clear();
+            playlists.clear();
+            loadDbFileAndSyncTracks();
+        } finally {
+            readAndWriteLock.writeLock().unlock();
+        }
+    }
+
+    private void loadDbFileAndSyncTracks() {
+        File file = new File(dataBaseFile);
+        if (!file.exists()) return;
+
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context) -> {
+                    try {
+                        if (json == null || json.isJsonNull()) return null;
+                        if (json.isJsonPrimitive()) return LocalDate.parse(json.getAsString());
+                        if (json.isJsonObject()) {
+                            JsonObject jo = json.getAsJsonObject();
+                            int year = jo.has("year") ? jo.get("year").getAsInt() : 1970;
+                            int month = jo.has("month") ? jo.get("month").getAsInt() : 1;
+                            int day = jo.has("day") ? jo.get("day").getAsInt() : 1;
+                            return LocalDate.of(year, month, day);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                })
+                .create();
+
+        readAndWriteLock.writeLock().lock();
+        try (Reader reader = new FileReader(file)) {
+            Map<String, JsonElement> jsonData = gson.fromJson(reader, new TypeToken<Map<String, JsonElement>>() {}.getType());
+            if (jsonData == null) return;
+
+            Map<String, Account> loadedAccounts = jsonData.get("accounts") != null
+                    ? gson.fromJson(jsonData.get("accounts"), new TypeToken<Map<String, Account>>() {}.getType())
+                    : new HashMap<>();
+
+            Map<String, Track> loadedTracks = jsonData.get("tracks") != null
+                    ? gson.fromJson(jsonData.get("tracks"), new TypeToken<Map<String, Track>>() {}.getType())
+                    : new HashMap<>();
+
+            Map<String, PlayList> loadedPlaylists = jsonData.get("playlists") != null
+                    ? gson.fromJson(jsonData.get("playlists"), new TypeToken<Map<String, PlayList>>() {}.getType())
+                    : new HashMap<>();
+
+            accounts.putAll(loadedAccounts);
+            tracks.putAll(loadedTracks);
+            playlists.putAll(loadedPlaylists);
+
+            for (Account acc : accounts.values()) {
+                if (acc.getTracks() == null) acc.setTracks(new HashMap<>());
+                if (acc.getPlayLists() == null) acc.setPlayLists(new ArrayList<>());
+                if (acc.getOwnedTrackIds() == null) acc.setOwnedTrackIds(new HashSet<>());
+
+                Set<String> owned = new HashSet<>(acc.getOwnedTrackIds());
+                for (String trackId : owned) {
+                    Track t = tracks.get(trackId);
+                    if (t != null) {
+                        acc.addTrack(t);
+
+
+//                        if (!isTrackFilePresent(t)) {
+//                            downloadTrack(t);
+//                        }
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            readAndWriteLock.writeLock().unlock();
+        }
+    }
+
+
+    private boolean isTrackFilePresent(Track track) {
+        File f = new File(getLocalTrackPath(track));
+        return f.exists();
+    }
+
+
+    private String getLocalTrackPath(Track track) {
+        return "tracks/" + track.getTrackId() + ".mp3";
+    }
+
+
+//    private void downloadTrack(Track track) {
+//        if (track.getSongBase64() == null || track.getSongBase64().isEmpty()) return;
+//
+//        try {
+//            byte[] fileBytes = Base64.getDecoder().decode(track.getSongBase64());
+//            Path target = Paths.get(TRACKS_FOLDER, track.getTrackId() + ".mp3");
+//
+//            Files.write(target, fileBytes);
+//
+//            track.setSongUrl(target.toString()); // حالا مسیر لوکال رو می‌ذاری
+//            System.out.println("Track saved locally: " + track.getTrackId());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+
+
+
+    public void saveDbFile() {
         try (Writer writer = new FileWriter(dataBaseFile)) {
             Map<String, Object> data = new HashMap<>();
             data.put("accounts", accounts);
@@ -85,154 +187,191 @@ public class DataBase {
         }
     }
 
-    // adding, removing and all that fancy CRUD stuff
-
-
     public void addAccount(Account acc) {
-        ReadAndWriteLock.writeLock().lock();
+        readAndWriteLock.writeLock().lock();
         try {
             accounts.put(acc.getUserId(), acc);
             saveDbFile();
         } finally {
-            ReadAndWriteLock.writeLock().unlock();
+            readAndWriteLock.writeLock().unlock();
         }
     }
 
     public void removeAccount(Account acc) {
-        ReadAndWriteLock.writeLock().lock();
-        try{
+        readAndWriteLock.writeLock().lock();
+        try {
             accounts.remove(acc.getUserId());
             saveDbFile();
-        }
-        finally {
-            ReadAndWriteLock.writeLock().unlock();
-        }
-    }
-
-    public void removePlayList(PlayList pl) {
-        ReadAndWriteLock.writeLock().lock();
-        try{
-            playlists.remove(pl.getPlayListID());
-            saveDbFile();
-        }
-        finally {
-            ReadAndWriteLock.writeLock().unlock();
+        } finally {
+            readAndWriteLock.writeLock().unlock();
         }
     }
 
     public void addTrackAndAssignToUser(Track track, String userId) {
-        ReadAndWriteLock.writeLock().lock();
+        readAndWriteLock.writeLock().lock();
         try {
+
+            if (track.getSongUrl() != null && !track.getSongUrl().isEmpty()) {
+                Path path = Paths.get(track.getSongUrl());
+                if (!Files.exists(path)) {
+                    System.err.println("Warning: Track file does not exist: " + track.getSongUrl());
+                    track.setSongUrl(null);
+                } else {
+                    System.out.println("Track file exists: " + track.getSongUrl());
+                }
+            }
+
+
             tracks.put(track.getTrackId(), track);
+
+
             Account acc = accounts.get(userId);
             if (acc != null) {
                 acc.addOwnedTrack(track.getTrackId());
+                acc.addTrack(track);
+            } else {
+                System.err.println("Warning: userId not found. Track added to general collection but not assigned to user.");
             }
+
+            System.out.println("Track added: " + track.getTrackId() + " for user: " + userId);
             saveDbFile();
-        }
-        finally {
-            ReadAndWriteLock.writeLock().unlock();
+
+        } finally {
+            readAndWriteLock.writeLock().unlock();
         }
     }
 
-    public void removeTrack(){
 
+
+
+
+
+
+
+
+
+
+    public void removeTrack(String userId, String trackId) {
+        readAndWriteLock.writeLock().lock();
+        try {
+            Account acc = accounts.get(userId);
+            if (acc != null) acc.removeOwnedTrack(trackId);
+            Track removed = tracks.remove(trackId);
+            if (removed != null && removed.getSongUrl() != null) {
+                try {
+                    Files.deleteIfExists(Paths.get(removed.getSongUrl()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            saveDbFile();
+        } finally {
+            readAndWriteLock.writeLock().unlock();
+        }
     }
 
     public Account fetchAccount(String userId) {
-        ReadAndWriteLock.readLock().lock();
+        readAndWriteLock.readLock().lock();
         try {
             return accounts.get(userId);
         } finally {
-            ReadAndWriteLock.readLock().unlock();
+            readAndWriteLock.readLock().unlock();
         }
     }
 
     public void addTrack(Track t) {
-        ReadAndWriteLock.writeLock().lock();
+        readAndWriteLock.writeLock().lock();
         try {
             tracks.put(t.getTrackId(), t);
             saveDbFile();
-        }
-        finally {
-            ReadAndWriteLock.writeLock().unlock();
+        } finally {
+            readAndWriteLock.writeLock().unlock();
         }
     }
 
     public Track fetchTrack(String id) {
-        ReadAndWriteLock.readLock().lock();
+        readAndWriteLock.readLock().lock();
         try {
+            System.out.println("🔎 Fetching from tracks map: " + id);
+            System.out.println("📦 All track keys in map: " + tracks.keySet());
             return tracks.get(id);
-        }
-        finally {
-            ReadAndWriteLock.readLock().unlock();
+        } finally {
+            readAndWriteLock.readLock().unlock();
         }
     }
 
+
     public void addPlaylist(PlayList p) {
-        ReadAndWriteLock.writeLock().lock();
+        readAndWriteLock.writeLock().lock();
         try {
             playlists.put(p.getPlayListID(), p);
             saveDbFile();
+        } finally {
+            readAndWriteLock.writeLock().unlock();
         }
-        finally {
-            ReadAndWriteLock.writeLock().unlock();
+    }
+
+    public void removePlaylist(PlayList p) {
+        readAndWriteLock.writeLock().lock();
+        try {
+            if (p != null) {
+                playlists.remove(p.getPlayListID());
+                saveDbFile();
+            }
+        } finally {
+            readAndWriteLock.writeLock().unlock();
         }
     }
 
     public PlayList fetchPlaylist(String id) {
-        ReadAndWriteLock.readLock().lock();
+        readAndWriteLock.readLock().lock();
         try {
             return playlists.get(id);
-        }
-        finally {
-            ReadAndWriteLock.readLock().unlock();
+        } finally {
+            readAndWriteLock.readLock().unlock();
         }
     }
 
     public Map<String, Account> getAccounts() {
-        ReadAndWriteLock.readLock().lock();
-        try{
-            return accounts;
-        }
-        finally {
-            ReadAndWriteLock.readLock().unlock();
+        readAndWriteLock.readLock().lock();
+        try {
+            return Collections.unmodifiableMap(accounts);
+        } finally {
+            readAndWriteLock.readLock().unlock();
         }
     }
+
     public Map<String, PlayList> getPlaylists() {
-        ReadAndWriteLock.readLock().lock();
-        try{
-            return playlists;
-        }
-        finally {
-            ReadAndWriteLock.readLock().unlock();
+        readAndWriteLock.readLock().lock();
+        try {
+            return Collections.unmodifiableMap(playlists);
+        } finally {
+            readAndWriteLock.readLock().unlock();
         }
     }
+
     public Map<String, Track> getTracks() {
-        ReadAndWriteLock.readLock().lock();
-        try{
-            return tracks;
-        }
-        finally {
-            ReadAndWriteLock.readLock().unlock();
+        readAndWriteLock.readLock().lock();
+        try {
+            return Collections.unmodifiableMap(tracks);
+        } finally {
+            readAndWriteLock.readLock().unlock();
         }
     }
 
-
-
-
-
-    //WARNING: this is for test use only unless we want to shut the app down lol :P
-    private void clear(){
-        for(Map.Entry<String, Account> entry : accounts.entrySet()){
-            entry = null;
+    public void clear() {
+        readAndWriteLock.writeLock().lock();
+        try {
+            accounts.clear();
+            tracks.clear();
+            playlists.clear();
+            db = null;
+            saveDbFile();
+        } finally {
+            readAndWriteLock.writeLock().unlock();
         }
-        for(Map.Entry<String, Track> entry : tracks.entrySet()){
-            entry = null;
-        }
-        for(Map.Entry<String, PlayList> entry : playlists.entrySet()){
-            entry = null;
-        }
-        db = null;
     }
 }
+
+
+

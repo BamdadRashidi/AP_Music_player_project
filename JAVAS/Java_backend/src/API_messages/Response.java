@@ -1,4 +1,6 @@
 package API_messages;
+
+
 import com.google.gson.*;
 
 public class Response {
@@ -22,4 +24,9 @@ public class Response {
     public String getStatus() {
         return status;
     }
+    @Override
+    public String toString() {
+        return "Response{status='" + status + "', message='" + message + "', payload=" + payload + "}";
+    }
+
 }

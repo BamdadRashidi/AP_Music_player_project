@@ -28,7 +28,7 @@ public class PlayListServicer extends AudioSorter {
                 }
                 PlayList playlist = new PlayList(playListName);
                 try{
-                    acc.Addplaylist(playlist);
+                    acc.addPlaylist(playlist);
                 }
                 catch(Exception e){
                     e.printStackTrace();
@@ -52,14 +52,34 @@ public class PlayListServicer extends AudioSorter {
             if(acc.getUserId().equals(userId)){
                 for(PlayList p : acc.getPlayLists()){
                     if(p.getPlayListID().equals(playlistId)){
-                        acc.Removeplaylist(p);
-                        dataBase.removePlayList(p);
+                        acc.removePlaylist(p);
+                        dataBase.removePlaylist(p);
+                        dataBase.saveDbFile();
                         return new Response("success","playlist deleted",null);
                     }
                 }
             }
         }
         return new Response("failed","playlist not deleted",null);
+    }
+
+
+    public static Response getPlaylistName(JsonObject payload){
+        String userId = payload.get("userId").getAsString();
+        String playlistName = payload.get("playlistName").getAsString();
+        for(Account acc : dataBase.getAccounts().values()){
+            if(acc.getUserId().equals(userId)){
+                for(PlayList p : acc.getPlayLists()){
+                    if(p.getPlaylistName().equals(playlistName)){
+                        JsonObject responsePl = new JsonObject();
+                        responsePl.addProperty("playlistId", p.getPlayListID());
+                        responsePl.addProperty("playlistName", p.getPlayListDate());
+                        return new Response("success","playlist found",responsePl);
+                    }
+                }
+            }
+        }
+        return new Response("failed","couldn't fetch playlist name and ID found",null);
     }
 
     public static Response sharePlayListWith(JsonObject payload) {
@@ -89,11 +109,11 @@ public class PlayListServicer extends AudioSorter {
         if (deliveryPlaylist == null) {
             return new Response("failed", "playlist not found in sender's account", null);
         }
-        if (!toAccount.CanShareWith()) {
+        if (!toAccount.canShareWith()) {
             return new Response("failed", "playlist cannot be shared with " + toAccount.getAccountName(), null);
         }
         try {
-            toAccount.Addplaylist(deliveryPlaylist);
+            toAccount.addPlaylist(deliveryPlaylist);
             dataBase.saveDbFile();
             return new Response("success", "playlist shared with " + toAccount.getAccountName(), null);
         } catch (Exception e) {

@@ -2,43 +2,41 @@ package models;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
-public class PlayList implements infoShower,TrackManager{
+public class PlayList implements infoShower, TrackManager {
 
-    Set<Track> TracksList = new HashSet<>();
+    private Set<Track> tracksList = new HashSet<>();
     private String playlistName;
     private final String playListID;
-
     private int playListDate;
 
+    // TODO: use these later
+    // private Duration playlistTime;
+    // private String playListTimeStringed;
 
-    //TODO: use the two variables below
-    //private Duration playlistTime;
-    //private String playListTimeStringed;
-
-    //TODO: add a system which sums the length of the tracks and adds them to the playListTime;
     public PlayList(String playlistName) {
         this.playlistName = playlistName;
-        playListID = Id_generator.generateId();
-        playListDate = LocalDate.now().getYear();
-        //this.playlistTime = Duration.ZERO;
+        this.playListID = Id_generator.generateId();
+        this.playListDate = LocalDate.now().getYear();
+        // this.playlistTime = Duration.ZERO;
     }
 
-    public void addTrack(Track t){
-        TracksList.add(t);
-    }
-    public void removeTrack(Track t){
-        TracksList.remove(t);
+    public void addTrack(Track t) {
+        if (t != null) {
+            tracksList.add(t);
+            // TODO: update playlistTime here if you implement it
+        }
     }
 
+    public void removeTrack(Track t) {
+        tracksList.remove(t);
+        // TODO: update playlistTime here
+    }
 
     public Set<Track> getTracksList() {
-        return TracksList;
+        return Collections.unmodifiableSet(tracksList);
     }
-
-
 
     public String getPlayListID() {
         return playListID;
@@ -48,65 +46,46 @@ public class PlayList implements infoShower,TrackManager{
         return playlistName;
     }
 
-    public int getPlayListDate() {
-        return playListDate;
-    }
-
     public void setPlaylistName(String playlistName) {
         this.playlistName = playlistName;
     }
 
-//    public String getPlayListTimeStringed() {
-//        return playListTimeStringed;
-//    }
-
-    public int getSongCount() {
-        return TracksList.size();
+    public int getPlayListDate() {
+        return playListDate;
     }
 
-
-//    public Duration getPlaylistTime() {
-//        return playlistTime;
-//    }
-//
-//    public void setPlaylistTime(Duration playlistTime) {
-//        this.playlistTime = playlistTime;
-//    }
-//
-//
-//    public void setPlayListTimeStringed(String playListTimeStringed) {
-//        this.playListTimeStringed = playListTimeStringed;
-//    }
-//
-//    public LocalDate getPlayListDate() {
-//        return playListDate;
-//    }
-
-
+    public int getSongCount() {
+        return tracksList.size();
+    }
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (!(o instanceof PlayList)) return false;
         PlayList playList = (PlayList) o;
-        return Objects.equals(TracksList, playList.TracksList) && Objects.equals(playlistName, playList.playlistName);
+        return Objects.equals(tracksList, playList.tracksList) &&
+                Objects.equals(playlistName, playList.playlistName) &&
+                Objects.equals(playListID, playList.playListID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(TracksList, playlistName);
+        return Objects.hash(tracksList, playlistName, playListID);
     }
 
     @Override
     public String toString() {
-        String toStringedPlaylist = "PlayList Name: " + playlistName + ", PlayList ID: "+ getPlayListID() + ", Tracks: "+ TracksList.size() + '\n';
-        return toStringedPlaylist;
+        return "PlayList Name: " + playlistName +
+                ", PlayList ID: " + playListID +
+                ", Tracks: " + tracksList.size() + '\n';
     }
 
+    @Override
     public String showInfo() {
-        String songsnames = "";
-        for(Track track : TracksList) {
-            songsnames += track.toString() + '\n';
+        StringBuilder songsNames = new StringBuilder();
+        for (Track track : tracksList) {
+            songsNames.append(track.toString()).append('\n');
         }
-        return songsnames;
+        return songsNames.toString();
     }
 }

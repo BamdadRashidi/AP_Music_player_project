@@ -1,21 +1,22 @@
 package models.utility;
+
 import models.Track;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.concurrent.*;
 
-public class AudioSorter{
+public class AudioSorter {
+
     public static ArrayList<Track> sortTracksAlphabetically(Collection<Track> allTracks) {
         ArrayList<Track> sortedList = new ArrayList<>(allTracks);
-        sortedList.sort(Comparator.comparing(Track::getTrackName));
+        sortedList.sort(Comparator.comparing(Track::getTrackName, String.CASE_INSENSITIVE_ORDER));
         return sortedList;
     }
 
     public static ArrayList<Track> sortTracksByDate(Collection<Track> allTracks) {
         ArrayList<Track> sortedList = new ArrayList<>(allTracks);
-        sortedList.sort(Comparator.comparing(Track::getTrackDate));
+        // مرتب سازی بر اساس تاریخ کامل (سال، ماه، روز)
+        sortedList.sort(Comparator.comparing(Track::getFullTrackDate));
         return sortedList;
     }
 
@@ -24,11 +25,5 @@ public class AudioSorter{
         sortedList.sort(Comparator.comparingInt(Track::getLikes).reversed());
         return sortedList;
     }
-
-//    public static ArrayList<Track> sortTracksByListens(Collection<Track> allTracks) {
-//        ArrayList<Track> sortedList = new ArrayList<>(allTracks);
-//        Collections.sort(sortedList, Comparator.comparing(Track::getPlays).reversed());
-//        return sortedList;
-//    }
 
 }

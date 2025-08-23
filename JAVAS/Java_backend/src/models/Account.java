@@ -1,152 +1,199 @@
 package models;
 
-import com.google.gson.annotations.SerializedName;
-
+import java.io.Serializable;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-public class Account implements TrackManager,infoShower{
-    @SerializedName("username")
-    private String Username;
-    @SerializedName("password")
-    private String password;
-    @SerializedName("accountName")
-    private String AccountName; // people see the account with this name
+public class Account implements Serializable {
+    private String userId;
+    private String userToken;
+    private String username;
+    private String password; // هش ذخیره می‌شود
+    private String accountName;
+    private String email;
+    private boolean canShareWith;
 
-    @SerializedName("userToken")
-    private final String UserToken;
-    @SerializedName("userId")
-    private final String userId;
+    private Map<String, Track> tracks = new HashMap<>();
+    private List<PlayList> playLists = new ArrayList<>();
+    private Set<String> ownedTrackIds = new HashSet<>();
 
-    private static History trackHistory;
-
-    private boolean canShareWith = true;
-    Set<PlayList> PlayListList = new HashSet<PlayList>();
-    static Set<Track> allTracks = new HashSet<>();
-
-
-
-    public Account(String name,String pass,String accName){
-        Username = name;
-        password = pass;
-        AccountName = accName;
-        userId = Id_generator.generateId();
-        UserToken = Id_generator.generateToken();
-        trackHistory = new History();
+    public Account(String username, String password, String accountName) {
+        this.userId = Id_generator.generateId();
+        this.username = username;
+        this.password = password;
+        this.accountName = accountName;
+        this.canShareWith = true;
+        this.userToken = generateUserToken();
     }
 
+    private String generateUserToken() {
+        return UUID.randomUUID().toString();
+    }
 
-
-    public void Addplaylist(PlayList p) throws RedundantPlayListNameException{
-        for(PlayList playList : PlayListList){
-            if(p.getPlaylistName().equals(playList.getPlaylistName())){
-                throw new RedundantPlayListNameException("There is a playlist with the same name!");
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashedBytes) {
+                sb.append(String.format("%02x", b));
             }
-        }
-        PlayListList.add(p);
-    }
-    public void Removeplaylist(PlayList p){
-        PlayListList.remove(p);
-    }
-
-
-    public void addTrack(Track t){
-        trackHistory.addToHistory(t);
-        allTracks.add(t);
-    }
-    public void removeTrack(Track t){
-        allTracks.remove(t);
-    }
-    public void addTrackToPlayList(Track track,PlayList playList) {
-        if(track != null) {
-            playList.addTrack(track);
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error hashing password", e);
         }
     }
 
-    public void removeTrackFromPlayList(Track track,PlayList playList) {
-        if(track != null && playList.getTracksList().contains(track)) {
-            playList.removeTrack(track);
-        }
-    }
-    @SerializedName("ownedTracks")
-    private final Set<String> ownedTrackIds = new HashSet<>();
-
-    public void addOwnedTrack(String trackId) {
-        ownedTrackIds.add(trackId);
+    public boolean checkPassword(String inputPassword) {
+        return this.password.equals(hashPassword(inputPassword));
     }
 
-    public Set<String> getOwnedTrackIds() {
-        return ownedTrackIds;
-    }
-
-
-    public String getUsername() {
-        return Username;
-    }
-
-    public String getPassword() {
-        return password;
+    public String getUserToken() {
+        return userToken;
     }
 
     public String getUserId() {
         return userId;
     }
 
-
-
-    public Set<PlayList> getPlayLists() {
-        return PlayListList;
+    public String getUsername() {
+        return username;
     }
-
     public void setUsername(String username) {
-        Username = username;
+        this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
     public void setPassword(String password) {
         this.password = password;
     }
 
-
-    public String getUserToken() {
-        return UserToken;
+    public String getAccountName() {
+        return accountName;
+    }
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
-    public boolean CanShareWith() {
+    public boolean canShareWith() {
         return canShareWith;
     }
-
     public void setCanShareWith(boolean canShareWith) {
         this.canShareWith = canShareWith;
     }
 
-    public String getAccountName() {
-        return AccountName;
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setAccountName(String accountName) {
-        AccountName = accountName;
+    public Map<String, Track> getTracks() {
+        return Collections.unmodifiableMap(tracks);
+    }
+    public void setTracks(Map<String, Track> tracks) {
+        this.tracks = tracks != null ? new HashMap<>(tracks) : new HashMap<>();
     }
 
-    public static Set<Track> getAllTracks() {
-        return allTracks;
+    public List<PlayList> getPlayLists() {
+        return Collections.unmodifiableList(playLists);
+    }
+    public void setPlayLists(List<PlayList> playLists) {
+        this.playLists = playLists != null ? new ArrayList<>(playLists) : new ArrayList<>();
     }
 
-    /// EVERYTHING RELATED TO ALL TRACKS MANAGEMENT
+    public void addOwnedTrack(String trackId) {
+        ownedTrackIds.add(trackId);
+    }
 
+    public void removeOwnedTrack(String trackId) {
+        ownedTrackIds.remove(trackId);
+    }
 
+    public Set<String> getOwnedTrackIds() {
+        return Collections.unmodifiableSet(ownedTrackIds);
+    }
+    public void setOwnedTrackIds(Set<String> ownedTrackIds) {
+        this.ownedTrackIds = ownedTrackIds != null ? new HashSet<>(ownedTrackIds) : new HashSet<>();
+    }
 
+    public List<Track> getAllTracks() {
+        return new ArrayList<>(tracks.values());
+    }
+
+    public void addTrack(Track track) {
+        if (track != null) {
+            tracks.put(track.getTrackId(), track);
+        }
+    }
+
+    public void removeTrack(Track track) {
+        if (track != null) {
+            tracks.remove(track.getTrackId());
+        }
+    }
+
+    public void addPlaylist(PlayList playlist) throws Exception {
+        if (playlist == null) return;
+        for (PlayList pl : playLists) {
+            if (pl.getPlayListID().equals(playlist.getPlayListID())) {
+                throw new Exception("Playlist already exists in account");
+            }
+        }
+        playLists.add(playlist);
+    }
+
+    public void removePlaylist(PlayList playlist) {
+        playLists.remove(playlist);
+    }
+
+    public String showInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Account Details:\n");
+        sb.append("User ID: ").append(userId).append("\n");
+        sb.append("Username: ").append(username).append("\n");
+        sb.append("Account Name: ").append(accountName).append("\n");
+        sb.append("Can Share With Others: ").append(canShareWith).append("\n");
+        sb.append("Number of Playlists: ").append(playLists.size()).append("\n");
+        sb.append("Number of Tracks: ").append(tracks.size()).append("\n");
+        sb.append("Tracks:\n");
+        for (Track t : tracks.values()) {
+            sb.append("  - ").append(t.getTrackName()).append("\n");
+        }
+        sb.append("Playlists:\n");
+        for (PlayList pl : playLists) {
+            sb.append("  - ").append(pl.getPlaylistName()).append("\n");
+        }
+        return sb.toString();
+    }
 
     @Override
-    public String toString(){
-        return "[Account Name: " + AccountName +"]" + " ,[Id: " + getUserId() + " ,[Username: " + Username + "]" + " ,[Password: " + password + "]" + " ,[CanShareWith: " + canShareWith + "]" + '\n';
+    public String toString() {
+        return "Account{" +
+                "userId='" + userId + '\'' +
+                ", userToken='" + userToken + '\'' +
+                ", username='" + username + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", canShareWith=" + canShareWith +
+                ", tracks=" + tracks.size() +
+                ", playLists=" + playLists.size() +
+                '}';
     }
-    public String showInfo(){
-        String PlaylistNames = "";
-        for(PlayList playList : PlayListList){
-            PlaylistNames += playList.toString() + '\n';
-        }
-        return PlaylistNames;
-    }
-
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
