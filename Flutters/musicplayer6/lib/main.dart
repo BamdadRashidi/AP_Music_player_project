@@ -1265,7 +1265,7 @@ class Playlist {
   factory Playlist.fromJson(Map<String, dynamic> json) => Playlist(
     name: json['name'],
     songs: (json['songs'] as List).map((s) => Song.fromJson(s)).toList(),
-      playListId: json["playlistId"],);
+    playListId: json["playlistId"],);
 
 
 }
@@ -1634,6 +1634,52 @@ class _MyLibraryState extends State<MyLibraryScreen> {
               title: const Text("Share", style: TextStyle(color: Colors.white)),
               onTap: () {
                 Navigator.pop(context);
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    final TextEditingController controller = TextEditingController();
+                    return AlertDialog(
+                      backgroundColor: Colors.grey[850],
+                      title: const Text("Share Track", style: TextStyle(color: Colors.white)),
+                      content: TextField(
+                        controller: controller,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: const InputDecoration(
+                          hintText: "Enter account name",
+                          hintStyle: TextStyle(color: Colors.white70),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white54),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text("Cancel", style: TextStyle(color: Colors.white70)),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            final accountName = controller.text.trim();
+                            Navigator.pop(context);
+                            if (accountName.isNotEmpty) {
+                              await UserLibraryManager().shareSong(song.id, accountName);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Shared '${song.title}' with $accountName"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          },
+                          child: const Text("Share", style: TextStyle(color: Colors.lightBlue)),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
             ),
           ],
@@ -2115,6 +2161,57 @@ class UserLibraryManager {
       print("removeSong error: $e");
     }
   }
+
+  Future<void> shareSong(String trackId, String accountName) async {
+    if (userIdentifier == null) {
+      print("❌ User identifier is null.");
+      return;
+    }
+
+    Socket? socket;
+    try {
+      print("🔌 Connecting to server for shareTrack...");
+      socket = await Socket.connect('192.168.1.5', 1080)
+          .timeout(const Duration(seconds: 10));
+
+      final request = {
+        "action": "shareTrack",
+        "payload": {
+          "fromUserId": userIdentifier,
+          "toAccountName": accountName,
+          "trackId": trackId,
+        }
+      };
+
+      final requestStr = jsonEncode(request) + '\n';
+      socket.add(utf8.encode(requestStr));
+      await socket.flush();
+      print("📤 Share request sent: $requestStr");
+
+      // read response
+      final responseStr = await utf8.decoder.bind(socket).join();
+      print("📩 ShareTrack server response: $responseStr");
+
+      final response = jsonDecode(responseStr);
+
+      if (response['status'] == 'success') {
+        print("✅ Track shared successfully with $accountName");
+        final payload = response['payload'];
+        print("➡️ Shared with userId: ${payload?['toUserId']}");
+      } else {
+        print("❌ Failed to share track: ${response['message']}");
+      }
+    } catch (e, st) {
+      print("⚠️ Error while sharing track: $e");
+      print(st);
+    } finally {
+      if (socket != null) {
+        await socket.close();
+        print("🔌 Socket closed (shareTrack).");
+      }
+    }
+  }
+
 }
 
 class UserLibraryScreen extends StatelessWidget {

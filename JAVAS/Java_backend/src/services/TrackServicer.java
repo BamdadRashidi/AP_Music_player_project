@@ -38,7 +38,6 @@ public class TrackServicer {
 
             String base64Data = payload.get("fileData").getAsString();
 
-            // تنظیم ژانر
             Genres genreForReal = settingGenre(genreStr);
             if (genreForReal == null) genreForReal = Genres.Default;
 
@@ -79,7 +78,7 @@ public class TrackServicer {
             responsePl.addProperty("genre", track.getGenre().name());
             responsePl.addProperty("isExplicit", track.isExplicit());
             responsePl.add("trackDate", dateObj);
-            responsePl.addProperty("songUrl", track.getSongUrl()); // مسیر نسبی
+            responsePl.addProperty("songUrl", track.getSongUrl());
 
             System.out.println("Track uploaded successfully: " + track.getTrackId() + " for user " + userId);
             return new Response("success", "track uploaded successfully", responsePl);
@@ -220,7 +219,6 @@ public class TrackServicer {
                 String artistName = payload.get("artistName").getAsString();
 
                 track = new Track(trackName, artistName, genreForReal, explicitness);
-                // همیشه trackId بساز
                 track.setTrackId(UUID.randomUUID().toString());
             }
 
@@ -317,8 +315,22 @@ public class TrackServicer {
                 for (PlayList pl : acc.getPlayLists()) {
                     if (pl.getPlayListID().equals(playListId) && chosenTrack != null) {
                         pl.addTrack(chosenTrack);
+                        JsonObject res = new JsonObject();
+                        res.addProperty("trackId", chosenTrack.getTrackId());
+                        res.addProperty("trackName", chosenTrack.getTrackName());
+                        res.addProperty("artistName", chosenTrack.getArtistName());
+                        res.addProperty("genre", chosenTrack.getGenre().name());
+                        res.addProperty("isExplicit", chosenTrack.isExplicit());
+                        res.addProperty("likes", chosenTrack.getLikes());
+                        res.addProperty("songUrl", chosenTrack.getSongUrl());
+                        JsonObject dateObj = new JsonObject();
+                        LocalDate date = chosenTrack.getFullTrackDate();
+                        dateObj.addProperty("year", date.getYear());
+                        dateObj.addProperty("month", date.getMonthValue());
+                        dateObj.addProperty("day", date.getDayOfMonth());
+                        res.add("trackDate", dateObj);
                         dataBase.saveDbFile();
-                        return new Response("success", "Track added to playlist: " + pl.getPlaylistName(), null);
+                        return new Response("success", "Track added to playlist: " + pl.getPlaylistName(), res);
                     }
                 }
             }
@@ -385,16 +397,20 @@ public class TrackServicer {
 
     public static Response shareTrack(JsonObject payload) {
         String fromUserId = payload.get("fromUserId").getAsString();
-        String toUserId = payload.get("toUserId").getAsString();
         String trackId = payload.get("trackId").getAsString();
+        String toAccountName = payload.get("toAccountName").getAsString();
 
         Account fromAccount = null;
         Account toAccount = null;
         Track sharedTrack = null;
 
         for (Account acc : dataBase.getAccounts().values()) {
-            if (acc.getUserId().equals(fromUserId)) fromAccount = acc;
-            if (acc.getUserId().equals(toUserId)) toAccount = acc;
+            if (acc.getUserId().equals(fromUserId)) {
+                fromAccount = acc;
+            }
+            if (acc.getAccountName().equalsIgnoreCase(toAccountName)) {
+                toAccount = acc;
+            }
         }
 
         if (fromAccount == null || toAccount == null) {
@@ -412,6 +428,7 @@ public class TrackServicer {
             return new Response("failed", "shared track not found in sender's account", null);
         }
 
+
         if (!toAccount.canShareWith()) {
             return new Response("failed", "track cannot be shared with " + toAccount.getAccountName(), null);
         }
@@ -419,13 +436,19 @@ public class TrackServicer {
         try {
             toAccount.addTrack(sharedTrack);
             dataBase.saveDbFile();
-            return new Response("success", "track shared with " + toAccount.getAccountName(), null);
+
+            JsonObject payloadRes = new JsonObject();
+            payloadRes.addProperty("toUserId", toAccount.getUserId());
+            payloadRes.addProperty("trackId", sharedTrack.getTrackId());
+
+            return new Response("success", "track shared with " + toAccount.getAccountName(), payloadRes);
         } catch (Exception e) {
-            return new Response("failed", "couldn't share track", null);
+            return new Response("failed", "couldn't share track: " + e.getMessage(), null);
         }
     }
 
-    // 🔹 متد جدید برای برگردوندن تمام آهنگ‌های یک اکانت
+
+
     public static Response getLibrary(JsonObject payload) {
         String userId = payload.get("userId").getAsString();
         for (Account acc : dataBase.getAccounts().values()) {
