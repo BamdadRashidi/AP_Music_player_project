@@ -978,35 +978,67 @@ class PlaylistManager {
   Future<void> deletePlaylist(String name) async {
     print("🟡 removePlaylist called for: $name");
 
-    // Find the playlist
-    final playlist = playlistArray.firstWhere(
-          (p) => p.name == name,
-      orElse: () {
-        print("❌ Playlist '$name' not found in playlistArray");
-        throw Exception("Playlist not found");
-      },
-    );
-
-    print("✅ Found playlist: ${playlist.name}, id: ${playlist.playListId}");
-
-    // If playlist has no ID yet, we can't sync with backend
-    if (playlist.playListId == null) {
-      print("⚠️ Playlist '${playlist.name}' has NULL ID. Removing locally only. '${playlist.playListId}'");
-      playlistArray.removeWhere((p) => p.name == name);
-      print("🗑️ Removed playlist locally: $name");
-      await savePlaylist();
-      print("💾 Saved playlists to local storage (SharedPreferences).");
-      return;
-    }
-
-    final playlistId = playlist.playListId!;
-    print("🔑 Playlist '${playlist.name}' has ID: $playlistId");
-
     try {
-      print("🌐 Attempting connection to backend...");
+
       final socket = await Socket.connect('192.168.1.5', 1080)
           .timeout(const Duration(seconds: 10));
-      print("🔌 Connected to backend at 192.168.1.5:1080");
+      print("🔌 Connected to backend for ID lookup");
+
+      final lookupRequest = {
+        "action": "getPlaylistName",
+        "payload": {
+          "userId": globaluserId,
+          "playlistName": name,
+        }
+      };
+
+      socket.add(utf8.encode(jsonEncode(lookupRequest) + '\n'));
+      await socket.flush();
+      print("📤 Sent getPlaylistName request for '$name'");
+
+      final completer = Completer<void>();
+
+      socket.listen((data) async {
+        final responseString = utf8.decode(data);
+        print("📥 Received backend response: $responseString");
+
+        try {
+          final response = jsonDecode(responseString);
+
+          if (response["status"] == "success" &&
+              response["payload"]?["playlistId"] != null) {
+            final playlistId = response["payload"]["playlistId"];
+            print("✅ Found playlistId for '$name': $playlistId");
+
+
+            await _sendRemovePlaylist(name, playlistId);
+
+
+            playlistArray.removeWhere((p) => p.name == name);
+            await savePlaylist();
+            print("🗑️ Removed '$name' locally and saved playlists.");
+          } else {
+            print("❌ Backend could not find playlistId for '$name'");
+          }
+        } catch (e) {
+          print("❌ Error parsing backend response: $e");
+        } finally {
+          await socket.close();
+          completer.complete();
+        }
+      });
+
+      await completer.future;
+    } catch (e) {
+      print("❌ Exception in deletePlaylist: $e");
+    }
+  }
+
+  Future<void> _sendRemovePlaylist(String name, String playlistId) async {
+    try {
+      final socket = await Socket.connect('192.168.1.5', 1080)
+          .timeout(const Duration(seconds: 10));
+      print("🔌 Connected to backend for removePlaylist");
 
       final request = {
         "action": "removePlaylist",
@@ -1017,39 +1049,21 @@ class PlaylistManager {
       };
 
       final requestStr = jsonEncode(request) + '\n';
-      print("📤 Sending request: $requestStr");
-
       socket.add(utf8.encode(requestStr));
       await socket.flush();
-      print("✅ Request sent to backend, awaiting response...");
+      print("📤 Sent removePlaylist request for '$name' with id $playlistId");
 
-      // Wait for backend response before removing locally
-      final completer = Completer<void>();
       socket.listen((data) {
         final responseString = utf8.decode(data);
-        print("📥 Received server response: $responseString");
-
-        print("🗑️ Removing playlist '$name' locally...");
-        playlistArray.removeWhere((p) => p.name == name);
-        savePlaylist();
-        print("💾 Playlists saved locally after backend confirmation.");
-
+        print("📥 Backend response (removePlaylist): $responseString");
         socket.close();
-        print("🔒 Socket connection closed.");
-        completer.complete();
       });
-
-      await completer.future;
-      print("✅ Completed removePlaylist for: $name");
     } catch (e) {
-      print("❌ Exception while deleting playlist on backend: $e");
-
-      print("⚠️ Falling back: Removing '$name' locally anyway.");
-      playlistArray.removeWhere((p) => p.name == name);
-      savePlaylist();
-      print("💾 Playlists saved locally after fallback.");
+      print("❌ Error while sending removePlaylist: $e");
     }
   }
+
+
 
 
 
@@ -1064,13 +1078,11 @@ class PlaylistManager {
   Future<void> createPlaylist(String name) async {
     print("🟡 createPlaylist called with name: $name");
 
-    // Prevent duplicates
     if (playlistArray.any((p) => p.name == name)) {
       print("⚠️ Playlist with name '$name' already exists. Aborting creation.");
       return;
     }
 
-    // Add locally first (no ID yet)
     playlistArray.add(Playlist(name: name, songs: []));
     Playlist p = playlistArray.last;
     print("📂 Added new playlist locally: ${p.name}, playListId=${p.playListId}");
@@ -1120,7 +1132,6 @@ class PlaylistManager {
       print("❌ Error while creating playlist on backend: $e");
     }
 
-    // Save regardless (so it's not lost in UI)
     savePlaylist();
     print("💾 Saved playlists locally (current count=${playlistArray.length})");
   }
@@ -1206,7 +1217,7 @@ class PlaylistManager {
     final jsonList = playlistArray.map((p) => p.toJson()).toList();
     final jsonString = jsonEncode(jsonList);
 
-    print("💾 Saving playlists: $jsonString"); // 🔎 log everything
+    print("💾 Saving playlists: $jsonString");
 
     await prefs.setString('playlists', jsonString);
   }
@@ -1216,7 +1227,7 @@ class PlaylistManager {
     final jsonString = prefs.getString('playlists');
 
     if (jsonString != null) {
-      print("📂 Loading playlists from storage: $jsonString"); // 🔎
+      print("📂 Loading playlists from storage: $jsonString");
 
       final List decoded = jsonDecode(jsonString);
       playlistArray.clear();
