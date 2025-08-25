@@ -7,8 +7,6 @@ import java.net.InetSocketAddress;
 public class FileServer {
     public static void start(int port) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-
-        // مسیر سروینگ آهنگ‌ها
         server.createContext("/tracks", exchange -> {
             String path = exchange.getRequestURI().getPath();
             File file = new File(DataBase.TRACKS_FOLDER, path.substring("/tracks/".length()));

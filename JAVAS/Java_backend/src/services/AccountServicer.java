@@ -38,6 +38,11 @@ public class AccountServicer extends AudioSorter {
                 return new Response("fail", "This username Already Exists.", null);
             }
         }
+        for (Account acc : dataBase.getAccounts().values()) {
+            if (acc.getAccountName().equals(accountName)) {
+                return new Response("fail", "A username with this AccountName exists.", null);
+            }
+        }
 
         Account account = new Account(username, password, accountName);
         dataBase.addAccount(account);

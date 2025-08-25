@@ -164,7 +164,7 @@ public class DataBase {
 //
 //            Files.write(target, fileBytes);
 //
-//            track.setSongUrl(target.toString()); // حالا مسیر لوکال رو می‌ذاری
+//            track.setSongUrl(target.toString());
 //            System.out.println("Track saved locally: " + track.getTrackId());
 //        } catch (IOException e) {
 //            e.printStackTrace();
