@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -24,27 +25,54 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 List<SongModel> allSongs = [];
-void main() async { WidgetsFlutterBinding.ensureInitialized();
-final prefs = await SharedPreferences.getInstance(); final userId = prefs.getString('userId');
-runApp(MyApp(userId: userId));}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-String? globaluserId;
+  // گرفتن userId ذخیره شده
+  final prefs = await SharedPreferences.getInstance();
+  final userId = prefs.getString('userId');
 
+  // بارگذاری تم ذخیره‌شده
+  await ThemeManager.init();
+
+  runApp(MyApp(userId: userId));
+}
 
 class MyApp extends StatelessWidget {
   final String? userId;
+
   const MyApp({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Directionality(
-        textDirection: TextDirection.ltr,
-        child: userId != null
-            ? SecondPage(userId: userId!)
-            : const LoginPage(),
-      ),
+    return ValueListenableBuilder<Color>(
+      valueListenable: ThemeManager.backgroundColor,
+      builder: (context, bgColor, _) {
+        // تغییر رنگ نوار وضعیت بر اساس پس‌زمینه
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+          statusBarColor: bgColor,
+          statusBarIconBrightness:
+          bgColor.computeLuminance() > 0.5 ? Brightness.dark : Brightness.light,
+        ));
+
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            scaffoldBackgroundColor: bgColor,
+            appBarTheme: AppBarTheme(
+              backgroundColor: bgColor,
+              foregroundColor:
+              bgColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,
+            ),
+          ),
+          home: Directionality(
+            textDirection: TextDirection.ltr,
+            child: userId != null
+                ? SecondPage(userId: userId!) // وارد صفحه اصلی
+                : const LoginPage(),           // یا بره لاگین کنه
+          ),
+        );
+      },
     );
   }
 }
