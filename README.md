@@ -20,9 +20,7 @@ Enjoy listening to music :D
 
 <img src="screenshots/library" alt="library" width="400" height="800"/>
 
----
-<br/>
-<br/>
+
 <img src="screenshots/playlists.png" alt="playlists" width="400" height="800"/>
 
 ---
@@ -38,11 +36,14 @@ Did you forget your password? Did you by any chance want to isolate yourself fro
 
 ### ✨🎵🎵Vibe🎵🎵✨:
 just enjoy the Vibe
-<br/>
-<br/>
+
+
+
+
+
+
 <img src="screenshots/player_page" alt="trackplayer" width="400" height="800"/>
 
----
 
 ## ❗❗Requirements❗❗:
 - The latest version of [flutter](https://flutter.dev/)
