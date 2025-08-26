@@ -68,4 +68,4 @@ Our mentors:
 Navid raeiszadeh, Mohsen karbalaie, Amirhossein ghafarian and the other mentors.
 Doctor Sadegh aliakbari for his beneficial teaching.
 
-<small>no credits are given to gradle that thing is a pain in one's eyeball </small>
+<small>no credits are given to gradle that thing is a pain in one's eyeball <small/>
