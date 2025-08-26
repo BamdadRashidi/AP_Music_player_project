@@ -52,7 +52,7 @@ just enjoy the Vibe
    ```
    ipconfig
    ```
-   4. make sure you have the [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson) package installed somehwhere in your computer and add it in the project settings within an code editor like IDEA
+   -make sure you have the [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson) package installed somehwhere in your computer and add it in the project settings within an code editor like IDEA
    and copy the IPv4 attribute and paste it everywhere that has a socket within main.dart.
 5. Enjoy the show
 
