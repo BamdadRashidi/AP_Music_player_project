@@ -43,10 +43,13 @@ just enjoy the Vibe
    ```
    --add-opens java.base/java.time=ALL-UNNAMED
    ```
-   and copy the IPv4 attribute and paste it everywhere that has a socket within main.dart.
+
 3. In case you don't know your IP address, type the command next to you into CMD:
-   ```ipconfig```
-4. Enjoy the show
+   ```
+   ipconfig
+   ```
+   and copy the IPv4 attribute and paste it everywhere that has a socket within main.dart.
+5. Enjoy the show
 
 
 --- 
