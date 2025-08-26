@@ -65,7 +65,7 @@ Our families for emotional support and our good friends:
 AF,SDZ,ZV,KNF,RB,PA,AG and everyone else who answered our questions or gave emotional support.
 
 Our mentors:
-Navid raeiszadeh, Mohsen karbalaie, Amirhossein ghafarian and the other mentors.
-Doctor Sadegh aliakbari for his beneficial teaching.
+Navid raeiszadeh, Mohsen karbalaie, Amirhossein ghafarian, Reyhaneh dadashpoor and the other mentors.
+and let us not forget Doctor Sadegh aliakbari for his beneficial teaching.
 
 <small>no credits are given to gradle that thing is a pain in one's eyeball <small/>
