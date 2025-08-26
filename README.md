@@ -34,7 +34,7 @@ just enjoy the Vibe
 - An IDE that can build apps for phone
 - An android phone (yes we are those types of devs that make apps exclusive to one platform :P)
 
-- > [!NOTE]
+> [!NOTE]
 > in case no tracks or playlists were showing up, keep on refreshing or in worst-case scenario, close and reopen the app and wait for a while.
 
 ---
