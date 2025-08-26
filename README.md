@@ -57,7 +57,7 @@ just enjoy the Vibe
 
 The creators of Java, Flutter and dart.
 
-Iman Tat hesari: A man of patience, He can smell colors. if you see any flutter code that actually is good it is because he probably wrote it. he traded his sanity to revamp the backend code, write the entire Song loading system into the app and wrote fingerprint system.
+Iman Tat hesari: project's lord and savior, He can smell colors. if you see any flutter code that actually is good it is because he probably wrote it. he traded his sanity to revamp the backend code, write the entire Song loading system into the app and wrote fingerprint system. he saved the project from never making into the finish line more than once. 
 
 Mohammadamin "Bamdad" rashidi: Jack-of-all-trades, on a crack called enthusiasm. the person who did most of the planning and direction, co-conceptualized the appreance of the app, wrote the entire backend before the revamp, designed the logo and the background images, and made the sharing and playlist systems.
 
