@@ -10,25 +10,26 @@ create as many accounts as you wish, add as many tracks as you desire and organi
 ### 🗣️An account based app🗣️:
 Create as many accounts as you wish! All it takes is your email/phone number, a password of your own choice and a username of your own choice as well!  
 Once done, you are good to go and will be moved into the library.
-![Log in page](screenshots/Login.png)
+<img src="screenshots/Login.png" alt="playlists" width="400" height="800"/>
 ---
 
 ### 📖A tab based library📖:
 Add any song from your phone into the app and create playlists. If you really like some songs why not like them to transport them to the *"liked tab"*?  
 Enjoy listening to music :D
-![Library](screenshots/library.png)
-![playlist page](screenshots/playlists.png)
+<img src="screenshots/library" alt="library" width="400" height="800"/>
+<img src="screenshots/playlists.png" alt="playlists" width="400" height="800"/>
+
 ---
 
 ### ⚙️Fairly customizable settings⚙️:
 Did you forget your password? Did you by any chance want to isolate yourself from people so that they don't send you their stupid songs? Fear not as the **_Settings page_** will get this done. Enter your new account name/password/email/phone to change your information and in case you want to be a private person, just check the checkbox below so people stop sending you their songs.
-![settings page](screenshots/settings.png)
+<img src="screenshots/settings.png" alt="settings" width="400" height="800"/>
 
 ---
 
 ### ✨🎵🎵Vibe🎵🎵✨:
 just enjoy the Vibe
-![track player](screenshots/player_page.png)
+<img src="screenshots/player_page" alt="trackplayer" width="400" height="800"/>
 ---
 
 ## ❗❗Requirements❗❗:
