@@ -1,6 +1,7 @@
 # AP_Music_player_project
 
 A project for the subject **Advanced Programming** about a music player called **"Navak"**
+create as many accounts as you wish, add as many tracks as you desire and organize them into as many playlists as you like and vibe till there is no tomorrows left!
 
 ---
 
@@ -32,6 +33,9 @@ just enjoy the Vibe
 - The latest version of flutter
 - An IDE that can build apps for phone
 - An android phone (yes we are those types of devs that make apps exclusive to one platform :P)
+
+- > [!NOTE]
+> in case no tracks or playlists were showing up, keep on refreshing or in worst-case scenario, close and reopen the app and wait for a while.
 
 ---
 
