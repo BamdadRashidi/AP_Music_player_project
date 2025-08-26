@@ -30,8 +30,8 @@ just enjoy the Vibe
 ---
 
 ## ❗❗Requirements❗❗:
-- The latest version of flutter
-- An IDE that can build apps for phone
+- The latest version of [flutter](https://flutter.dev/)
+- An IDE that can build apps for phone such as android studio
 - An android phone (yes we are those types of devs that make apps exclusive to one platform :P)
 
 > [!NOTE]
@@ -52,6 +52,7 @@ just enjoy the Vibe
    ```
    ipconfig
    ```
+   4. make sure you have the [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson) package installed somehwhere in your computer and add it in the project settings within an code editor like IDEA
    and copy the IPv4 attribute and paste it everywhere that has a socket within main.dart.
 5. Enjoy the show
 
@@ -59,7 +60,7 @@ just enjoy the Vibe
 --- 
 ## Credits:
 
-The creators of Java, Flutter and dart.
+The creators of [Java](https://www.oracle.com/java/technologies/downloads/), [Flutter](https://flutter.dev/) and dart.
 
 Iman Tat hesari: project's lord and savior, He can smell colors. if you see any flutter code that actually is good it is because he probably wrote it. he traded his sanity to revamp the backend code, write the entire Song loading system into the app and wrote fingerprint system. he saved the project from never making into the finish line more than once. 
 
