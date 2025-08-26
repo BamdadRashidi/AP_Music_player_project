@@ -44,7 +44,7 @@ just enjoy the Vibe
    --add-opens java.base/java.time=ALL-UNNAMED
    ```
 
-3. In case you don't know your IP address, type the command next to you into CMD:
+3. In case you don't know your IP address, type the command below you into CMD:
    ```
    ipconfig
    ```
@@ -67,3 +67,5 @@ AF,SDZ,ZV,KNF,RB,PA,AG and everyone else who answered our questions or gave emot
 Our mentors:
 Navid raeiszadeh, Mohsen karbalaie, Amirhossein ghafarian and the other mentors.
 Doctor Sadegh aliakbari for his beneficial teaching.
+
+<small>no credits are given to gradle that thing is a pain in one's eyeball </small>
