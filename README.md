@@ -39,7 +39,7 @@ just enjoy the Vibe
 
 
 
-<img src="screenshots/player_page.png" alt="trackplayer" width="400" height="800"/>
+
 
 
 ## ❗❗Requirements❗❗:
