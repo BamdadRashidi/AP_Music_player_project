@@ -44,8 +44,8 @@ just enjoy the Vibe
    --add-opens java.base/java.time=ALL-UNNAMED
    ```
    and copy the IPv4 attribute and paste it everywhere that has a socket within main.dart.
-3. In case you don't know your IP address, type the command below into CMD:
-```ipconfig```
+3. In case you don't know your IP address, type the command next to you into CMD:
+   ```ipconfig```
 4. Enjoy the show
 
 
@@ -58,10 +58,9 @@ Iman Tat hesari: A man of patience, He can smell colors. if you see any flutter 
 
 Mohammadamin "Bamdad" rashidi: Jack-of-all-trades, on a crack called enthusiasm. the person who did most of the planning and direction, co-conceptualized the appreance of the app, wrote the entire backend before the revamp, designed the logo and the background images, and made the sharing and playlist systems.
 
-our families for emotional support and our good friends:
+Our families for emotional support and our good friends:
+AF,SDZ,ZV,KNF,RB,PA,AG and everyone else who answered our questions or gave emotional support.
 
-AF,SDZ,ZV,KNF,RB,PA,AG and more who answered our questions.
-
-our mentors:
+Our mentors:
 Navid raeiszadeh, Mohsen karbalaie, Amirhossein ghafarian and the other mentors.
 Doctor Sadegh aliakbari for his beneficial teaching.
