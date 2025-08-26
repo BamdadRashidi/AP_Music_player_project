@@ -18,10 +18,10 @@ Once done, you are good to go and will be moved into the library.
 Add any song from your phone into the app and create playlists. If you really like some songs why not like them to transport them to the *"liked tab"*?  
 Enjoy listening to music :D
 
-<img src="screenshots/library" alt="library" width="400" height="800"/>
-
-
 <img src="screenshots/playlists.png" alt="playlists" width="400" height="800"/>
+
+
+<img src="screenshots/library" alt="library" width="400" height="800"/>
 
 ---
 <br/>
@@ -36,9 +36,6 @@ Did you forget your password? Did you by any chance want to isolate yourself fro
 
 ### ✨🎵🎵Vibe🎵🎵✨:
 just enjoy the Vibe
-
-
-
 
 
 
