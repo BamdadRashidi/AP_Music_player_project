@@ -21,7 +21,7 @@ Enjoy listening to music :D
 <img src="screenshots/playlists.png" alt="playlists" width="400" height="800"/>
 
 
-<img src="screenshots/library" alt="library" width="400" height="800"/>
+<img src="screenshots/library.png" alt="library" width="400" height="800"/>
 
 ---
 <br/>
@@ -39,7 +39,7 @@ just enjoy the Vibe
 
 
 
-<img src="screenshots/player_page" alt="trackplayer" width="400" height="800"/>
+<img src="screenshots/player_page.png" alt="trackplayer" width="400" height="800"/>
 
 
 ## ❗❗Requirements❗❗:
