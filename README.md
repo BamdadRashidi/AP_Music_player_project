@@ -47,6 +47,10 @@ unleash your inner admin in this terminal based admin page and look see the full
 <img src="screenshots/admin_page.png" alt="settings" width="400" height="800"/>
 
 
+> [!NOTE]
+> To use admin page, open the admin class in the models folder of backend and run the admin file itself.
+
+
 ---
 
 ## ❗❗Requirements❗❗:
