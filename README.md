@@ -47,6 +47,11 @@ just enjoy the Vibe
 ### 👨‍💻Admin page👩‍💻:
 unleash your inner admin in this terminal based admin page and look see the full details of one account/playlist or track or see the information of every singe account in one or two simple inputs.
 
+<img src="screenshots/admin_page.png" alt="settings" width="400" height="800"/>
+
+
+---
+
 ## ❗❗Requirements❗❗:
 - The latest version of [flutter](https://flutter.dev/)
 - An IDE that can build apps for phone such as android studio
