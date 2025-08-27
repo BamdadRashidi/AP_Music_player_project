@@ -57,7 +57,6 @@ class WrongUserNameException extends Exception{
 }
 
 class RedundantUsernameException extends Exception{
-    // email/phone
     String message;
     public RedundantUsernameException() {
         super();
@@ -68,7 +67,6 @@ class RedundantUsernameException extends Exception{
 }
 
 class RedundantAccountNameException extends Exception{
-    // account name duuuuh!
     String message;
     public RedundantAccountNameException() {
         super();

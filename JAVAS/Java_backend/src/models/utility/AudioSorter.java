@@ -15,7 +15,6 @@ public class AudioSorter {
 
     public static ArrayList<Track> sortTracksByDate(Collection<Track> allTracks) {
         ArrayList<Track> sortedList = new ArrayList<>(allTracks);
-        // مرتب سازی بر اساس تاریخ کامل (سال، ماه، روز)
         sortedList.sort(Comparator.comparing(Track::getFullTrackDate));
         return sortedList;
     }

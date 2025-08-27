@@ -32,15 +32,9 @@ public class AccountServicer extends AudioSorter {
         String accountName = payload.get("accountName").getAsString();
         String username = payload.get("username").getAsString();
         String password = payload.get("password").getAsString();
-
         for (Account acc : dataBase.getAccounts().values()) {
             if (acc.getUsername().equals(username)) {
                 return new Response("fail", "This username Already Exists.", null);
-            }
-        }
-        for (Account acc : dataBase.getAccounts().values()) {
-            if (acc.getAccountName().equals(accountName)) {
-                return new Response("fail", "A username with this AccountName exists.", null);
             }
         }
 
@@ -167,20 +161,12 @@ public class AccountServicer extends AudioSorter {
         try {
             String uploadDir = "uploaded_tracks";
             Files.createDirectories(Paths.get(uploadDir));
-
-            // در عمل، باید از استریم ورودی بگیریم
-            // اینجا به صورت نمایشی یک فایل تست ذخیره می‌کنیم
             String fileName = UUID.randomUUID() + ".mp3";
             Path filePath = Paths.get(uploadDir, fileName);
-
-            // فایل تست
             Files.write(filePath, "dummy mp3 data".getBytes());
-
             String fileUrl = "http://your-server-address/" + uploadDir + "/" + fileName;
-
             JsonObject res = new JsonObject();
             res.addProperty("fileUrl", fileUrl);
-
             return new Response("success", "Track uploaded", res);
         } catch (Exception e) {
             e.printStackTrace();

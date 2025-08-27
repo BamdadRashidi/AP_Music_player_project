@@ -9,27 +9,15 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Admin extends AudioSorter{
-    private DataBase db = DataBase.getInstance();
-    public static String findTheMostLikedTracks(){
-        ArrayList<Track> sorted = sortTracksByLikes(DataBase.getInstance().getTracks().values());
-        StringBuilder mostLikedTracks = new StringBuilder();
-        int count = Math.min(10, sorted.size());
-        for (int i = 0; i < count; i++) {
-            mostLikedTracks.append(sorted.get(i).toString()).append("\n");
+    private static void getTrackinfo(String trackId) throws IdNotFoundException {
+        for(Track track : DataBase.getInstance().getTracks().values()){
+            if(track.getTrackId().equals(trackId)){
+                System.out.println(track.toString());
+                return;
+            }
         }
-        return mostLikedTracks.toString();
+        throw new IdNotFoundException("There is no track with this id.");
     }
-//    public static String findTheMostListenedTracks(){
-//        ArrayList<Track> sorted = sortTracksByListens(DataBase.getInstance().getTracks().values());
-//        StringBuilder mostListened = new StringBuilder();
-//
-//        int count = Math.min(10, sorted.size());
-//        for (int i = 0; i < count; i++) {
-//            mostListened.append(sorted.get(i).toString()).append("\n");
-//        }
-//
-//        return mostListened.toString();
-//    }
 
     public static void getAccountInfo(String accountId, boolean shouldExpand) throws IdNotFoundException {
         for (Account account : DataBase.getInstance().getAccounts().values()) {
@@ -57,15 +45,24 @@ public class Admin extends AudioSorter{
     }
 
 
-    public void getTrackInfo(String Trackname) throws IdNotFoundException {
-        for(Track track : db.getTracks().values()){
-            if(track.getTrackName().equals(Trackname)){
-                System.out.println(track.toString());
-                return;
-            }
+    public static void getAllAccountInfo(){
+        for (Account account : DataBase.getInstance().getAccounts().values()) {
+            System.out.println(account.toString());
+            System.out.println(account.showInfo());
         }
-        throw new IdNotFoundException("There is no track with this id.");
     }
+    public static void getAllPlaylistInfo(){
+        for(PlayList playlist : DataBase.getInstance().getPlaylists().values()){
+            System.out.println(playlist.toString());
+            System.out.println(playlist.showInfo());
+        }
+    }
+    public static void getAllTrackInfo(){
+        for(Track track : DataBase.getInstance().getTracks().values()){
+            System.out.println(track.toString());
+        }
+    }
+
 
 
     public static void main(String[] args) {
@@ -75,29 +72,43 @@ public class Admin extends AudioSorter{
             System.out.println("Welcome to the Admin Menu. please choose a number");
             System.out.println("1: checking an account (account id , more info or not (true/false))");
             System.out.println("2: checking a playlist (playlist id , more info or not (true/false))");
-            System.out.println("3: find the top 10 most liked tracks");
-            System.out.println("4: find the top 10 most played tracks");
-            System.out.println("5: exit");
+            System.out.println("3: checking a song");
+            System.out.println("4: seeing the info of all accounts in detail");
+            System.out.println("5: seeing the info of all playlists in detail");
+            System.out.println("6: seeing the info of all tracks in detail");
+            System.out.println("7: exit");
             choice = scanner.nextInt();
             try {
                 switch (choice) {
                     case 1:
+                        System.out.println("Enter account id: ");
                         String accountId = scanner.next();
+                        System.out.println("expand the information: True/False write it exactly this way");
                         boolean shouldExpand = scanner.nextBoolean();
                         getAccountInfo(accountId, shouldExpand);
                         break;
                     case 2:
+                        System.out.println("Enter playlist id: ");
                         String playlistID = scanner.next();
+                        System.out.println("expand the information: True/False write it exactly this way");
                         boolean expandornot = scanner.nextBoolean();
                         getPlayListInfo(playlistID, expandornot);
                         break;
                     case 3:
-                        System.out.println(findTheMostLikedTracks());
+                        System.out.println("Enter track id: ");
+                        String trackID = scanner.next();
+                        getTrackinfo(trackID);
                         break;
                     case 4:
-//                        System.out.println(findTheMostListenedTracks());
+                        getAllAccountInfo();
                         break;
                     case 5:
+                        getAllPlaylistInfo();
+                        break;
+                    case 6:
+                        getAllTrackInfo();
+                        break;
+                    case 7:
                         System.exit(0);
                         break;
                     default:
@@ -110,4 +121,6 @@ public class Admin extends AudioSorter{
             }
         }
     }
+
+
 }

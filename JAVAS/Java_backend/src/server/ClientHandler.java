@@ -30,7 +30,7 @@ public class ClientHandler extends Thread {
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
                 if (line.isEmpty()) continue;
-                System.out.println("📥 Raw request received: " + line);
+
                 System.out.println("Received JSON length: " + line.length());
 
                 Request request = gson.fromJson(line, Request.class);

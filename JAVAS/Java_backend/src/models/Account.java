@@ -9,7 +9,7 @@ public class Account implements Serializable {
     private String userId;
     private String userToken;
     private String username;
-    private String password; // هش ذخیره می‌شود
+    private String password;
     private String accountName;
     private String email;
     private boolean canShareWith;

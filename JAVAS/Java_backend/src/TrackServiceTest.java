@@ -14,19 +14,19 @@ import java.io.IOException;
 
 public class TrackServiceTest {
 
-    private final String testFilePath = "/tmp/test.mp3"; // مسیر فایل تست
+    private final String testFilePath = "/tmp/test.mp3";
 
     @BeforeEach
     void setup() {
-        // پاک کردن دیتابیس قبل از هر تست
-        DataBase db = DataBase.getInstance();
-        // db.clearAll(); // اگر متد کمکی دارید فعال کنید
 
-        // ساخت فایل تستی قبل از هر تست
+        DataBase db = DataBase.getInstance();
+
+
+
         File f = new File(testFilePath);
-        f.getParentFile().mkdirs(); // ایجاد پوشه اگر وجود نداشته باشد
+        f.getParentFile().mkdirs();
         try (FileOutputStream fos = new FileOutputStream(f)) {
-            fos.write("test".getBytes()); // محتوای اختیاری
+            fos.write("test".getBytes());
         } catch (IOException e) {
             e.printStackTrace();
             fail("Fail to create test.mp3 file: " + e.getMessage());
@@ -71,7 +71,6 @@ public class TrackServiceTest {
         assertTrue(new File(url).exists());
     }
 
-    // بقیه تست‌ها مثل testAddTrackTraditionalPayload و testInvalidPayload مشابه قبل هستند
 }
 
 

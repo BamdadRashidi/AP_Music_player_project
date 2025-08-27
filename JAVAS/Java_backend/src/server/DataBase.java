@@ -127,15 +127,9 @@ public class DataBase {
                     Track t = tracks.get(trackId);
                     if (t != null) {
                         acc.addTrack(t);
-
-
-//                        if (!isTrackFilePresent(t)) {
-//                            downloadTrack(t);
-//                        }
                     }
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

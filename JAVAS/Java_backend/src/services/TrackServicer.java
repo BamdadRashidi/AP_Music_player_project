@@ -33,19 +33,12 @@ public class TrackServicer {
             String trackName = payload.get("trackName").getAsString().trim();
             String artistName = payload.get("artistName").getAsString().trim();
             String genreStr = payload.has("genre") ? payload.get("genre").getAsString() : "Default";
-            boolean explicitness = payload.has("isExplicit") &&
-                    payload.get("isExplicit").getAsString().equalsIgnoreCase("true");
-
+            boolean explicitness = payload.has("isExplicit") && payload.get("isExplicit").getAsString().equalsIgnoreCase("true");
             String base64Data = payload.get("fileData").getAsString();
-
             Genres genreForReal = settingGenre(genreStr);
             if (genreForReal == null) genreForReal = Genres.Default;
-
-
             Track track = new Track(trackName, artistName, genreForReal, explicitness);
             track.setTrackId(UUID.randomUUID().toString());
-
-
             try {
                 byte[] fileBytes = Base64.getDecoder().decode(base64Data);
                 Files.createDirectories(Paths.get("tracks"));
@@ -183,9 +176,7 @@ public class TrackServicer {
     public static Response addTrack(JsonObject payload) {
         try {
             String userId = payload.get("userId").getAsString();
-
             Track track = null;
-
             if (payload.has("track") && payload.get("track").isJsonObject()) {
                 JsonObject tObj = payload.getAsJsonObject("track");
                 String clientId = tObj.has("id") ? tObj.get("id").getAsString() : null;
@@ -315,22 +306,8 @@ public class TrackServicer {
                 for (PlayList pl : acc.getPlayLists()) {
                     if (pl.getPlayListID().equals(playListId) && chosenTrack != null) {
                         pl.addTrack(chosenTrack);
-                        JsonObject res = new JsonObject();
-                        res.addProperty("trackId", chosenTrack.getTrackId());
-                        res.addProperty("trackName", chosenTrack.getTrackName());
-                        res.addProperty("artistName", chosenTrack.getArtistName());
-                        res.addProperty("genre", chosenTrack.getGenre().name());
-                        res.addProperty("isExplicit", chosenTrack.isExplicit());
-                        res.addProperty("likes", chosenTrack.getLikes());
-                        res.addProperty("songUrl", chosenTrack.getSongUrl());
-                        JsonObject dateObj = new JsonObject();
-                        LocalDate date = chosenTrack.getFullTrackDate();
-                        dateObj.addProperty("year", date.getYear());
-                        dateObj.addProperty("month", date.getMonthValue());
-                        dateObj.addProperty("day", date.getDayOfMonth());
-                        res.add("trackDate", dateObj);
                         dataBase.saveDbFile();
-                        return new Response("success", "Track added to playlist: " + pl.getPlaylistName(), res);
+                        return new Response("success", "Track added to playlist: " + pl.getPlaylistName(), null);
                     }
                 }
             }
@@ -446,8 +423,6 @@ public class TrackServicer {
             return new Response("failed", "couldn't share track: " + e.getMessage(), null);
         }
     }
-
-
 
     public static Response getLibrary(JsonObject payload) {
         String userId = payload.get("userId").getAsString();

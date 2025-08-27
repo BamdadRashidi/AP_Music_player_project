@@ -79,8 +79,7 @@ Iman Tat hesari: project's lord and savior, He can smell colors. if you see any 
 
 Mohammadamin "Bamdad" Rashidi: Jack-of-all-trades, on a crack called enthusiasm. the person who did most of the planning and direction, co-conceptualized the appreance of the app, wrote the entire backend before the revamp, designed the logo and the background images, and made the sharing and playlist systems.
 
-Our families for emotional support and our good friends:
-AF,SDZ,ZV,KNF,RB,PA,AG and everyone else who answered our questions or gave emotional support.
+Our good friends and families for emotional support
 
 Our mentors:
 Navid raeiszadeh, Mohsen karbalaie, Amirhossein ghafarian, Reyhaneh dadashpoor and the other mentors.

@@ -16,8 +16,6 @@ public class Track implements Serializable, Comparable<Track> {
 
 
     private String songUrl;
-
-    // Constructors
     public Track() {
         this.trackDate = LocalDate.now();
         this.trackId = Id_generator.generateId();
@@ -32,7 +30,16 @@ public class Track implements Serializable, Comparable<Track> {
         this.trackId = Id_generator.generateId();
     }
 
-    // Getter & Setter ها
+    public Track(Track other){
+        this.trackName = other.trackName;
+        this.artistName = other.artistName;
+        this.genre = other.genre;
+        this.isExplicit = other.isExplicit;
+        this.trackDate = other.trackDate;
+        this.trackId = Id_generator.generateId();
+        this.songUrl = other.songUrl;
+    }
+
     public String getTrackName() { return trackName; }
     public void setTrackName(String trackName) { this.trackName = trackName; }
 

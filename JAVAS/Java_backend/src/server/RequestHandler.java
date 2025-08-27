@@ -23,8 +23,11 @@ public class RequestHandler {
             case "updateAccount": response = AccountServicer.updateAccount(payload); break;
             case "deleteAccount": response = AccountServicer.DeleteAccount(payload); break;
             case "addPlaylist" : response = PlayListServicer.addPlayList(payload); break;
+            case "getPlaylists" : response = PlayListServicer.getPlaylists(payload); break;
+            case "savePlaylist" : response = PlayListServicer.savePlaylist(payload); break;
             case "removePlaylist" : response = PlayListServicer.removePlayList(payload); break;
             case "sharePlaylist" : response = PlayListServicer.sharePlayListWith(payload); break;
+            case "getPlaylistName": response = PlayListServicer.getPlaylistName(payload); break;
             case "changePlaylistName": response = PlayListServicer.changePlName(payload); break;
             case "likeTrack" : response = TrackServicer.likeTrack(payload); break;
             case "addTrack": response = TrackServicer.addTrack(payload); break;
@@ -35,7 +38,6 @@ public class RequestHandler {
             case "shareTrack": response = TrackServicer.shareTrack(payload); break;
             case "updateTrack": response = TrackServicer.updateTrack(payload); break;
             case "downloadTrack": response = TrackServicer.downloadTrack(payload); break;
-            case "getPlaylistName": response = PlayListServicer.getPlaylistName(payload); break;
             case "getLibrary":
                 String userId = null;
                 if (payload.has("userId")) {
