@@ -84,7 +84,7 @@ The creators of [Java](https://www.oracle.com/java/technologies/downloads/), [Fl
 
 Iman Tat hesari: project's lord and savior, He can smell colors. if you see any flutter code that actually is good it is because he probably wrote it. he traded his sanity to revamp the backend code, write the entire Song loading system into the app and wrote fingerprint system. he saved the project from never making into the finish line more than once. 
 
-Mohammadamin "Bamdad" Rashidi: Jack-of-all-trades, on a crack called enthusiasm. the person who did most of the planning and direction, co-conceptualized the appreance of the app, wrote the entire backend before the revamp, designed the logo and the background images, and made the sharing and playlist systems.
+Mohammadamin "Bamdad" Rashidi: Jack-of-all-trades, on a crack called Vocaloid. the person who did most of the planning and direction, co-conceptualized the appreance of the app, wrote the entire backend before the revamp, designed the logo and the background images, and made the sharing and playlist systems.
 
 Our good friends and families for emotional support.
 
