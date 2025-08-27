@@ -37,6 +37,7 @@ Did you forget your password? Did you by any chance want to isolate yourself fro
 ### ✨🎵🎵Vibe🎵🎵✨:
 just enjoy the Vibe
 
+<img src="screenshots/player_page.png" alt="settings" width="400" height="800"/>
 
 
 
