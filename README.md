@@ -26,6 +26,8 @@ Enjoy listening to music :D
 ---
 <br/>
 <br/>
+
+
 ### ⚙️Fairly customizable settings⚙️:
 Did you forget your password? Did you by any chance want to isolate yourself from people so that they don't send you their stupid songs? Fear not as the **_Settings page_** will get this done. Enter your new account name/password/email/phone to change your information and in case you want to be a private person, just check the checkbox below so people stop sending you their songs.
 
