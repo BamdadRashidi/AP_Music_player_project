@@ -40,8 +40,12 @@ just enjoy the Vibe
 <img src="screenshots/player_page.png" alt="settings" width="400" height="800"/>
 
 
+---
+<br/>
+<br/>
 
-
+### 👨‍💻Admin page👩‍💻:
+unleash your inner admin in this terminal based admin page and look see the full details of one account/playlist or track or see the information of every singe account in one or two simple inputs.
 
 ## ❗❗Requirements❗❗:
 - The latest version of [flutter](https://flutter.dev/)
@@ -61,7 +65,7 @@ just enjoy the Vibe
    ```
    --add-opens java.base/java.time=ALL-UNNAMED
    ```
-
+   -make sure to run ServerSocket in order to connect the mobile device with the computer.
 3. In case you don't know your IP address, type the command below you into CMD:
    ```
    ipconfig
@@ -80,7 +84,7 @@ Iman Tat hesari: project's lord and savior, He can smell colors. if you see any 
 
 Mohammadamin "Bamdad" Rashidi: Jack-of-all-trades, on a crack called enthusiasm. the person who did most of the planning and direction, co-conceptualized the appreance of the app, wrote the entire backend before the revamp, designed the logo and the background images, and made the sharing and playlist systems.
 
-Our good friends and families for emotional support
+Our good friends and families for emotional support.
 
 Our mentors:
 Navid raeiszadeh, Mohsen karbalaie, Amirhossein ghafarian, Reyhaneh dadashpoor and the other mentors.
